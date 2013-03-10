@@ -1,10 +1,10 @@
 ﻿=== Simple Share Buttons Adder ===
 Contributors: DavidoffNeal
 Donate link: http://www.davidsneal.co.uk/contributions
-Tags: share buttons, facebook, twitter, google+, share, share links
+Tags: share buttons, facebook, twitter, google+, share, share links, stumble upon, linkedin, pinterest
 Requires at least: 3.0.1
 Tested up to: 3.5.1
-Stable tag: 1.0
+Stable tag: 1.1
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -38,6 +38,10 @@ SSBA has only just been released so I've not had any questions yet! I'll be happ
 6. This is an example of a set of Share Buttons you can add using Simple Share Buttons Adder.
 
 == Changelog ==
+
+= 1.1 =
+* New buttons added - Pinterest, LinkedIn and Stumble Upon.
+* You can now also choose to display smaller versions of the buttons if you wish.
 
 = 1.0 =
 * Initial release

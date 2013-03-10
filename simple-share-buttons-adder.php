@@ -3,7 +3,7 @@
 Plugin Name: Simple Share Buttons Adder
 Plugin URI: http://www.davidsneal.co.uk/wordpress/simple-share-buttons-adder
 Description: A simple plugin that enables you to add share buttons to all of your posts and/or pages.
-Version: 1.0
+Version: 1.1
 Author: David S. Neal
 Author URI: http://www.davidsneal.co.uk/
 License: GPLv2
@@ -30,8 +30,9 @@ GNU General Public License for more details.
 	function ssba_activate() {
 		
 		// insert default options for ssba
-		add_option('ssba_version', 			'1.0');
+		add_option('ssba_version', 			'1.1');
 		add_option('ssba_image_set', 		'default');
+		add_option('ssba_size', 			'small');
 		add_option('ssba_posts_or_pages',	'both');
 		add_option('ssba_align', 			'left');
 		add_option('ssba_padding', 			'10');
@@ -40,6 +41,9 @@ GNU General Public License for more details.
 		add_option('ssba_facebook', 		'Y');
 		add_option('ssba_twitter', 			'Y');
 		add_option('ssba_diggit', 			'Y');
+		add_option('ssba_linkedin', 		'Y');
+		add_option('ssba_stumbleupon', 		'Y');
+		add_option('ssba_pinterest', 		'Y');
 	}
 
 	// --------- ADMIN BITS ------------ //
@@ -52,6 +56,22 @@ GNU General Public License for more details.
 	
 		// add menu page
 		add_plugins_page( 'Simple Share Buttons Adder', 'Share Buttons', 'manage_options', 'simple-share-buttons-adder', 'ssba_settings');
+		
+		// query the db for current ssba settings
+		$arrSettings = get_ssba_settings();
+		
+		// check if using 1.0
+		if ($arrSettings['ssba_version'] == '1.0') {
+		
+			// update version number
+			update_option('ssba_version', 	'1.1');
+			
+			// add new options for 1.1
+			add_option('ssba_size', 		'small');
+			add_option('ssba_linkedin', 	'N');
+			add_option('ssba_stumbleupon', 	'N');
+			add_option('ssba_pinterest', 	'N');
+		}
 	}
 
 	// --------- SETTINGS PAGE ------------ //
@@ -71,6 +91,7 @@ GNU General Public License for more details.
 
 			// update existing ssba settings		
 			update_option('ssba_image_set', 		($_POST['ssba_image_set']));
+			update_option('ssba_size', 				($_POST['ssba_size']));
 			update_option('ssba_posts_or_pages', 	($_POST['ssba_posts_or_pages']));
 			update_option('ssba_align', 			($_POST['ssba_align']));
 			update_option('ssba_padding', 			($_POST['ssba_padding']));								
@@ -79,6 +100,9 @@ GNU General Public License for more details.
 			update_option('ssba_facebook', 			($_POST['ssba_facebook']));
 			update_option('ssba_twitter', 			($_POST['ssba_twitter']));
 			update_option('ssba_diggit', 			($_POST['ssba_diggit']));
+			update_option('ssba_linkedin', 			($_POST['ssba_linkedin']));
+			update_option('ssba_stumbleupon', 		($_POST['ssba_stumbleupon']));
+			update_option('ssba_pinterest', 		($_POST['ssba_pinterest']));
 
 			// show settings saved message
 			echo '<div id="setting-error-settings_updated" class="updated settings-error"><p><strong>Settings saved.</strong></p></div>';
@@ -139,12 +163,22 @@ GNU General Public License for more details.
 						echo '</select></td>';
 					echo '</tr>';
 					echo '<tr valign="top">';
+						echo '<th scope="row" style="width: 120px;"><label for="ssba_size">Image Size:&nbsp;</label></th>';
+						echo '<td><select name="ssba_size" id="ssba_size">';
+						echo '<option ' . ($arrSettings['ssba_size'] == 'small'  ? 'selected="selected"' : NULL) . ' value="small">Small</option>';
+						echo '<option ' . ($arrSettings['ssba_size'] == 'medium' ? 'selected="selected"' : NULL) . ' value="medium">Medium</option>';
+						echo '</select></td>';
+					echo '</tr>';
+					echo '<tr valign="top">';
 						echo '<th scope="row" style="width: 120px;"><label for="ssba_choices">Include:</label></th>';
 						echo '<td>';
-						echo 'Facebook&nbsp;<input type="checkbox" name="ssba_facebook" id="ssba_facebook" ' 	. ($arrSettings['ssba_facebook'] 	== 'Y'   ? 'checked' : NULL) . ' value="Y" style="margin-right: 10px;" />';
-						echo 'Twitter&nbsp;<input type="checkbox" name="ssba_twitter" id="ssba_twitter" ' 	. ($arrSettings['ssba_twitter'] 	== 'Y'   ? 'checked' : NULL) . ' value="Y" style="margin-right: 10px;" />';
-						echo 'Google&nbsp;<input type="checkbox" name="ssba_google" id="ssba_google" ' 		. ($arrSettings['ssba_google'] 		== 'Y'   ? 'checked' : NULL) . ' value="Y" style="margin-right: 10px;" />';
-						echo 'Digg&nbsp;<input type="checkbox" name="ssba_diggit" id="ssba_diggit" ' 			. ($arrSettings['ssba_diggit'] 		== 'Y'   ? 'checked' : NULL) . ' value="Y" style="margin-right: 10px;" />';
+						echo 'Facebook&nbsp;<input type="checkbox" name="ssba_facebook" id="ssba_facebook" ' 	 		. ($arrSettings['ssba_facebook'] 	== 'Y'   ? 'checked' : NULL) . ' value="Y" style="margin-right: 10px;" />';
+						echo 'Twitter&nbsp;<input type="checkbox" name="ssba_twitter" id="ssba_twitter" ' 		 		. ($arrSettings['ssba_twitter'] 	== 'Y'   ? 'checked' : NULL) . ' value="Y" style="margin-right: 10px;" />';
+						echo 'Google&nbsp;<input type="checkbox" name="ssba_google" id="ssba_google" ' 			 		. ($arrSettings['ssba_google'] 	 	== 'Y'   ? 'checked' : NULL) . ' value="Y" style="margin-right: 10px;" />';
+						echo 'Digg&nbsp;<input type="checkbox" name="ssba_diggit" id="ssba_diggit" ' 			 		. ($arrSettings['ssba_diggit'] 		== 'Y'   ? 'checked' : NULL) . ' value="Y" style="margin-right: 10px;" />';
+						echo 'LinkedIn&nbsp;<input type="checkbox" name="ssba_linkedin" id="ssba_linkedin" ' 		 	. ($arrSettings['ssba_linkedin'] 	== 'Y'   ? 'checked' : NULL) . ' value="Y" style="margin-right: 10px;" />';
+						echo 'Pinterest&nbsp;<input type="checkbox" name="ssba_pinterest" id="ssba_pinterest" '	 		. ($arrSettings['ssba_pinterest'] 	== 'Y'   ? 'checked' : NULL) . ' value="Y" style="margin-right: 10px;" />';
+						echo 'StumbleUpon&nbsp;<input type="checkbox" name="ssba_stumbleupon" id="ssba_stumbleupon" ' 	. ($arrSettings['ssba_stumbleupon'] == 'Y'   ? 'checked' : NULL) . ' value="Y" style="margin-right: 10px;" />';
 						echo '</td>';
 					echo '</tr>';
 					echo '<tr valign="top">';
@@ -210,31 +244,55 @@ GNU General Public License for more details.
 		
 			// show facebook share button
 			$htmlShareButtons .= '<a href="http://www.facebook.com/sharer.php?u=' . $urlCurrentPage  . '">';
-			$htmlShareButtons .= '<img src="' . WP_PLUGIN_URL . '/simple-share-buttons-adder/buttons/' . $arrSettings['ssba_image_set'] . '/facebook.png" style="padding: ' . $arrSettings['ssba_padding'] . 'px" /></a>';
+			$htmlShareButtons .= '<img src="' . WP_PLUGIN_URL . '/simple-share-buttons-adder/buttons/' . $arrSettings['ssba_image_set'] . '/facebook' . ($arrSettings['ssba_size'] == 'small' ? '-small' : NULL) . '.png" style="padding: ' . $arrSettings['ssba_padding'] . 'px" /></a>';
 		}
 		
-		// check for facebook
+		// check for twitter
 		if ($arrSettings['ssba_twitter'] == Y) {
 		
-			// show facebook share button
+			// show twitter share button
 			$htmlShareButtons .= '<a href="http://twitter.com/share?url=' . $urlCurrentPage  . '">';
-			$htmlShareButtons .= '<img src="' . WP_PLUGIN_URL . '/simple-share-buttons-adder/buttons/' . $arrSettings['ssba_image_set'] . '/twitter.png" style="padding: ' . $arrSettings['ssba_padding'] . 'px" /></a>';
+			$htmlShareButtons .= '<img src="' . WP_PLUGIN_URL . '/simple-share-buttons-adder/buttons/' . $arrSettings['ssba_image_set'] . '/twitter' . ($arrSettings['ssba_size'] == 'small' ? '-small' : NULL) . '.png" style="padding: ' . $arrSettings['ssba_padding'] . 'px" /></a>';
 		}
 		
-		// check for facebook
+		// check for google
 		if ($arrSettings['ssba_google'] == Y) {
 		
-			// show facebook share button
+			// show google share button
 			$htmlShareButtons .= '<a href="https://plus.google.com/share?url=' . $urlCurrentPage  . '">';
-			$htmlShareButtons .= '<img src="' . WP_PLUGIN_URL . '/simple-share-buttons-adder/buttons/' . $arrSettings['ssba_image_set'] . '/google.png" style="padding: ' . $arrSettings['ssba_padding'] . 'px" /></a>';
+			$htmlShareButtons .= '<img src="' . WP_PLUGIN_URL . '/simple-share-buttons-adder/buttons/' . $arrSettings['ssba_image_set'] . '/google' . ($arrSettings['ssba_size'] == 'small' ? '-small' : NULL) . '.png" style="padding: ' . $arrSettings['ssba_padding'] . 'px" /></a>';
 		}
 		
-		// check for facebook
+		// check for diggit
 		if ($arrSettings['ssba_diggit'] == Y) {
 		
-			// show facebook share button
+			// show diggit share button
 			$htmlShareButtons .= '<a href="http://www.digg.com/submit?url=' . $urlCurrentPage  . '">';
-			$htmlShareButtons .= '<img src="' . WP_PLUGIN_URL . '/simple-share-buttons-adder/buttons/' . $arrSettings['ssba_image_set'] . '/diggit.png" style="padding: ' . $arrSettings['ssba_padding'] . 'px" /></a>';
+			$htmlShareButtons .= '<img src="' . WP_PLUGIN_URL . '/simple-share-buttons-adder/buttons/' . $arrSettings['ssba_image_set'] . '/diggit' . ($arrSettings['ssba_size'] == 'small' ? '-small' : NULL) . '.png" style="padding: ' . $arrSettings['ssba_padding'] . 'px" /></a>';
+		}
+		
+		// check for linkedin
+		if ($arrSettings['ssba_linkedin'] == Y) {
+		
+			// show linkedin share button
+			$htmlShareButtons .= '<a href="http://www.linkedin.com/shareArticle?mini=true&url=' . $urlCurrentPage  . '">';
+			$htmlShareButtons .= '<img src="' . WP_PLUGIN_URL . '/simple-share-buttons-adder/buttons/' . $arrSettings['ssba_image_set'] . '/linkedin' . ($arrSettings['ssba_size'] == 'small' ? '-small' : NULL) . '.png" style="padding: ' . $arrSettings['ssba_padding'] . 'px" /></a>';
+		}
+		
+		// check for pinterest
+		if ($arrSettings['ssba_pinterest'] == Y) {
+		
+			// show pinterest share button
+			$htmlShareButtons .= "<a href='javascript:void((function()%7Bvar%20e=document.createElement(&apos;script&apos;);e.setAttribute(&apos;type&apos;,&apos;text/javascript&apos;);e.setAttribute(&apos;charset&apos;,&apos;UTF-8&apos;);e.setAttribute(&apos;src&apos;,&apos;http://assets.pinterest.com/js/pinmarklet.js?r=&apos;+Math.random()*99999999);document.body.appendChild(e)%7D)());'>";
+			$htmlShareButtons .= '<img src="' . WP_PLUGIN_URL . '/simple-share-buttons-adder/buttons/' . $arrSettings['ssba_image_set'] . '/pinterest' . ($arrSettings['ssba_size'] == 'small' ? '-small' : NULL) . '.png" style="padding: ' . $arrSettings['ssba_padding'] . 'px" /></a>';
+		}
+		
+		// check for stumbleupon
+		if ($arrSettings['ssba_stumbleupon'] == Y) {
+		
+			// show stumbleupon share button
+			$htmlShareButtons .= '<a href="http://www.stumbleupon.com/submit?url=' . $urlCurrentPage  . '">';
+			$htmlShareButtons .= '<img src="' . WP_PLUGIN_URL . '/simple-share-buttons-adder/buttons/' . $arrSettings['ssba_image_set'] . '/stumbleupon' . ($arrSettings['ssba_size'] == 'small' ? '-small' : NULL) . '.png" style="padding: ' . $arrSettings['ssba_padding'] . 'px" /></a>';
 		}
 		
 		// return share buttons
