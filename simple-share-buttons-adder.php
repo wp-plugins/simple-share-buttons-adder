@@ -3,7 +3,7 @@
 Plugin Name: Simple Share Buttons Adder
 Plugin URI: http://www.davidsneal.co.uk/wordpress/simple-share-buttons-adder
 Description: A simple plugin that enables you to add share buttons to all of your posts and/or pages.
-Version: 1.1
+Version: 1.2
 Author: David S. Neal
 Author URI: http://www.davidsneal.co.uk/
 License: GPLv2
@@ -30,8 +30,8 @@ GNU General Public License for more details.
 	function ssba_activate() {
 		
 		// insert default options for ssba
-		add_option('ssba_version', 			'1.1');
-		add_option('ssba_image_set', 		'default');
+		add_option('ssba_version', 			'1.2');
+		add_option('ssba_image_set', 		'somacro');
 		add_option('ssba_size', 			'small');
 		add_option('ssba_posts_or_pages',	'both');
 		add_option('ssba_align', 			'left');
@@ -60,17 +60,22 @@ GNU General Public License for more details.
 		// query the db for current ssba settings
 		$arrSettings = get_ssba_settings();
 		
-		// check if using 1.0
-		if ($arrSettings['ssba_version'] == '1.0') {
+		// check if not yet updated to 1.2
+		if ($arrSettings['ssba_version'] != '1.2') {
 		
-			// update version number
-			update_option('ssba_version', 	'1.1');
+			// check if using 1.0
+			if ($arrSettings['ssba_version'] == '1.0') {
 			
-			// add new options for 1.1
-			add_option('ssba_size', 		'small');
-			add_option('ssba_linkedin', 	'N');
-			add_option('ssba_stumbleupon', 	'N');
-			add_option('ssba_pinterest', 	'N');
+				// add options that were new for 1.1
+				// NOTE: 1.1 and above will have these already
+				add_option('ssba_size', 		'small');
+				add_option('ssba_linkedin', 	'N');
+				add_option('ssba_stumbleupon', 	'N');
+				add_option('ssba_pinterest', 	'N');
+			}
+			
+			// update version number
+			update_option('ssba_version', '1.2');
 		}
 	}
 
@@ -117,6 +122,8 @@ GNU General Public License for more details.
 		echo '<div class="wrap">';
 			echo '<img src="' . plugins_url( 'images/ssba.png' , __FILE__ ) . '" align="left" style="margin-right: 10px;" alt="ssba" /> ';
 			echo '<h2>Simple Share Buttons Adder</h2>';
+			echo '<p class="description">I hope you find this plugin useful. Should you come across any problems or have any suggestions, please <a href="http://www.davidsneal.co.uk/wordpress/simple-share-buttons-adder" target="_blank">leave a comment on this page</a>.</p>';
+			echo '<p>&nbsp;</p>';
 			echo '<form method="post">';
 			
 			// hidden field to check for post
@@ -130,7 +137,8 @@ GNU General Public License for more details.
 						echo '<option ' . ($arrSettings['ssba_posts_or_pages'] == 'both'  ? 'selected="selected"' : NULL) . ' value="both">Both</option>';
 						echo '<option ' . ($arrSettings['ssba_posts_or_pages'] == 'posts' ? 'selected="selected"' : NULL) . ' value="posts">Posts</option>';
 						echo '<option ' . ($arrSettings['ssba_posts_or_pages'] == 'pages' ? 'selected="selected"' : NULL) . ' value="pages">Pages</option>';
-						echo '</td>';
+						echo '</select>';
+						echo '<p class="description">Select where you would like share buttons to appear</p></td>';
 					echo '</tr>';
 					echo '<tr valign="top">';
 						echo '<th scope="row" style="width: 120px;"><label for="ssba_before_or_after">Placement:&nbsp;</label></th>';
@@ -138,36 +146,43 @@ GNU General Public License for more details.
 						echo '<option ' . ($arrSettings['ssba_before_or_after'] == 'after' 	? 'selected="selected"' : NULL) . ' value="after">After</option>';
 						echo '<option ' . ($arrSettings['ssba_before_or_after'] == 'before' ? 'selected="selected"' : NULL) . ' value="before">Before</option>';
 						echo '<option ' . ($arrSettings['ssba_before_or_after'] == 'both' 	? 'selected="selected"' : NULL) . ' value="both">Both</option>';
-						echo '</select></td>';
+						echo '</select>';
+						echo '<p class="description">Place share buttons before or after your content</p></td>';
 					echo '</tr>';
 					echo '<tr valign="top">';
 						echo '<th scope="row" style="width: 120px;"><label for="ssba_align">Alignment:&nbsp;</label></th>';
 						echo '<td><select name="ssba_align" id="ssba_align">';
 						echo '<option ' . ($arrSettings['ssba_align'] == 'left'   ? 'selected="selected"' : NULL) . ' value="left">Left</option>';
 						echo '<option ' . ($arrSettings['ssba_align'] == 'center' ? 'selected="selected"' : NULL) . ' value="center">Center</option>';
-						echo '</select></td>';
+						echo '</select>';
+						echo '<p class="description">Center your buttons if desired</p></td>';
 					echo '</tr>';
 					echo '<tr valign="top">';
 						echo '<th scope="row" style="width: 120px;"><label for="ssba_padding">Padding:&nbsp;</label></th>';
 						echo '<td><input type="number" name="ssba_padding" id="ssba_padding" step="1" min="0" value="' . $arrSettings['ssba_padding'] . '" /><span class="description">px</span>';
-						echo '</td>';
+						echo '<p class="description">Apply some space around your images</p></td>';
 					echo '</tr>';
 					echo '<tr valign="top">';
 						echo '<th scope="row" style="width: 120px;"><label for="ssba_image_set">Image Set:&nbsp;</label></th>';
 						echo '<td><select name="ssba_image_set" id="ssba_image_set">';
-						echo '<option ' . ($arrSettings['ssba_image_set'] == 'default' 		? 'selected="selected"' : NULL) . ' value="default">Default</option>';
 						echo '<option ' . ($arrSettings['ssba_image_set'] == 'arbenta' 		? 'selected="selected"' : NULL) . ' value="arbenta">Arbenta</option>';
+						echo '<option ' . ($arrSettings['ssba_image_set'] == 'default' 		? 'selected="selected"' : NULL) . ' value="default">Default</option>';
+						echo '<option ' . ($arrSettings['ssba_image_set'] == 'metal' 		? 'selected="selected"' : NULL) . ' value="metal">Metal</option>';
 						echo '<option ' . ($arrSettings['ssba_image_set'] == 'pagepeel' 	? 'selected="selected"' : NULL) . ' value="pagepeel">Page Peel</option>';
 						echo '<option ' . ($arrSettings['ssba_image_set'] == 'plain' 		? 'selected="selected"' : NULL) . ' value="plain">Plain</option>';
 						echo '<option ' . ($arrSettings['ssba_image_set'] == 'ribbons' 		? 'selected="selected"' : NULL) . ' value="ribbons">Ribbons</option>';
-						echo '</select></td>';
+						echo '<option ' . ($arrSettings['ssba_image_set'] == 'simple' 		? 'selected="selected"' : NULL) . ' value="simple">Simple</option>';
+						echo '<option ' . ($arrSettings['ssba_image_set'] == 'somacro' 		? 'selected="selected"' : NULL) . ' value="somacro">Somacro</option>';
+						echo '</select>';
+						echo '<p class="description">Choose your favourite set of buttons</p></td>';
 					echo '</tr>';
 					echo '<tr valign="top">';
 						echo '<th scope="row" style="width: 120px;"><label for="ssba_size">Image Size:&nbsp;</label></th>';
 						echo '<td><select name="ssba_size" id="ssba_size">';
 						echo '<option ' . ($arrSettings['ssba_size'] == 'small'  ? 'selected="selected"' : NULL) . ' value="small">Small</option>';
 						echo '<option ' . ($arrSettings['ssba_size'] == 'medium' ? 'selected="selected"' : NULL) . ' value="medium">Medium</option>';
-						echo '</select></td>';
+						echo '</select>';
+						echo '<p class="description">Pick a size of images, default is small</p></td>';
 					echo '</tr>';
 					echo '<tr valign="top">';
 						echo '<th scope="row" style="width: 120px;"><label for="ssba_choices">Include:</label></th>';
@@ -179,7 +194,7 @@ GNU General Public License for more details.
 						echo 'LinkedIn&nbsp;<input type="checkbox" name="ssba_linkedin" id="ssba_linkedin" ' 		 	. ($arrSettings['ssba_linkedin'] 	== 'Y'   ? 'checked' : NULL) . ' value="Y" style="margin-right: 10px;" />';
 						echo 'Pinterest&nbsp;<input type="checkbox" name="ssba_pinterest" id="ssba_pinterest" '	 		. ($arrSettings['ssba_pinterest'] 	== 'Y'   ? 'checked' : NULL) . ' value="Y" style="margin-right: 10px;" />';
 						echo 'StumbleUpon&nbsp;<input type="checkbox" name="ssba_stumbleupon" id="ssba_stumbleupon" ' 	. ($arrSettings['ssba_stumbleupon'] == 'Y'   ? 'checked' : NULL) . ' value="Y" style="margin-right: 10px;" />';
-						echo '</td>';
+						echo '<p class="description">Check all those that you wish to include</p></td>';
 					echo '</tr>';
 					echo '<tr valign="top">';
 						echo '<td><input type="submit" value="Save changes" id="submit" class="button button-primary"/></td>';
@@ -191,16 +206,22 @@ GNU General Public License for more details.
 			echo '<br />';
 			echo '<h2>Image Sets</h2>';
 			echo '<div id="ssba_preview">';
-			echo '<h3>Default</h3>';
-			echo '<img src="' . WP_PLUGIN_URL . '/simple-share-buttons-adder/images/default.png" style="padding: 5px" />';
 			echo '<h3>Arbenta</h3>';
 			echo '<img src="' . WP_PLUGIN_URL . '/simple-share-buttons-adder/images/arbenta.png" style="padding: 5px" />';
+			echo '<h3>Default</h3>';
+			echo '<img src="' . WP_PLUGIN_URL . '/simple-share-buttons-adder/images/default.png" style="padding: 5px" />';
+			echo '<h3>Metal</h3>';
+			echo '<img src="' . WP_PLUGIN_URL . '/simple-share-buttons-adder/images/metal.png" style="padding: 5px" />';
 			echo '<h3>Page Peel</h3>';
 			echo '<img src="' . WP_PLUGIN_URL . '/simple-share-buttons-adder/images/pagepeel.png" style="padding: 5px" />';
 			echo '<h3>Plain</h3>';
 			echo '<img src="' . WP_PLUGIN_URL . '/simple-share-buttons-adder/images/plain.png" style="padding: 5px" />';
 			echo '<h3>Ribbons</h3>';
 			echo '<img src="' . WP_PLUGIN_URL . '/simple-share-buttons-adder/images/ribbons.png" style="padding: 5px" />';
+			echo '<h3>Simple</h3>';
+			echo '<img src="' . WP_PLUGIN_URL . '/simple-share-buttons-adder/images/simple.png" style="padding: 5px" />';
+			echo '<h3>Somacro</h3>';
+			echo '<img src="' . WP_PLUGIN_URL . '/simple-share-buttons-adder/images/somacro.png" style="padding: 5px" />';
 			echo '</div>';
 			echo '<p class="description">I hope you find this plugin useful. Should you come across any problems or have any suggestions, please <a href="http://www.davidsneal.co.uk/wordpress/simple-share-buttons-adder" target="_blank">leave a comment on this page</a>.</p>';
 			
@@ -244,7 +265,7 @@ GNU General Public License for more details.
 		
 			// show facebook share button
 			$htmlShareButtons .= '<a href="http://www.facebook.com/sharer.php?u=' . $urlCurrentPage  . '">';
-			$htmlShareButtons .= '<img src="' . WP_PLUGIN_URL . '/simple-share-buttons-adder/buttons/' . $arrSettings['ssba_image_set'] . '/facebook' . ($arrSettings['ssba_size'] == 'small' ? '-small' : NULL) . '.png" style="padding: ' . $arrSettings['ssba_padding'] . 'px" /></a>';
+			$htmlShareButtons .= '<img src="' . WP_PLUGIN_URL . '/simple-share-buttons-adder/buttons/' . $arrSettings['ssba_image_set'] . '/facebook' . ($arrSettings['ssba_size'] == 'small' ? '-small' : NULL) . '.png" /></a>';
 		}
 		
 		// check for twitter
@@ -252,7 +273,7 @@ GNU General Public License for more details.
 		
 			// show twitter share button
 			$htmlShareButtons .= '<a href="http://twitter.com/share?url=' . $urlCurrentPage  . '">';
-			$htmlShareButtons .= '<img src="' . WP_PLUGIN_URL . '/simple-share-buttons-adder/buttons/' . $arrSettings['ssba_image_set'] . '/twitter' . ($arrSettings['ssba_size'] == 'small' ? '-small' : NULL) . '.png" style="padding: ' . $arrSettings['ssba_padding'] . 'px" /></a>';
+			$htmlShareButtons .= '<img src="' . WP_PLUGIN_URL . '/simple-share-buttons-adder/buttons/' . $arrSettings['ssba_image_set'] . '/twitter' . ($arrSettings['ssba_size'] == 'small' ? '-small' : NULL) . '.png" /></a>';
 		}
 		
 		// check for google
@@ -260,7 +281,7 @@ GNU General Public License for more details.
 		
 			// show google share button
 			$htmlShareButtons .= '<a href="https://plus.google.com/share?url=' . $urlCurrentPage  . '">';
-			$htmlShareButtons .= '<img src="' . WP_PLUGIN_URL . '/simple-share-buttons-adder/buttons/' . $arrSettings['ssba_image_set'] . '/google' . ($arrSettings['ssba_size'] == 'small' ? '-small' : NULL) . '.png" style="padding: ' . $arrSettings['ssba_padding'] . 'px" /></a>';
+			$htmlShareButtons .= '<img src="' . WP_PLUGIN_URL . '/simple-share-buttons-adder/buttons/' . $arrSettings['ssba_image_set'] . '/google' . ($arrSettings['ssba_size'] == 'small' ? '-small' : NULL) . '.png" /></a>';
 		}
 		
 		// check for diggit
@@ -268,7 +289,7 @@ GNU General Public License for more details.
 		
 			// show diggit share button
 			$htmlShareButtons .= '<a href="http://www.digg.com/submit?url=' . $urlCurrentPage  . '">';
-			$htmlShareButtons .= '<img src="' . WP_PLUGIN_URL . '/simple-share-buttons-adder/buttons/' . $arrSettings['ssba_image_set'] . '/diggit' . ($arrSettings['ssba_size'] == 'small' ? '-small' : NULL) . '.png" style="padding: ' . $arrSettings['ssba_padding'] . 'px" /></a>';
+			$htmlShareButtons .= '<img src="' . WP_PLUGIN_URL . '/simple-share-buttons-adder/buttons/' . $arrSettings['ssba_image_set'] . '/diggit' . ($arrSettings['ssba_size'] == 'small' ? '-small' : NULL) . '.png" /></a>';
 		}
 		
 		// check for linkedin
@@ -276,7 +297,7 @@ GNU General Public License for more details.
 		
 			// show linkedin share button
 			$htmlShareButtons .= '<a href="http://www.linkedin.com/shareArticle?mini=true&url=' . $urlCurrentPage  . '">';
-			$htmlShareButtons .= '<img src="' . WP_PLUGIN_URL . '/simple-share-buttons-adder/buttons/' . $arrSettings['ssba_image_set'] . '/linkedin' . ($arrSettings['ssba_size'] == 'small' ? '-small' : NULL) . '.png" style="padding: ' . $arrSettings['ssba_padding'] . 'px" /></a>';
+			$htmlShareButtons .= '<img src="' . WP_PLUGIN_URL . '/simple-share-buttons-adder/buttons/' . $arrSettings['ssba_image_set'] . '/linkedin' . ($arrSettings['ssba_size'] == 'small' ? '-small' : NULL) . '.png" /></a>';
 		}
 		
 		// check for pinterest
@@ -284,7 +305,7 @@ GNU General Public License for more details.
 		
 			// show pinterest share button
 			$htmlShareButtons .= "<a href='javascript:void((function()%7Bvar%20e=document.createElement(&apos;script&apos;);e.setAttribute(&apos;type&apos;,&apos;text/javascript&apos;);e.setAttribute(&apos;charset&apos;,&apos;UTF-8&apos;);e.setAttribute(&apos;src&apos;,&apos;http://assets.pinterest.com/js/pinmarklet.js?r=&apos;+Math.random()*99999999);document.body.appendChild(e)%7D)());'>";
-			$htmlShareButtons .= '<img src="' . WP_PLUGIN_URL . '/simple-share-buttons-adder/buttons/' . $arrSettings['ssba_image_set'] . '/pinterest' . ($arrSettings['ssba_size'] == 'small' ? '-small' : NULL) . '.png" style="padding: ' . $arrSettings['ssba_padding'] . 'px" /></a>';
+			$htmlShareButtons .= '<img src="' . WP_PLUGIN_URL . '/simple-share-buttons-adder/buttons/' . $arrSettings['ssba_image_set'] . '/pinterest' . ($arrSettings['ssba_size'] == 'small' ? '-small' : NULL) . '.png" /></a>';
 		}
 		
 		// check for stumbleupon
@@ -292,7 +313,7 @@ GNU General Public License for more details.
 		
 			// show stumbleupon share button
 			$htmlShareButtons .= '<a href="http://www.stumbleupon.com/submit?url=' . $urlCurrentPage  . '">';
-			$htmlShareButtons .= '<img src="' . WP_PLUGIN_URL . '/simple-share-buttons-adder/buttons/' . $arrSettings['ssba_image_set'] . '/stumbleupon' . ($arrSettings['ssba_size'] == 'small' ? '-small' : NULL) . '.png" style="padding: ' . $arrSettings['ssba_padding'] . 'px" /></a>';
+			$htmlShareButtons .= '<img src="' . WP_PLUGIN_URL . '/simple-share-buttons-adder/buttons/' . $arrSettings['ssba_image_set'] . '/stumbleupon' . ($arrSettings['ssba_size'] == 'small' ? '-small' : NULL) . '.png" /></a>';
 		}
 		
 		// return share buttons
@@ -361,12 +382,13 @@ GNU General Public License for more details.
 		
 			// css style
 			$htmlShareButtons = '<style type="text/css">
-									#ssba 	{ 	
-												padding: 		  ' . $arrSettings['ssba_padding'] . 'px;
-											}
+									#ssba img	{ 	
+													padding: ' . $arrSettings['ssba_padding'] . 'px;
+													border:  0;
+												}
 								</style>';
 			
-			// content
+			// ssba buttons!!
 			$htmlShareButtons.= '<div id="ssba">';
 			$htmlShareButtons.= ($arrSettings['ssba_align'] == 'center' ? '<center>' : NULL);
 			$htmlShareButtons.= get_share_buttons($arrSettings);
