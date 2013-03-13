@@ -3,7 +3,7 @@
 Plugin Name: Simple Share Buttons Adder
 Plugin URI: http://www.davidsneal.co.uk/wordpress/simple-share-buttons-adder
 Description: A simple plugin that enables you to add share buttons to all of your posts and/or pages.
-Version: 1.2
+Version: 1.3
 Author: David S. Neal
 Author URI: http://www.davidsneal.co.uk/
 License: GPLv2
@@ -60,8 +60,8 @@ GNU General Public License for more details.
 		// query the db for current ssba settings
 		$arrSettings = get_ssba_settings();
 		
-		// check if not yet updated to 1.2
-		if ($arrSettings['ssba_version'] != '1.2') {
+		// check if not yet updated to 1.3
+		if ($arrSettings['ssba_version'] != '1.3') {
 		
 			// check if using 1.0
 			if ($arrSettings['ssba_version'] == '1.0') {
@@ -75,7 +75,7 @@ GNU General Public License for more details.
 			}
 			
 			// update version number
-			update_option('ssba_version', '1.2');
+			update_option('ssba_version', '1.3');
 		}
 	}
 
@@ -170,6 +170,7 @@ GNU General Public License for more details.
 						echo '<option ' . ($arrSettings['ssba_image_set'] == 'metal' 		? 'selected="selected"' : NULL) . ' value="metal">Metal</option>';
 						echo '<option ' . ($arrSettings['ssba_image_set'] == 'pagepeel' 	? 'selected="selected"' : NULL) . ' value="pagepeel">Page Peel</option>';
 						echo '<option ' . ($arrSettings['ssba_image_set'] == 'plain' 		? 'selected="selected"' : NULL) . ' value="plain">Plain</option>';
+						echo '<option ' . ($arrSettings['ssba_image_set'] == 'retro' 		? 'selected="selected"' : NULL) . ' value="retro">Retro</option>';
 						echo '<option ' . ($arrSettings['ssba_image_set'] == 'ribbons' 		? 'selected="selected"' : NULL) . ' value="ribbons">Ribbons</option>';
 						echo '<option ' . ($arrSettings['ssba_image_set'] == 'simple' 		? 'selected="selected"' : NULL) . ' value="simple">Simple</option>';
 						echo '<option ' . ($arrSettings['ssba_image_set'] == 'somacro' 		? 'selected="selected"' : NULL) . ' value="somacro">Somacro</option>';
@@ -202,25 +203,37 @@ GNU General Public License for more details.
 				echo '</table>';
 			echo '</form>';
 			
-			// image set preview below
+			// image set previews and showcase link below
 			echo '<br />';
+			echo '<h2>Showcase</h2>';
+			echo '<p class="description">Enjoying the Simple Share Buttons Adder? Would you like to showcase your website? <a href="http://www.davidsneal.co.uk/wordpress/share-buttons-showcase" target="_blank">Leave a comment on this page</a>.</p>';
 			echo '<h2>Image Sets</h2>';
 			echo '<div id="ssba_preview">';
-			echo '<h3>Arbenta</h3>';
+			echo '<h3><a href="http://arbent.net/blog/social-media-circles-icon-set" target="_blank">Arbenta</a></h3>';
 			echo '<img src="' . WP_PLUGIN_URL . '/simple-share-buttons-adder/images/arbenta.png" style="padding: 5px" />';
-			echo '<h3>Default</h3>';
+			
+			echo '<h3><a href="http://365psd.com/day/3-52/" target="_blank">Default</a></h3>';
 			echo '<img src="' . WP_PLUGIN_URL . '/simple-share-buttons-adder/images/default.png" style="padding: 5px" />';
-			echo '<h3>Metal</h3>';
+			
+			echo '<h3><a href="http://creativenerds.co.uk/freebies/metal-social-media-free-icon-set/" target="_blank">Metal</a></h3>';
 			echo '<img src="' . WP_PLUGIN_URL . '/simple-share-buttons-adder/images/metal.png" style="padding: 5px" />';
-			echo '<h3>Page Peel</h3>';
+			
+			echo '<h3><a href="http://www.productivedreams.com/page-peel-free-social-iconset/" target="_blank">Page Peel</a></h3>';
 			echo '<img src="' . WP_PLUGIN_URL . '/simple-share-buttons-adder/images/pagepeel.png" style="padding: 5px" />';
-			echo '<h3>Plain</h3>';
+			
+			echo '<h3><a href="http://www.designbolts.com/2012/12/02/free-fat-social-media-icons-set-2013/" target="_blank">Plain</a></h3>';
 			echo '<img src="' . WP_PLUGIN_URL . '/simple-share-buttons-adder/images/plain.png" style="padding: 5px" />';
-			echo '<h3>Ribbons</h3>';
+			
+			echo '<h3><a href="http://www.designbolts.com/2012/09/09/20-free-retro-style-social-media-icons-set-256-x-256-png/" target="_blank">Retro</a></h3>';
+			echo '<img src="' . WP_PLUGIN_URL . '/simple-share-buttons-adder/images/retro.png" style="padding: 5px" />';
+			
+			echo '<h3><a href="http://www.designbolts.com/2012/09/19/beautiful-ribbon-social-media-icons-pack/" target="_blank">Ribbons</a></h3>';
 			echo '<img src="' . WP_PLUGIN_URL . '/simple-share-buttons-adder/images/ribbons.png" style="padding: 5px" />';
-			echo '<h3>Simple</h3>';
+			
+			echo '<h3><a href="http://simpleicons.org/" target="_blank">Simple</a></h3>';
 			echo '<img src="' . WP_PLUGIN_URL . '/simple-share-buttons-adder/images/simple.png" style="padding: 5px" />';
-			echo '<h3>Somacro</h3>';
+			
+			echo '<h3><a href="http://vervex.deviantart.com/art/Somacro-32-300DPI-Social-Media-Icons-267955425" target="_blank">Somacro</a></h3>';
 			echo '<img src="' . WP_PLUGIN_URL . '/simple-share-buttons-adder/images/somacro.png" style="padding: 5px" />';
 			echo '</div>';
 			echo '<p class="description">I hope you find this plugin useful. Should you come across any problems or have any suggestions, please <a href="http://www.davidsneal.co.uk/wordpress/simple-share-buttons-adder" target="_blank">leave a comment on this page</a>.</p>';
@@ -264,7 +277,7 @@ GNU General Public License for more details.
 		if ($arrSettings['ssba_facebook'] == Y) {
 		
 			// show facebook share button
-			$htmlShareButtons .= '<a href="http://www.facebook.com/sharer.php?u=' . $urlCurrentPage  . '">';
+			$htmlShareButtons .= '<a href="http://www.facebook.com/sharer.php?u=' . $urlCurrentPage  . '" target="_blank">';
 			$htmlShareButtons .= '<img src="' . WP_PLUGIN_URL . '/simple-share-buttons-adder/buttons/' . $arrSettings['ssba_image_set'] . '/facebook' . ($arrSettings['ssba_size'] == 'small' ? '-small' : NULL) . '.png" /></a>';
 		}
 		
@@ -272,7 +285,7 @@ GNU General Public License for more details.
 		if ($arrSettings['ssba_twitter'] == Y) {
 		
 			// show twitter share button
-			$htmlShareButtons .= '<a href="http://twitter.com/share?url=' . $urlCurrentPage  . '">';
+			$htmlShareButtons .= '<a href="http://twitter.com/share?url=' . $urlCurrentPage  . '" target="_blank">';
 			$htmlShareButtons .= '<img src="' . WP_PLUGIN_URL . '/simple-share-buttons-adder/buttons/' . $arrSettings['ssba_image_set'] . '/twitter' . ($arrSettings['ssba_size'] == 'small' ? '-small' : NULL) . '.png" /></a>';
 		}
 		
@@ -280,7 +293,7 @@ GNU General Public License for more details.
 		if ($arrSettings['ssba_google'] == Y) {
 		
 			// show google share button
-			$htmlShareButtons .= '<a href="https://plus.google.com/share?url=' . $urlCurrentPage  . '">';
+			$htmlShareButtons .= '<a href="https://plus.google.com/share?url=' . $urlCurrentPage  . '" target="_blank">';
 			$htmlShareButtons .= '<img src="' . WP_PLUGIN_URL . '/simple-share-buttons-adder/buttons/' . $arrSettings['ssba_image_set'] . '/google' . ($arrSettings['ssba_size'] == 'small' ? '-small' : NULL) . '.png" /></a>';
 		}
 		
@@ -288,7 +301,7 @@ GNU General Public License for more details.
 		if ($arrSettings['ssba_diggit'] == Y) {
 		
 			// show diggit share button
-			$htmlShareButtons .= '<a href="http://www.digg.com/submit?url=' . $urlCurrentPage  . '">';
+			$htmlShareButtons .= '<a href="http://www.digg.com/submit?url=' . $urlCurrentPage  . '" target="_blank">';
 			$htmlShareButtons .= '<img src="' . WP_PLUGIN_URL . '/simple-share-buttons-adder/buttons/' . $arrSettings['ssba_image_set'] . '/diggit' . ($arrSettings['ssba_size'] == 'small' ? '-small' : NULL) . '.png" /></a>';
 		}
 		
@@ -296,7 +309,7 @@ GNU General Public License for more details.
 		if ($arrSettings['ssba_linkedin'] == Y) {
 		
 			// show linkedin share button
-			$htmlShareButtons .= '<a href="http://www.linkedin.com/shareArticle?mini=true&url=' . $urlCurrentPage  . '">';
+			$htmlShareButtons .= '<a href="http://www.linkedin.com/shareArticle?mini=true&url=' . $urlCurrentPage  . '" target="_blank">';
 			$htmlShareButtons .= '<img src="' . WP_PLUGIN_URL . '/simple-share-buttons-adder/buttons/' . $arrSettings['ssba_image_set'] . '/linkedin' . ($arrSettings['ssba_size'] == 'small' ? '-small' : NULL) . '.png" /></a>';
 		}
 		
@@ -304,7 +317,7 @@ GNU General Public License for more details.
 		if ($arrSettings['ssba_pinterest'] == Y) {
 		
 			// show pinterest share button
-			$htmlShareButtons .= "<a href='javascript:void((function()%7Bvar%20e=document.createElement(&apos;script&apos;);e.setAttribute(&apos;type&apos;,&apos;text/javascript&apos;);e.setAttribute(&apos;charset&apos;,&apos;UTF-8&apos;);e.setAttribute(&apos;src&apos;,&apos;http://assets.pinterest.com/js/pinmarklet.js?r=&apos;+Math.random()*99999999);document.body.appendChild(e)%7D)());'>";
+			$htmlShareButtons .= "<a  target='_blank' href='javascript:void((function()%7Bvar%20e=document.createElement(&apos;script&apos;);e.setAttribute(&apos;type&apos;,&apos;text/javascript&apos;);e.setAttribute(&apos;charset&apos;,&apos;UTF-8&apos;);e.setAttribute(&apos;src&apos;,&apos;http://assets.pinterest.com/js/pinmarklet.js?r=&apos;+Math.random()*99999999);document.body.appendChild(e)%7D)());'>";
 			$htmlShareButtons .= '<img src="' . WP_PLUGIN_URL . '/simple-share-buttons-adder/buttons/' . $arrSettings['ssba_image_set'] . '/pinterest' . ($arrSettings['ssba_size'] == 'small' ? '-small' : NULL) . '.png" /></a>';
 		}
 		
@@ -312,7 +325,7 @@ GNU General Public License for more details.
 		if ($arrSettings['ssba_stumbleupon'] == Y) {
 		
 			// show stumbleupon share button
-			$htmlShareButtons .= '<a href="http://www.stumbleupon.com/submit?url=' . $urlCurrentPage  . '">';
+			$htmlShareButtons .= '<a href="http://www.stumbleupon.com/submit?url=' . $urlCurrentPage  . '" target="_blank">';
 			$htmlShareButtons .= '<img src="' . WP_PLUGIN_URL . '/simple-share-buttons-adder/buttons/' . $arrSettings['ssba_image_set'] . '/stumbleupon' . ($arrSettings['ssba_size'] == 'small' ? '-small' : NULL) . '.png" /></a>';
 		}
 		

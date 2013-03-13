@@ -4,7 +4,7 @@ Donate link: http://www.davidsneal.co.uk/contributions
 Tags: share buttons, facebook, twitter, google+, share, share links, stumble upon, linkedin, pinterest
 Requires at least: 3.0.1
 Tested up to: 3.5.1
-Stable tag: 1.2
+Stable tag: 1.3
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -39,8 +39,16 @@ SSBA has only just been released so I've not had any questions yet! I'll be happ
 7. This is an example of a set of Share Buttons you can add using Simple Share Buttons Adder.
 8. This is an example of a set of Share Buttons you can add using Simple Share Buttons Adder.
 9. This is an example of a set of Share Buttons you can add using Simple Share Buttons Adder.
+10. This is an example of a set of Share Buttons you can add using Simple Share Buttons Adder.
 
 == Changelog ==
+
+= 1.3 =
+* Apologies for all the updates recently, trying to get things just right!
+* By popular request, share links now open in a new window.
+* New 'Retro' image set added!
+* Added a link to a page to showcase your website.
+* Links added to the image sets for where the credit is due.
 
 = 1.2 =
 * 3 New button sets added!
