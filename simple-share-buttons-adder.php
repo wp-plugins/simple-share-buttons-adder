@@ -585,6 +585,7 @@ GNU General Public License for more details.
 													padding: ' . $arrSettings['ssba_padding'] . 'px;
 													border:  0;
 													box-shadow: 0;
+													display: ;
 												}
 								</style>';
 			

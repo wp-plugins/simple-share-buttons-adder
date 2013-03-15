@@ -16,6 +16,8 @@ The Simple Share Buttons Adder does exactly what it says on the tin – adds sha
 
 No hotlinking to another website to slow downloading or for tracking use, it's simple, as promised.
 
+You can even upload and use your own custom images if you wish!
+
 The Simple Share Buttons Adder utilises features that, as a WordPress user, you will be familiar with. A self-explanatory administration screen will have you showing your Share Buttons on your posts and pages in no time!
 
 <iframe width="420" height="315" src="http://www.youtube.com/embed/dkte9uu2o0M" frameborder="0" allowfullscreen></iframe>
