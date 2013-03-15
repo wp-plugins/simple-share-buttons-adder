@@ -4,7 +4,7 @@ Donate link: http://www.davidsneal.co.uk/contributions
 Tags: share buttons, facebook, twitter, google+, share, share links, stumble upon, linkedin, pinterest
 Requires at least: 3.0.1
 Tested up to: 3.5.1
-Stable tag: 1.3
+Stable tag: 1.4
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -17,6 +17,8 @@ The Simple Share Buttons Adder does exactly what it says on the tin – adds sha
 No hotlinking to another website to slow downloading or for tracking use, it's simple, as promised.
 
 The Simple Share Buttons Adder utilises features that, as a WordPress user, you will be familiar with. A self-explanatory administration screen will have you showing your Share Buttons on your posts and pages in no time!
+
+<iframe width="420" height="315" src="http://www.youtube.com/embed/dkte9uu2o0M" frameborder="0" allowfullscreen></iframe>
 
 == Installation ==
 
@@ -39,9 +41,12 @@ SSBA has only just been released so I've not had any questions yet! I'll be happ
 7. This is an example of a set of Share Buttons you can add using Simple Share Buttons Adder.
 8. This is an example of a set of Share Buttons you can add using Simple Share Buttons Adder.
 9. This is an example of a set of Share Buttons you can add using Simple Share Buttons Adder.
-10. This is an example of a set of Share Buttons you can add using Simple Share Buttons Adder.
 
 == Changelog ==
+
+= 1.4 =
+* You can now upload and use your own custom images!
+* Share Buttons can now also be shown before/after excerpts of posts when viewing categories, archives or your homepage!
 
 = 1.3 =
 * Apologies for all the updates recently, trying to get things just right!
