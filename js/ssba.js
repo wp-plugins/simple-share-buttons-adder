@@ -1,5 +1,7 @@
 ﻿jQuery(document).ready(function() {
 
+	jQuery('#ssba_font_color').wpColorPicker();
+
 	jQuery('#ssba_image_set').change(function(){
 	
 		if (jQuery("#ssba_image_set").val() == "custom" ) { 
@@ -10,6 +12,13 @@
 			jQuery("#ssba-custom-images").hide(800);
 			jQuery("#ssba-image-settings").delay(800).show(800);
         }
+	}); 
+	
+	jQuery('#custom_share_text').click(function(){
+
+			jQuery("#ssba-custom-text").show(800);
+
+
 	}); 
 
 	// ----- Image Uploads ------ //
@@ -24,6 +33,21 @@
 		window.send_to_editor = function(html) {
 			imgurl = jQuery('img',html).attr('src');
 			jQuery('#ssba_custom_diggit').val(imgurl);
+			tb_remove();
+		}
+	 return false;
+	});
+	
+	// email	
+	jQuery('#upload_email_button').click(function() {
+	 
+		formfield = jQuery('#upload_email_button').attr('name');
+		tb_show('', 'media-upload.php?type=image&amp;TB_iframe=true');
+	
+		// send image back to the text field
+		window.send_to_editor = function(html) {
+			imgurl = jQuery('img',html).attr('src');
+			jQuery('#ssba_custom_email').val(imgurl);
 			tb_remove();
 		}
 	 return false;
@@ -84,6 +108,21 @@
 		window.send_to_editor = function(html) {
 			imgurl = jQuery('img',html).attr('src');
 			jQuery('#ssba_custom_pinterest').val(imgurl);
+			tb_remove();
+		}
+	 return false;
+	});
+	
+	// reddit
+	jQuery('#upload_reddit_button').click(function() {
+	
+		formfield = jQuery('#upload_reddit_button').attr('name');
+		tb_show('', 'media-upload.php?type=image&amp;TB_iframe=true');
+
+		// send image back to the text field
+		window.send_to_editor = function(html) {
+			imgurl = jQuery('img',html).attr('src');
+			jQuery('#ssba_custom_reddit').val(imgurl);
 			tb_remove();
 		}
 	 return false;
