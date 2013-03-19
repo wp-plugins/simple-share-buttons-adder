@@ -4,7 +4,7 @@ Donate link: http://www.davidsneal.co.uk/contributions
 Tags: share buttons, facebook, twitter, google+, share, share links, stumble upon, linkedin, pinterest
 Requires at least: 3.0.1
 Tested up to: 3.5.1
-Stable tag: 1.5
+Stable tag: 1.6
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -45,6 +45,10 @@ SSBA has only just been released so I've not had any questions yet! I'll be happ
 9. This is an example of a set of Share Buttons you can add using Simple Share Buttons Adder.
 
 == Changelog ==
+
+= 1.6 =
+* A reluctant update, sorry!
+* A small fix for when clicking the Pinterest button when using Internet Explorer. Note that IE requires the same image to be set across all pages if an image is to be pinned, I do not wish to restrict users to this so have left it this way in hope that Microsoft will resolve things their end!
 
 = 1.5 =
 * You can now add some custom text if you wish!

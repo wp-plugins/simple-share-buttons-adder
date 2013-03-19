@@ -32,7 +32,7 @@ GNU General Public License for more details.
 	function ssba_activate() {
 		
 		// insert default options for ssba
-		add_option('ssba_version', 				'1.4');
+		add_option('ssba_version', 				'1.6');
 		add_option('ssba_image_set', 			'somacro');
 		add_option('ssba_size', 				'small');
 		add_option('ssba_pages',				'');
@@ -112,7 +112,7 @@ GNU General Public License for more details.
 		$arrSettings = get_ssba_settings();
 		
 		// check if not yet updated to 1.5
-		if ($arrSettings['ssba_version'] != '1.5') {
+		if ($arrSettings['ssba_version'] != '1.6') {
 		
 			// see if posts and pages were selected in previous version
 			if (isset($arrSettings['ssba_posts_or_pages']) && $arrSettings['ssba_posts_or_pages'] == 'both') {
@@ -178,7 +178,7 @@ GNU General Public License for more details.
 			}
 			
 			// update version number
-			update_option('ssba_version', '1.5');
+			update_option('ssba_version', '1.6');
 		}
 	}
 
@@ -655,7 +655,7 @@ GNU General Public License for more details.
 		if (($arrSettings['ssba_pinterest'] == 'Y' && $arrSettings['ssba_image_set'] != 'custom') || ($arrSettings['ssba_image_set'] == 'custom' && $arrSettings['ssba_custom_pinterest'] != '')) {
 		
 			// pinterest share link
-			$htmlShareButtons .= "<a  target='_blank' href='javascript:void((function()%7Bvar%20e=document.createElement(&apos;script&apos;);e.setAttribute(&apos;type&apos;,&apos;text/javascript&apos;);e.setAttribute(&apos;charset&apos;,&apos;UTF-8&apos;);e.setAttribute(&apos;src&apos;,&apos;http://assets.pinterest.com/js/pinmarklet.js?r=&apos;+Math.random()*99999999);document.body.appendChild(e)%7D)());'>";
+			$htmlShareButtons .= "<a href='javascript:void((function()%7Bvar%20e=document.createElement(&apos;script&apos;);e.setAttribute(&apos;type&apos;,&apos;text/javascript&apos;);e.setAttribute(&apos;charset&apos;,&apos;UTF-8&apos;);e.setAttribute(&apos;src&apos;,&apos;http://assets.pinterest.com/js/pinmarklet.js?r=&apos;+Math.random()*99999999);document.body.appendChild(e)%7D)());'>";
 			
 			// if image set is custom
 			if ($arrSettings['ssba_image_set'] == 'custom') {
