@@ -22,10 +22,6 @@ GNU General Public License for more details.
 */
 	// turn error reporting off
 	error_reporting(0);
-	
-	// includes
-	include_once(plugin_dir_path(__FILE__) . 'inc/ssba_buttons.php');
-	include_once(plugin_dir_path(__FILE__) . 'inc/ssba_upgrade.php');
 
 	// --------- INSTALLATION ------------ //
 
@@ -129,7 +125,6 @@ GNU General Public License for more details.
 		// check if not yet updated to 1.7
 		if ($arrSettings['ssba_version'] != '1.7') {
 		
-<<<<<<< .mine
 			// see if posts and pages were selected in previous version
 	if (isset($arrSettings['ssba_posts_or_pages']) && $arrSettings['ssba_posts_or_pages'] == 'both') {
 	
@@ -196,10 +191,6 @@ GNU General Public License for more details.
 	
 	// update version number
 	update_option('ssba_version', '1.7');		
-=======
-			// run the upgrade script
-			ssba_upgrade($arrSettings);			
->>>>>>> .r685857
 		}
 	}
 
@@ -520,7 +511,6 @@ GNU General Public License for more details.
 		return $arrSettings;	
 	}
 	
-<<<<<<< .mine
 	// get set share buttons
 	function get_share_buttons($arrSettings, $urlCurrentPage, $strPageTitle) {
 	
@@ -754,8 +744,6 @@ GNU General Public License for more details.
 		return $htmlShareButtons;
 	}
 	
-=======
->>>>>>> .r685857
 	// get and show share buttons
 	function show_share_buttons($content, $booShortCode = FALSE) {
 	
