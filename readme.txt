@@ -25,11 +25,9 @@ The Simple Share Buttons Adder utilises features that, as a WordPress user, you 
 1. Upload the 'simple-share-buttons-adder' folder to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
 3. Navigate to the SSBA Admin Panel via ‘Plugins’ -> ‘Share Buttons’ to change the settings as desired.
-4. Follow the instructions on <a href="http://www.davidsneal.co.uk/wordpress/simple-share-buttons-adder/" target="blank">this page</a> to customise your buttons to your liking.
-
-https://www.youtube.com/watch?v=dkte9uu2o0M
-
-<iframe width="560" height="315" src="http://www.youtube.com/embed/bwjITKYby1c" frameborder="0" allowfullscreen></iframe>
+4. Follow the instructions on <a href="http://www.davidsneal.co.uk/wordpress/simple-share-buttons-adder/" target="_blank">this page</a> to customise your buttons to your liking.
+5. Watch <a href="https://www.youtube.com/watch?v=dkte9uu2o0M" target="_blank">this video</a> to see how you can upload and use your own custom images.
+6. Watch <a href="https://www.youtube.com/watch?v=bwjITKYby1c" target="_blank">this video</a> to see how you can add custom CSS and share text.
 
 == Frequently Asked Questions ==
 
@@ -38,11 +36,11 @@ SSBA has only just been released so I've not had any questions yet! I'll be happ
 == Screenshots ==
 
 1. This is the SSBA Admin menu, where you can change the appearance and placement of your Share Buttons.
-2. This is an example of a set of Share Buttons you can add using Simple Share Buttons Adder.
-3. This is an example of a set of Share Buttons you can add using Simple Share Buttons Adder.
-4. This is an example of a set of Share Buttons you can add using Simple Share Buttons Adder.
-5. This is an example of a set of Share Buttons you can add using Simple Share Buttons Adder.
-6. This is an example of a set of Share Buttons you can add using Simple Share Buttons Adder.
+2. You can customise the share text that accompanies your buttons!
+3. Upload and use your own images!
+4. Simple Share Buttons Adder allows full control over your buttons' appearance, so you can make it match your site!
+5. Use shortcode to show your buttons somewhere, or hide them entirely from a page!
+6. Only include the share buttons that you wish to.
 7. This is an example of a set of Share Buttons you can add using Simple Share Buttons Adder.
 8. This is an example of a set of Share Buttons you can add using Simple Share Buttons Adder.
 9. This is an example of a set of Share Buttons you can add using Simple Share Buttons Adder.
