@@ -4,7 +4,7 @@ Donate link: http://www.davidsneal.co.uk/contributions
 Tags: share buttons, facebook, twitter, google+, share, share links, stumble upon, linkedin, pinterest
 Requires at least: 3.0.1
 Tested up to: 3.5.1
-Stable tag: 1.8
+Stable tag: 1.9
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -36,16 +36,23 @@ SSBA has only just been released so I've not had any questions yet! I'll be happ
 == Screenshots ==
 
 1. This is the SSBA Admin menu, where you can change the appearance and placement of your Share Buttons.
-2. You can customise the share text that accompanies your buttons!
-3. Upload and use your own images!
-4. Simple Share Buttons Adder allows full control over your buttons' appearance, so you can make it match your site!
-5. Use shortcode to show your buttons somewhere, or hide them entirely from a page!
-6. Only include the share buttons that you wish to.
+2. This is an example of a set of Share Buttons you can add using Simple Share Buttons Adder.
+3. This is an example of a set of Share Buttons you can add using Simple Share Buttons Adder.
+4. This is an example of a set of Share Buttons you can add using Simple Share Buttons Adder.
+5. This is an example of a set of Share Buttons you can add using Simple Share Buttons Adder.
+6. This is an example of a set of Share Buttons you can add using Simple Share Buttons Adder.
 7. This is an example of a set of Share Buttons you can add using Simple Share Buttons Adder.
 8. This is an example of a set of Share Buttons you can add using Simple Share Buttons Adder.
 9. This is an example of a set of Share Buttons you can add using Simple Share Buttons Adder.
 
 == Changelog ==
+
+= 1.9 =
+* Choose placement of your share text: above, left, right or below!
+* Hide share buttons on posts you wish to, using shortcode [ssba_hide]
+* [ssba] shortcode will now work for any page being displayed if used outside of the norm.
+* Images aligned with text by default.
+* Lots of great things coming in version 2.0! No more updates for a little while :)
 
 = 1.8 =
 * Much needed fix for 1.7, many apologies all!!

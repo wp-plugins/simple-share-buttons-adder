@@ -3,7 +3,7 @@
 Plugin Name: Simple Share Buttons Adder
 Plugin URI: http://www.davidsneal.co.uk/wordpress/simple-share-buttons-adder
 Description: A simple plugin that enables you to add share buttons to all of your posts and/or pages.
-Version: 1.8
+Version: 1.9
 Author: David S. Neal
 Author URI: http://www.davidsneal.co.uk/
 License: GPLv2
@@ -32,7 +32,7 @@ GNU General Public License for more details.
 	function ssba_activate() {
 		
 		// insert default options for ssba
-		add_option('ssba_version', 				'1.8');
+		add_option('ssba_version', 				'1.9');
 		add_option('ssba_image_set', 			'somacro');
 		add_option('ssba_size', 				'small');
 		add_option('ssba_pages',				'');
@@ -47,6 +47,7 @@ GNU General Public License for more details.
 		
 		// share text
 		add_option('ssba_share_text', 			'');
+		add_option('ssba_text_placement', 		'left');
 		add_option('ssba_font_color',			'');	
 		add_option('ssba_font_size',			'');
 		add_option('ssba_font_weight',			'');
@@ -122,75 +123,78 @@ GNU General Public License for more details.
 		// query the db for current ssba settings
 		$arrSettings = get_ssba_settings();
 		
-		// check if not yet updated to 1.8
-		if ($arrSettings['ssba_version'] != '1.8') {
+		// check if not yet updated to 1.9
+		if ($arrSettings['ssba_version'] != '1.9') {
 		
 			// see if posts and pages were selected in previous version
-	if (isset($arrSettings['ssba_posts_or_pages']) && $arrSettings['ssba_posts_or_pages'] == 'both') {
-	
-		// set posts and pages to Y
-		add_option('ssba_pages', 'Y');
-		add_option('ssba_posts', 'Y');
-	}
-	
-	// see if posts only was selected in previous version
-	else if (isset($arrSettings['ssba_posts_or_pages']) && $arrSettings['ssba_posts_or_pages'] == 'posts') {
-	
-		// set posts to Y pages to N
-		add_option('ssba_pages', '');
-		add_option('ssba_posts', 'Y');
-	}
-	
-	// see if pages only was selected in previous version
-	else if (isset($arrSettings['ssba_posts_or_pages']) && $arrSettings['ssba_posts_or_pages'] == 'pages') {
-	
-		// set pages to Y pages to N
-		add_option('ssba_pages', 'Y');
-		add_option('ssba_posts', '');
-	}
-	
-	// new custom styles option
-	add_option('ssba_custom_styles', 		'');
-	add_option('ssba_email_message', 		'');
-	
-	// new share text option
-	add_option('ssba_share_text', 			'');
-	add_option('ssba_font_color',			'');	
-	add_option('ssba_font_size',			'');
-	add_option('ssba_font_weight',			'');
-	
-	// add new placement options
-	add_option('ssba_cats_archs',			'');
-	add_option('ssba_homepage',				'');
-	
-	// add new buttons
-	add_option('ssba_email', 				'');
-	add_option('ssba_reddit', 				'');
+			if (isset($arrSettings['ssba_posts_or_pages']) && $arrSettings['ssba_posts_or_pages'] == 'both') {
+			
+				// set posts and pages to Y
+				add_option('ssba_pages', 'Y');
+				add_option('ssba_posts', 'Y');
+			}
+			
+			// see if posts only was selected in previous version
+			else if (isset($arrSettings['ssba_posts_or_pages']) && $arrSettings['ssba_posts_or_pages'] == 'posts') {
+			
+				// set posts to Y pages to N
+				add_option('ssba_pages', '');
+				add_option('ssba_posts', 'Y');
+			}
+			
+			// see if pages only was selected in previous version
+			else if (isset($arrSettings['ssba_posts_or_pages']) && $arrSettings['ssba_posts_or_pages'] == 'pages') {
+			
+				// set pages to Y pages to N
+				add_option('ssba_pages', 'Y');
+				add_option('ssba_posts', '');
+			}
+			
+			// new custom styles option
+			add_option('ssba_custom_styles', 		'');
+			add_option('ssba_email_message', 		'');
+			
+			// new share text option
+			add_option('ssba_share_text', 			'');
+			add_option('ssba_font_color',			'');	
+			add_option('ssba_font_size',			'');
+			add_option('ssba_font_weight',			'');
+			
+			// add new placement options
+			add_option('ssba_cats_archs',			'');
+			add_option('ssba_homepage',				'');
+			
+			// add new buttons
+			add_option('ssba_email', 				'');
+			add_option('ssba_reddit', 				'');
 
-	// add custom image options
-	add_option('ssba_custom_email', 		'');
-	add_option('ssba_custom_google', 		'');
-	add_option('ssba_custom_facebook', 		'');
-	add_option('ssba_custom_twitter', 		'');
-	add_option('ssba_custom_diggit', 		'');
-	add_option('ssba_custom_linkedin', 	  	'');
-	add_option('ssba_custom_reddit', 		'');
-	add_option('ssba_custom_stumbleupon', 	'');
-	add_option('ssba_custom_pinterest', 	'');
+			// add custom image options
+			add_option('ssba_custom_email', 		'');
+			add_option('ssba_custom_google', 		'');
+			add_option('ssba_custom_facebook', 		'');
+			add_option('ssba_custom_twitter', 		'');
+			add_option('ssba_custom_diggit', 		'');
+			add_option('ssba_custom_linkedin', 	  	'');
+			add_option('ssba_custom_reddit', 		'');
+			add_option('ssba_custom_stumbleupon', 	'');
+			add_option('ssba_custom_pinterest', 	'');
 
-	// check if using 1.0
-	if ($arrSettings['ssba_version'] == '1.0') {
-	
-		// add options that were new for 1.1
-		// NOTE: 1.1 and above will have these already
-		add_option('ssba_size', 		'small');
-		add_option('ssba_linkedin', 	'');
-		add_option('ssba_stumbleupon', 	'');
-		add_option('ssba_pinterest', 	'');
-	}
-	
-	// update version number
-	update_option('ssba_version', '1.8');		
+			// check if using 1.0
+			if ($arrSettings['ssba_version'] == '1.0') {
+			
+				// add options that were new for 1.1
+				// NOTE: 1.1 and above will have these already
+				add_option('ssba_size', 		'small');
+				add_option('ssba_linkedin', 	'');
+				add_option('ssba_stumbleupon', 	'');
+				add_option('ssba_pinterest', 	'');
+			}
+			
+			// add text placement option, default to left
+			add_option('ssba_text_placement', 		'left');
+			
+			// update version number
+			update_option('ssba_version', '1.9');		
 		}
 	}
 
@@ -223,7 +227,8 @@ GNU General Public License for more details.
 			update_option('ssba_email_message', 		$_POST['ssba_email_message']);
 
 			// text
-			update_option('ssba_share_text', 			$_POST['ssba_share_text']);	
+			update_option('ssba_share_text', 			stripslashes_deep($_POST['ssba_share_text']));	
+			update_option('ssba_text_placement', 		$_POST['ssba_text_placement']);	
 			update_option('ssba_font_color', 			$_POST['ssba_font_color']);	
 			update_option('ssba_font_size', 			$_POST['ssba_font_size']);	
 			update_option('ssba_font_weight', 			$_POST['ssba_font_weight']);	
@@ -430,6 +435,16 @@ GNU General Public License for more details.
 						echo '<p class="description">Add some custom text by your share buttons</p></td>';
 					echo '</tr>';
 					echo '<tr valign="top">';
+						echo '<th scope="row" style="width: 120px;"><label for="ssba_text_placement">Text placement:&nbsp;</label></th>';
+						echo '<td><select name="ssba_text_placement" id="ssba_text_placement">';
+						echo '<option value="">Please select...</option>';
+						echo '<option ' . ($arrSettings['ssba_text_placement'] == 'above'   ? 'selected="selected"' : NULL) . ' value="above">Above</option>';
+						echo '<option ' . ($arrSettings['ssba_text_placement'] == 'left' 	? 'selected="selected"' : NULL) . ' value="left">Left</option>';
+						echo '<option ' . ($arrSettings['ssba_text_placement'] == 'right' 	? 'selected="selected"' : NULL) . ' value="right">Right</option>';
+						echo '<option ' . ($arrSettings['ssba_text_placement'] == 'below' 	? 'selected="selected"' : NULL) . ' value="below">Below</option>';
+						echo '</select>';
+					echo '</tr>';
+					echo '<tr valign="top">';
 						echo '<th scope="row" style="width: 120px;"></th>';
 						echo '<td>';
 						echo '<input id="custom_share_text" class="button" type="button" value="Styles" /></td>';
@@ -516,13 +531,6 @@ GNU General Public License for more details.
 	
 		// variables
 		$htmlShareButtons = '';
-		
-		// add custom text if set
-		if (isset($arrSettings['ssba_share_text'])) {
-		
-			// share text
-			$htmlShareButtons .= $arrSettings['ssba_share_text'];
-		}
 		
 		// check if facebook is set to Y or (image set is custom and a facebook image has been uploaded)
 		if (($arrSettings['ssba_facebook'] == 'Y' && $arrSettings['ssba_image_set'] != 'custom') || ($arrSettings['ssba_image_set'] == 'custom' && $arrSettings['ssba_custom_facebook'] != '')) {
@@ -780,6 +788,7 @@ GNU General Public License for more details.
 											border:  0;
 											box-shadow: 0;
 											display: inline;
+											vertical-align: middle;
 										}
 										#ssba		
 										{
@@ -791,10 +800,53 @@ GNU General Public License for more details.
 			
 			$htmlShareButtons .= '</style>';
 			
-			// ssba buttons!!
+			// ssba div
 			$htmlShareButtons.= '<div id="ssba">';
+			
+			// center if set so
 			$htmlShareButtons.= ($arrSettings['ssba_align'] == 'center' ? '<center>' : NULL);
-			$htmlShareButtons.= get_share_buttons($arrSettings, get_permalink($post->ID), get_the_title($post->ID));
+			
+			// add custom text if set and set to placement above or left
+			if ((isset($arrSettings['ssba_share_text'])) && ($arrSettings['ssba_text_placement'] == 'above' || $arrSettings['ssba_text_placement'] == 'left')) {
+			
+				// share text
+				$htmlShareButtons .= $arrSettings['ssba_share_text'];
+				
+				// add a line break if set to above
+				($arrSettings['ssba_text_placement'] == 'above' ? $htmlShareButtons .= '<br/>' : NULL);
+			}
+			
+			// if running standard
+			if ($booShortCode == FALSE) {
+			
+				// use wordpress functions for page/post details
+				$urlCurrentPage = get_permalink($post->ID);	
+				$strPageTitle = get_the_title($post->ID);
+			}
+			
+			// if using shortcode
+			else if ($booShortCode == TRUE) {
+			
+				// get page name and url from functions
+				$urlCurrentPage = get_current_url();
+				$strPageTitle = $_SERVER["SERVER_NAME"];
+			}		
+			
+			// the buttons!
+			$htmlShareButtons.= get_share_buttons($arrSettings, $urlCurrentPage, $strPageTitle);
+			
+			// add custom text if set and set to placement right or below
+			if ((isset($arrSettings['ssba_share_text'])) && ($arrSettings['ssba_text_placement'] == 'right' || $arrSettings['ssba_text_placement'] =='below')) {
+			
+				// add a line break if set to above
+				($arrSettings['ssba_text_placement'] == 'below' ? $htmlShareButtons .= '<br/>' : NULL);
+				
+				// share text
+				$htmlShareButtons .= $arrSettings['ssba_share_text'];
+				
+			}
+			
+			// close center if set
 			$htmlShareButtons.= ($arrSettings['ssba_align'] == 'center' ? '</center>' : NULL);
 			$htmlShareButtons.= '</div>';
 			
@@ -844,7 +896,53 @@ GNU General Public License for more details.
 		return $htmlShareButtons;
 	}
 	
-	// register shortcode [ssba]
-	add_shortcode( 'ssba', 'ssba_buttons' );	
+	// shortcode for hiding buttons
+	function ssba_hide($content){
+	
+		// add display none to the ssba div
+		$htmlShareButtons .= 	'<style type="text/css">
+									#ssba		
+										{ 	
+											display: none !important;
+										}
+								</style>' . $content;
+	
+		//return buttons
+		return $htmlShareButtons;
+	}
+	
+	// get URL function
+	function get_current_url() {
+	
+		// add http
+		$urlCurrentPage = 'http';
+		
+		// add s to http if required
+		if ($_SERVER["HTTPS"] == "on") {$urlCurrentPage .= "s";}
+		
+		// add colon and forward slashes
+		$urlCurrentPage .= "://";
+		
+		// check if port is not 80
+		if ($_SERVER["SERVER_PORT"] != "80") {
+		
+			// include port if needed
+			$urlCurrentPage .= $_SERVER["SERVER_NAME"].":".$_SERVER["SERVER_PORT"].$_SERVER["REQUEST_URI"];
+			
+		} 
+		
+		// else if on port 80
+		else {
+		
+			// don't include port in url
+			$urlCurrentPage .= $_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
+		}
+		
+		return $urlCurrentPage;
+	}
+	
+	// register shortcode [ssba] to show [ssba_hide]
+	add_shortcode( 'ssba', 		'ssba_buttons' );	
+	add_shortcode( 'ssba_hide', 'ssba_hide' );	
 	
 ?>
