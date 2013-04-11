@@ -1,161 +1,148 @@
 ﻿jQuery(document).ready(function() {
 
-	jQuery('#ssba_font_color').wpColorPicker();
+	//------- INCLUDE LIST ----------//
 
+	// add drag and sort functions to include table
+	jQuery(function() {
+		jQuery( "#sortable1, #sortable2" ).sortable({
+			connectWith: ".connectedSortable"
+		}).disableSelection();
+	  });
+	 
+	// extract and add include list to hidden field
+	jQuery('#ssba_selected_buttons').val(jQuery('#sortable2 li').map(function() {
+	// For each <li> in the list, return its inner text and let .map()
+	//  build an array of those values.
+	return jQuery(this).attr('id');
+	}).get());
+	  
+	// after a change, extract and add include list to hidden field
+	jQuery('.ssba-include-list').mouseout(function() {
+		jQuery('#ssba_selected_buttons').val(jQuery('#sortable2 li').map(function() {
+		// For each <li> in the list, return its inner text and let .map()
+		//  build an array of those values.
+		return jQuery(this).attr('id');
+		}).get());
+	});
+	  
+
+	
+	//------- TABS -----------//
+	
+	// basic tab
+	jQuery('#ssba_tab_basic').click(function(){
+	
+		// hide other tabs in case needed
+		jQuery("#ssba_settings_styling").hide();
+		jQuery("#ssba_settings_advanced").hide();
+		
+		// remove selected classes if needed
+		jQuery('#ssba_tab_styling').removeClass('ssba-selected-tab');
+		jQuery('#ssba_tab_advanced').removeClass('ssba-selected-tab');
+		
+		// show chosen tab
+		jQuery("#ssba_settings_basic").show();
+		
+		// add selected tab class
+		jQuery('#ssba_tab_basic').addClass('ssba-selected-tab');
+	}); 
+	
+	// styling tab
+	jQuery('#ssba_tab_styling').click(function(){
+	
+		// hide other tabs
+		jQuery("#ssba_settings_basic").hide();
+		jQuery("#ssba_settings_advanced").hide();
+		
+		// remove selected classes if needed
+		jQuery('#ssba_tab_basic').removeClass('ssba-selected-tab');
+		jQuery('#ssba_tab_advanced').removeClass('ssba-selected-tab');
+		
+		// show chosen tab
+		jQuery("#ssba_settings_styling").show();
+		
+		// add selected tab class
+		jQuery('#ssba_tab_styling').addClass('ssba-selected-tab');
+	}); 
+	
+	// advanced tab
+	jQuery('#ssba_tab_advanced').click(function(){
+	
+		// hide other tabs
+		jQuery("#ssba_settings_basic").hide();
+		jQuery("#ssba_settings_styling").hide();
+		
+		// remove selected classes if needed
+		jQuery('#ssba_tab_basic').removeClass('ssba-selected-tab');
+		jQuery('#ssba_tab_styling').removeClass('ssba-selected-tab');
+		
+		// show chosen tab
+		jQuery("#ssba_settings_advanced").show();
+		
+		// add selected tab class
+		jQuery('#ssba_tab_advanced').addClass('ssba-selected-tab');
+	}); 
+	
+	// color picker
+	jQuery('#ssba_font_color').wpColorPicker();
+	
+	// when custom style button is clicked
+	jQuery('#ssba_button_custom_styles').click(function(){
+	
+		// hide show custom css and hide normal settings
+		jQuery("#ssba_option_custom_css").show(600);
+		jQuery("#ssba_normal_settings").hide(600);
+	}); 
+	
+	// when assisted CSS button is clicked
+	jQuery('#ssba_button_normal_settings').click(function(){
+	
+		// hide show custom css and hide normal settings
+		jQuery("#ssba_normal_settings").show(600);
+		jQuery("#ssba_option_custom_css").hide(600);
+		
+		// clear the contents of the custom css field
+		// this must be done so that the custom styles don't
+		// continue to overwrite other styles
+		jQuery('#ssba_custom_styles').val('');
+	}); 
+	
+	
+	// when changing image sets
 	jQuery('#ssba_image_set').change(function(){
 	
 		if (jQuery("#ssba_image_set").val() == "custom" ) { 
-			jQuery("#ssba-custom-images").delay(800).show(800);
-			jQuery("#ssba-image-settings").hide(800);
+			jQuery("#ssba-custom-images").show(600);
         }
         if(jQuery("#ssba_image_set").val() != "custom" ) { 
-			jQuery("#ssba-custom-images").hide(800);
-			jQuery("#ssba-image-settings").delay(800).show(800);
+			jQuery("#ssba-custom-images").hide(600);
         }
 	}); 
+
+	// ----- IMAGE UPLOADS ------ //	 
+
+	// custom image upload
+	jQuery('.customUpload').click(function() {
 	
-	jQuery('#custom_share_text').click(function(){
-
-			jQuery("#ssba-custom-text").show(800);
-
-
-	}); 
-
-	// ----- Image Uploads ------ //
-	
-	// diggit	
-	jQuery('#upload_diggit_button').click(function() {
-	 
-		formfield = jQuery('#upload_diggit_button').attr('name');
-		tb_show('', 'media-upload.php?type=image&amp;TB_iframe=true');
-	
+		// get custom data field for the text field to return the url to
+		var strInputID = jQuery(this).data('ssba-input');
+		
+		// simple function to change button text after loading window
+		ssba_tb_interval = setInterval( function() { 
+			jQuery('#TB_iframeContent').contents().find('.savesend .button').val('Use this image'); 
+		}, 200 );
+		
+		// load thickbox window with upload options
+		tb_show('Upload Image', 'media-upload.php?type=image&amp;TB_iframe=true');
+		
 		// send image back to the text field
 		window.send_to_editor = function(html) {
 			imgurl = jQuery('img',html).attr('src');
-			jQuery('#ssba_custom_diggit').val(imgurl);
+			jQuery('#' + strInputID).val(imgurl);
 			tb_remove();
-		}
-	 return false;
-	});
-	
-	// email	
-	jQuery('#upload_email_button').click(function() {
-	 
-		formfield = jQuery('#upload_email_button').attr('name');
-		tb_show('', 'media-upload.php?type=image&amp;TB_iframe=true');
-	
-		// send image back to the text field
-		window.send_to_editor = function(html) {
-			imgurl = jQuery('img',html).attr('src');
-			jQuery('#ssba_custom_email').val(imgurl);
-			tb_remove();
-		}
-	 return false;
-	});
-
-	// facebook
-	jQuery('#upload_facebook_button').click(function() {
-	 
-		formfield = jQuery('#upload_facebook_button').attr('name');
-		tb_show('', 'media-upload.php?type=image&amp;TB_iframe=true');
-	 
-		// send image back to the text field
-		window.send_to_editor = function(html) {
-			imgurl = jQuery('img',html).attr('src');
-			jQuery('#ssba_custom_facebook').val(imgurl);
-			tb_remove();
-		}
-	 return false;
-	});
-
-	// google
-	jQuery('#upload_google_button').click(function() {
-	
-		formfield = jQuery('#upload_google_button').attr('name');
-		tb_show('', 'media-upload.php?type=image&amp;TB_iframe=true');
-	
-		// send image back to the text field
-		window.send_to_editor = function(html) {
-			imgurl = jQuery('img',html).attr('src');
-			jQuery('#ssba_custom_google').val(imgurl);
-			tb_remove();
-		}
-	 return false;
-	});
-
-	// linkedin	
-	jQuery('#upload_linkedin_button').click(function() {
-	
-		formfield = jQuery('#upload_linkedin_button').attr('name');
-		tb_show('', 'media-upload.php?type=image&amp;TB_iframe=true');
-	 
-		// send image back to the text field
-		window.send_to_editor = function(html) {
-			imgurl = jQuery('img',html).attr('src');
-			jQuery('#ssba_custom_linkedin').val(imgurl);
-			tb_remove();
-		}
-	 return false;
-	});
-
-	// pinterest
-	jQuery('#upload_pinterest_button').click(function() {
-	
-		formfield = jQuery('#upload_pinterest_button').attr('name');
-		tb_show('', 'media-upload.php?type=image&amp;TB_iframe=true');
-
-		// send image back to the text field
-		window.send_to_editor = function(html) {
-			imgurl = jQuery('img',html).attr('src');
-			jQuery('#ssba_custom_pinterest').val(imgurl);
-			tb_remove();
-		}
-	 return false;
-	});
-	
-	// reddit
-	jQuery('#upload_reddit_button').click(function() {
-	
-		formfield = jQuery('#upload_reddit_button').attr('name');
-		tb_show('', 'media-upload.php?type=image&amp;TB_iframe=true');
-
-		// send image back to the text field
-		window.send_to_editor = function(html) {
-			imgurl = jQuery('img',html).attr('src');
-			jQuery('#ssba_custom_reddit').val(imgurl);
-			tb_remove();
-		}
-	 return false;
-	});
-
-	// stumbleupon
-	jQuery('#upload_stumbleupon_button').click(function() {
-	
-		formfield = jQuery('#upload_stumbleupon_button').attr('name');
-		tb_show('', 'media-upload.php?type=image&amp;TB_iframe=true');
-	 
-		// send image back to the text field
-		window.send_to_editor = function(html) {
-			imgurl = jQuery('img',html).attr('src');
-			jQuery('#ssba_custom_stumbleupon').val(imgurl);
-			tb_remove();
-		}
-	 return false;
-	});
-
-	// twitter
-	jQuery('#upload_twitter_button').click(function() {
-	
-		formfield = jQuery('#upload_twitter_button').attr('name');
-		tb_show('', 'media-upload.php?type=image&amp;TB_iframe=true');
-	 
-		// send image back to the text field
-		window.send_to_editor = function(html) {
-			imgurl = jQuery('img',html).attr('src');
-			jQuery('#ssba_custom_twitter').val(imgurl);
-			tb_remove();
-		}
-	 return false;
+		};
+		
+		return false;
 	});
 
 });

@@ -4,7 +4,7 @@ Donate link: http://www.davidsneal.co.uk/contributions
 Tags: share buttons, facebook, twitter, google+, share, share links, stumble upon, linkedin, pinterest
 Requires at least: 3.0.1
 Tested up to: 3.5.1
-Stable tag: 1.9
+Stable tag: 2.0
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -31,14 +31,16 @@ The Simple Share Buttons Adder utilises features that, as a WordPress user, you 
 
 == Frequently Asked Questions ==
 
-SSBA has only just been released so I've not had any questions yet! I'll be happy to answer any that come up!
+Please visit the <a href="http://www.simplesharebuttons.com/forums/forum/wordpress-forum/">WordPress Support Forum</a> for any assistance you may need.
+
+A step by step guide on how to configure this plugin can be found <a href="http://www.simplesharebuttons.com/wordpress/wordpress-configuration/">here</a>.
 
 == Screenshots ==
 
 1. This is the SSBA Admin menu, where you can change the appearance and placement of your Share Buttons.
-2. This is an example of a set of Share Buttons you can add using Simple Share Buttons Adder.
-3. This is an example of a set of Share Buttons you can add using Simple Share Buttons Adder.
-4. This is an example of a set of Share Buttons you can add using Simple Share Buttons Adder.
+2. Upload and use your own custom images.
+3. Drag, drop and reorder the buttons you wish to include.
+4. Show your buttons using [ssba] or hide them entirely from a page using [ssba_hide].
 5. This is an example of a set of Share Buttons you can add using Simple Share Buttons Adder.
 6. This is an example of a set of Share Buttons you can add using Simple Share Buttons Adder.
 7. This is an example of a set of Share Buttons you can add using Simple Share Buttons Adder.
@@ -46,6 +48,19 @@ SSBA has only just been released so I've not had any questions yet! I'll be happ
 9. This is an example of a set of Share Buttons you can add using Simple Share Buttons Adder.
 
 == Changelog ==
+
+= 2.0 =
+* Note: this update will require a moment's configuration to reinstate your share buttons
+* The settings link has moved - 'Settings' -> 'Share Buttons'
+* Drag and drop to reorder the buttons how you like!
+* Brand new redesign of the admin panel!
+* New support forums launched!
+* Resize images by pixels!
+* A choice of fonts for your share text!
+* Code and functions optimised!
+* More lightweight on database use!
+* Title attributes added to all buttons!
+* Set links to open in the same or new window!
 
 = 1.9 =
 * Choose placement of your share text: above, left, right or below!

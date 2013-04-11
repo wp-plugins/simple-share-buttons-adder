@@ -1,0 +1,24 @@
+﻿a.ssba_tooptip {outline:none; text-decoration: none !important; color: inherit !important;}
+a.ssba_tooptip strong {line-height:12px;}
+a.ssba_tooptip:hover {text-decoration:none; color: inherit !important;} 
+a.ssba_tooptip span {
+	z-index:10;display:none; padding:10px;
+    margin-top:-30px; margin-left:28px; line-height:16px;
+}
+a.ssba_tooptip:hover span{
+	font-size: 14px;
+    display:inline; position:absolute; color:#fff;
+    border:1px solid #515953; background:#42a7e2;}
+.callout {z-index:20;position:absolute;top:30px;border:0;left:-12px;}
+    
+/*CSS3 extras*/
+a.ssba_tooptip span
+{
+    border-radius:4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+        
+    -moz-box-shadow: 5px 5px 8px #CCC;
+    -webkit-box-shadow: 5px 5px 8px #CCC;
+    box-shadow: 5px 5px 8px #CCC;
+}

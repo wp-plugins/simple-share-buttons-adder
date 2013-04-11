@@ -1,8 +1,114 @@
 ﻿<?php
 
-function ssba_upgrade($arrSettings) {
+function upgrade_ssba($arrSettings) {
 
+	// see if posts and pages were selected in previous versions
+	if (isset($arrSettings['ssba_posts_or_pages']) && $arrSettings['ssba_posts_or_pages'] == 'both') {
+
+		// set posts and pages to Y
+		add_option('ssba_pages', 'Y');
+		add_option('ssba_posts', 'Y');
+	}
+
+	// see if posts only was selected in previous versions
+	else if (isset($arrSettings['ssba_posts_or_pages']) && $arrSettings['ssba_posts_or_pages'] == 'posts') {
+
+		// set posts to Y pages to N
+		add_option('ssba_pages', '');
+		add_option('ssba_posts', 'Y');
+	}
+
+	// see if pages only was selected in previous versions
+	else if (isset($arrSettings['ssba_posts_or_pages']) && $arrSettings['ssba_posts_or_pages'] == 'pages') {
+
+		// set pages to Y pages to N
+		add_option('ssba_pages', 'Y');
+		add_option('ssba_posts', '');
+	}
 	
-}
+	// if users had images set to small in previous versions (pre 2.0)
+	if ($arrSettings['ssba_size'] == 'small') {
+	
+		// set image size to new pixel format 35px
+		update_option('ssba_size', '35');
+	} 
+	
+	// if users had images set to medium in previous versions (pre 2.0)
+	else if ($arrSettings['ssba_size'] == 'medium') { 
+	
+		// set image size to new pixel format 45px
+		update_option('ssba_size', '45');
+	}
+	
+	else { 
+	
+		// do nothing, user will be installing 1.9+ 
+	}
+	
+	// new include option
+	add_option('ssba_selected_buttons', 	'');
+	
+	// new custom styles option
+	add_option('ssba_custom_styles', 		'');
+	add_option('ssba_email_message', 		'');
 
+	// new share text option
+	add_option('ssba_share_text', 			'');
+	add_option('ssba_font_family', 			'');
+	add_option('ssba_font_color',			'');	
+	add_option('ssba_font_size',			'');
+	add_option('ssba_font_weight',			'');
+
+	// add new placement options
+	add_option('ssba_cats_archs',			'');
+	add_option('ssba_homepage',				'');
+
+	// add new buttons
+	add_option('ssba_email', 				'');
+	add_option('ssba_reddit', 				'');
+
+	// add custom image options
+	add_option('ssba_custom_email', 		'');
+	add_option('ssba_custom_google', 		'');
+	add_option('ssba_custom_facebook', 		'');
+	add_option('ssba_custom_twitter', 		'');
+	add_option('ssba_custom_diggit', 		'');
+	add_option('ssba_custom_linkedin', 	  	'');
+	add_option('ssba_custom_reddit', 		'');
+	add_option('ssba_custom_stumbleupon', 	'');
+	add_option('ssba_custom_pinterest', 	'');
+	
+	// include
+	delete_option('ssba_email', 			'');
+	delete_option('ssba_google', 			'');
+	delete_option('ssba_facebook', 			'');
+	delete_option('ssba_twitter', 			'');
+	delete_option('ssba_diggit', 			'');
+	delete_option('ssba_linkedin', 			'');
+	delete_option('ssba_reddit', 			'');
+	delete_option('ssba_stumbleupon', 		'');
+	delete_option('ssba_pinterest', 		'');
+	
+	// new options
+	add_option('ssba_share_new_window', 	'Y');
+	add_option('ssba_link_to_ssb', 			'Y');
+
+	// check if using 1.0
+	if ($arrSettings['ssba_version'] == '1.0') {
+
+		// add options that were new for 1.1
+		// NOTE: 1.1 and above will have these already
+		add_option('ssba_size', 		'35');
+		add_option('ssba_linkedin', 	'');
+		add_option('ssba_stumbleupon', 	'');
+		add_option('ssba_pinterest', 	'');
+	}
+
+	// add text placement option, default to left
+	add_option('ssba_text_placement', 	'left');
+
+	// update version number
+	update_option('ssba_version', '2.0');
+}
+	
 ?>
