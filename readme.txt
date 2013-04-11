@@ -25,9 +25,10 @@ The Simple Share Buttons Adder utilises features that, as a WordPress user, you 
 1. Upload the 'simple-share-buttons-adder' folder to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
 3. Navigate to the SSBA Admin Panel via ‘Plugins’ -> ‘Share Buttons’ to change the settings as desired.
-4. Follow the instructions on <a href="http://www.davidsneal.co.uk/wordpress/simple-share-buttons-adder/" target="_blank">this page</a> to customise your buttons to your liking.
-5. Watch <a href="https://www.youtube.com/watch?v=dkte9uu2o0M" target="_blank">this video</a> to see how you can upload and use your own custom images.
-6. Watch <a href="https://www.youtube.com/watch?v=bwjITKYby1c" target="_blank">this video</a> to see how you can add custom CSS and share text.
+4. Follow the instructions on <a href="http://www.simplesharebuttons.com/wordpress/wordpress-configuration/" target="_blank">this page</a> to customise your buttons to your liking.
+5. Watch <a href="http://www.youtube.com/watch?v=p03B4C3QMzs" target="_blank">this video</a> to learn how to configure your buttons if you prefer.
+6. Watch <a href="https://www.youtube.com/watch?v=dkte9uu2o0M" target="_blank">this video</a> to see how you can upload and use your own custom images.
+
 
 == Frequently Asked Questions ==
 
