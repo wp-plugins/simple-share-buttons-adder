@@ -168,13 +168,13 @@ function ssba_admin_panel($arrSettings, $htmlSettingsSaved) {
 						$htmlShareButtonsForm .= '<th scope="row" style="width: 120px !important;"><label for="ssba_choices">Include:</label></th>';
 						$htmlShareButtonsForm .= '<td class="ssba-include-list available">';
 							$htmlShareButtonsForm .= '<span class="include-heading">Available</span>';
-							$htmlShareButtonsForm .= '<center><ul id="sortable1" class="connectedSortable">';
+							$htmlShareButtonsForm .= '<center><ul id="ssbasort1" class="connectedSortable">';
 							 $htmlShareButtonsForm .= getAvailableSSBA($arrSettings['ssba_selected_buttons']);
 							$htmlShareButtonsForm .= '</ul></center>';
 						$htmlShareButtonsForm .= '</td>';
 						$htmlShareButtonsForm .= '<td class="ssba-include-list chosen">';
 							$htmlShareButtonsForm .= '<span class="include-heading">Selected</span>';
-							$htmlShareButtonsForm .= '<center><ul id="sortable2" class="connectedSortable">';
+							$htmlShareButtonsForm .= '<center><ul id="ssbasort2" class="connectedSortable">';
 							$htmlShareButtonsForm .= getSelectedSSBA($arrSettings['ssba_selected_buttons']);
 							$htmlShareButtonsForm .= '</ul></center>';
 						$htmlShareButtonsForm .= '</td>';
@@ -285,7 +285,7 @@ function ssba_admin_panel($arrSettings, $htmlSettingsSaved) {
 														width: 35px;</br>
 														padding: 6px;</br>
 														border:  0;</br>
-														box-shadow: 0;</br>
+														box-shadow: none !important;</br>
 														display: inline;</br>
 														vertical-align: middle;</br>
 													}</br></br>

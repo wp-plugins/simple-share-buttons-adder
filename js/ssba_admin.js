@@ -4,13 +4,13 @@
 
 	// add drag and sort functions to include table
 	jQuery(function() {
-		jQuery( "#sortable1, #sortable2" ).sortable({
+		jQuery( "#ssbasort1, #ssbasort2" ).sortable({
 			connectWith: ".connectedSortable"
 		}).disableSelection();
 	  });
 	 
 	// extract and add include list to hidden field
-	jQuery('#ssba_selected_buttons').val(jQuery('#sortable2 li').map(function() {
+	jQuery('#ssba_selected_buttons').val(jQuery('#ssbasort2 li').map(function() {
 	// For each <li> in the list, return its inner text and let .map()
 	//  build an array of those values.
 	return jQuery(this).attr('id');
@@ -18,7 +18,7 @@
 	  
 	// after a change, extract and add include list to hidden field
 	jQuery('.ssba-include-list').mouseout(function() {
-		jQuery('#ssba_selected_buttons').val(jQuery('#sortable2 li').map(function() {
+		jQuery('#ssba_selected_buttons').val(jQuery('#ssbasort2 li').map(function() {
 		// For each <li> in the list, return its inner text and let .map()
 		//  build an array of those values.
 		return jQuery(this).attr('id');

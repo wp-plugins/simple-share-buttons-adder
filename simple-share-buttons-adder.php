@@ -3,7 +3,7 @@
 Plugin Name: Simple Share Buttons Adder
 Plugin URI: http://www.simplesharebuttons.com
 Description: A simple plugin that enables you to add share buttons to all of your posts and/or pages.
-Version: 2.0
+Version: 2.1
 Author: David S. Neal
 Author URI: http://www.davidsneal.co.uk/
 License: GPLv2
@@ -21,7 +21,7 @@ GNU General Public License for more details.
 
 */
 	// turn error reporting off
-	//error_reporting(0);
+	error_reporting(0);
 
 	// --------- INSTALLATION ------------ //
 
@@ -35,7 +35,7 @@ GNU General Public License for more details.
 	function ssba_activate() {
 	
 		// insert default options for ssba
-		add_option('ssba_version', 				'2.0');
+		add_option('ssba_version', 				'2.1');
 		add_option('ssba_image_set', 			'somacro');
 		add_option('ssba_size', 				'35');
 		add_option('ssba_pages',				'');
@@ -145,9 +145,10 @@ GNU General Public License for more details.
 		wp_enqueue_script('media-upload');
 		wp_enqueue_script('thickbox');
 		wp_enqueue_script('wp-color-picker');
-		wp_register_script('my-upload', WP_PLUGIN_URL . '/simple-share-buttons-adder/js/ssba_admin.js', array('jquery', 'media-upload', 'thickbox', 'wp-color-picker'));
+		wp_register_script('my-upload', plugins_url('/js/ssba_admin.js', __FILE__ ));
 		wp_enqueue_script('my-upload');
 		wp_enqueue_script('jquery-ui-sortable');
+		wp_enqueue_script('jquery-ui');
 	}
 	
 	// include styles for the ssba admin panel
@@ -156,7 +157,7 @@ GNU General Public License for more details.
 		// admin styles
 		wp_enqueue_style('thickbox');
 		wp_enqueue_style('wp-color-picker');
-		wp_register_style('ssba-styles', WP_PLUGIN_URL . '/simple-share-buttons-adder/css/style.css');
+		wp_register_style('ssba-styles', plugins_url('/css/style.css', __FILE__ ));
 		wp_enqueue_style('ssba-styles');
 	}
 	
@@ -172,11 +173,11 @@ GNU General Public License for more details.
 	function ssba_page_scripts() {
 	
 		// js scripts 
-		wp_register_style('googleFonts', 'http://fonts.googleapis.com/css?family=Reenie+Beanie|Indie+Flower');
-        wp_enqueue_style( 'googleFonts');
+		wp_register_style('ssbaFonts', 'http://fonts.googleapis.com/css?family=Reenie+Beanie|Indie+Flower');
+        wp_enqueue_style( 'ssbaFonts');
 	
 		// register and enqueue css styles
-		wp_register_style('ssba-page-styles', WP_PLUGIN_URL . '/simple-share-buttons-adder/css/page-style.css');
+		wp_register_style('ssba-page-styles', plugins_url('/css/page-style.css', __FILE__ ));
 		wp_enqueue_style('ssba-page-styles');
 	}
 	
@@ -192,8 +193,8 @@ GNU General Public License for more details.
 		// query the db for current ssba settings
 		$arrSettings = get_ssba_settings();
 		
-		// check if not yet updated to 2.0
-		if ($arrSettings['ssba_version'] != '2.0') {
+		// check if not yet updated to 2.1
+		if ($arrSettings['ssba_version'] != '2.1') {
 		
 			// include then run the upgrade script
 			include_once (plugin_dir_path(__FILE__) . '/inc/ssba_upgrade.php');
@@ -339,7 +340,7 @@ GNU General Public License for more details.
 											width: ' . $arrSettings['ssba_size'] . 'px;
 											padding: ' . $arrSettings['ssba_padding'] . 'px;
 											border:  0;
-											box-shadow: 0;
+											box-shadow: none !important;
 											display: inline;
 											vertical-align: middle;
 										}
