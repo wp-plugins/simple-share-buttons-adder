@@ -2,9 +2,9 @@
 Contributors: DavidoffNeal
 Donate link: http://www.davidsneal.co.uk/contributions
 Tags: share buttons, facebook, twitter, google+, share, share links, stumble upon, linkedin, pinterest
-Requires at least: 3.5.1
+Requires at least: 3.0.1
 Tested up to: 3.5.1
-Stable tag: 2.1
+Stable tag: 2.2
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -49,6 +49,11 @@ A step by step guide on how to configure this plugin can be found <a href="http:
 9. This is an example of a set of Share Buttons you can add using Simple Share Buttons Adder.
 
 == Changelog ==
+
+= 2.2 =
+* Standby for Share Counters, currently under development!
+* Increased functionality for those with older versions of WordPress
+* To get the full Simple Share Buttons experience, update to version 3.5.1
 
 = 2.1 =
 * An attempted fix for those experiencing problems with the new drag and drop facility

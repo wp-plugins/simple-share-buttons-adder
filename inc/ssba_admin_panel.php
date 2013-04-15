@@ -4,6 +4,7 @@ function ssba_admin_panel($arrSettings, $htmlSettingsSaved) {
 
 	// variables
 	$htmlShareButtonsForm = '';
+	$strWordPressVersion = get_bloginfo('version');
 	
 	// header
 	$htmlShareButtonsForm .= '<div id="ssba-header">';
@@ -76,7 +77,14 @@ function ssba_admin_panel($arrSettings, $htmlSettingsSaved) {
 						$htmlShareButtonsForm .= '<th scope="row" style="width: 120px;"><label for="ssba_image_set">Image Set:&nbsp;</label></th>';
 						$htmlShareButtonsForm .= '<td><select name="ssba_image_set" id="ssba_image_set">';
 						$htmlShareButtonsForm .= '<option ' . ($arrSettings['ssba_image_set'] == 'arbenta' 		? 'selected="selected"' : NULL) . ' value="arbenta">Arbenta</option>';
-						$htmlShareButtonsForm .= '<option ' . ($arrSettings['ssba_image_set'] == 'custom' 		? 'selected="selected"' : NULL) . ' value="custom">Custom</option>';
+						
+						//only display custom option if user has version 3.5+
+						if ($strWordPressVersion >= 3.5) {
+						
+							// show custom option
+							$htmlShareButtonsForm .= '<option ' . ($arrSettings['ssba_image_set'] == 'custom' 		? 'selected="selected"' : NULL) . ' value="custom">Custom</option>';
+						}
+						
 						$htmlShareButtonsForm .= '<option ' . ($arrSettings['ssba_image_set'] == 'default' 		? 'selected="selected"' : NULL) . ' value="default">Default</option>';
 						$htmlShareButtonsForm .= '<option ' . ($arrSettings['ssba_image_set'] == 'metal' 		? 'selected="selected"' : NULL) . ' value="metal">Metal</option>';
 						$htmlShareButtonsForm .= '<option ' . ($arrSettings['ssba_image_set'] == 'pagepeel' 	? 'selected="selected"' : NULL) . ' value="pagepeel">Page Peel</option>';
@@ -87,7 +95,21 @@ function ssba_admin_panel($arrSettings, $htmlSettingsSaved) {
 						$htmlShareButtonsForm .= '<option ' . ($arrSettings['ssba_image_set'] == 'somacro' 		? 'selected="selected"' : NULL) . ' value="somacro">Somacro</option>';
 						$htmlShareButtonsForm .= '</select>';
 						$htmlShareButtonsForm .= '<p class="description"><a href="http://www.simplesharebuttons.com/button-sets/" target="_blank">Click here</a> to preview the button sets</br>';
-						$htmlShareButtonsForm .= "Choose your favourite set of buttons, or set to 'Custom' to choose your own.</p></td>";
+						
+						// message for those not using 3.5+
+						if ($strWordPressVersion >= 3.5) {
+							
+							// custom descr
+							$htmlShareButtonsForm .= "Choose your favourite set of buttons, or set to 'Custom' to choose your own.</p></td>";
+						}
+						
+						// message for those using <3.5
+						else {
+						
+							// update message
+							$htmlShareButtonsForm .= "You must update WordPress to v3.5&#43; to use custom images.</p></td>";
+						}
+						
 					$htmlShareButtonsForm .= '</tr>';
 				$htmlShareButtonsForm .= '</table>';
 				
@@ -162,43 +184,87 @@ function ssba_admin_panel($arrSettings, $htmlSettingsSaved) {
 				$htmlShareButtonsForm .= '</div>';
 				
 				// --------- NON-CUSTOM IMAGE SETTINGS ------------ //
-				$htmlShareButtonsForm .= '<div id="ssba-image-settings">';
-				$htmlShareButtonsForm .= '<table class="form-table">';
-					$htmlShareButtonsForm .= '<tr valign="top">';
-						$htmlShareButtonsForm .= '<th scope="row" style="width: 120px !important;"><label for="ssba_choices">Include:</label></th>';
-						$htmlShareButtonsForm .= '<td class="ssba-include-list available">';
-							$htmlShareButtonsForm .= '<span class="include-heading">Available</span>';
-							$htmlShareButtonsForm .= '<center><ul id="ssbasort1" class="connectedSortable">';
-							 $htmlShareButtonsForm .= getAvailableSSBA($arrSettings['ssba_selected_buttons']);
-							$htmlShareButtonsForm .= '</ul></center>';
-						$htmlShareButtonsForm .= '</td>';
-						$htmlShareButtonsForm .= '<td class="ssba-include-list chosen">';
-							$htmlShareButtonsForm .= '<span class="include-heading">Selected</span>';
-							$htmlShareButtonsForm .= '<center><ul id="ssbasort2" class="connectedSortable">';
-							$htmlShareButtonsForm .= getSelectedSSBA($arrSettings['ssba_selected_buttons']);
-							$htmlShareButtonsForm .= '</ul></center>';
-						$htmlShareButtonsForm .= '</td>';
-					$htmlShareButtonsForm .= '</tr>';
-					$htmlShareButtonsForm .= '<tr valign="top">';
-						$htmlShareButtonsForm .= '<th scope="row" style="width: 120px !important;"></th>';
-						$htmlShareButtonsForm .= '<td colspan=2>';
-							$htmlShareButtonsForm .= '<p class="description">Drag, drop and reorder those buttons that you wish to include.</p>';
-						$htmlShareButtonsForm .= '</td>';
-					$htmlShareButtonsForm .= '</tr>';
-				$htmlShareButtonsForm .= '</table>';
-				$htmlShareButtonsForm .= '</div>';
+				
+				// if using 3.5+
+				if ($strWordPressVersion >= 3.5) {
+					
+					// show drag and drop options
+					$htmlShareButtonsForm .= '<div id="ssba-image-settings">';
+					$htmlShareButtonsForm .= '<table class="form-table">';
+						$htmlShareButtonsForm .= '<tr valign="top">';
+							$htmlShareButtonsForm .= '<th scope="row" style="width: 120px !important;"><label for="ssba_choices">Include:</label></th>';
+							$htmlShareButtonsForm .= '<td class="ssba-include-list available">';
+								$htmlShareButtonsForm .= '<span class="include-heading">Available</span>';
+								$htmlShareButtonsForm .= '<center><ul id="ssbasort1" class="connectedSortable">';
+								 $htmlShareButtonsForm .= getAvailableSSBA($arrSettings['ssba_selected_buttons']);
+								$htmlShareButtonsForm .= '</ul></center>';
+							$htmlShareButtonsForm .= '</td>';
+							$htmlShareButtonsForm .= '<td class="ssba-include-list chosen">';
+								$htmlShareButtonsForm .= '<span class="include-heading">Selected</span>';
+								$htmlShareButtonsForm .= '<center><ul id="ssbasort2" class="connectedSortable">';
+								$htmlShareButtonsForm .= getSelectedSSBA($arrSettings['ssba_selected_buttons']);
+								$htmlShareButtonsForm .= '</ul></center>';
+							$htmlShareButtonsForm .= '</td>';
+						$htmlShareButtonsForm .= '</tr>';
+						$htmlShareButtonsForm .= '<tr valign="top">';
+							$htmlShareButtonsForm .= '<th scope="row" style="width: 120px !important;"></th>';
+							$htmlShareButtonsForm .= '<td colspan=2>';
+								$htmlShareButtonsForm .= '<p class="description">Drag, drop and reorder those buttons that you wish to include.</p>';
+							$htmlShareButtonsForm .= '</td>';
+						$htmlShareButtonsForm .= '</tr>';
+					$htmlShareButtonsForm .= '</table>';
+					$htmlShareButtonsForm .= '<input type="hidden" name="ssba_selected_buttons" id="ssba_selected_buttons" />';
+					$htmlShareButtonsForm .= '</div>';
+				}
+				
+				// if using < 3.5
+				else {
+				
+					// show simple text entry field for order/include option
+					$htmlShareButtonsForm .= '<table class="form-table">';
+						$htmlShareButtonsForm .= '<tr valign="top">';
+							$htmlShareButtonsForm .= '<th scope="row" style="width: 120px !important;"><label for="ssba_selected_buttons">Include:</label></th>';
+							$htmlShareButtonsForm .= '<td>';
+								$htmlShareButtonsForm .= '<textarea rows="1" cols="90" name="ssba_selected_buttons">' . $arrSettings['ssba_selected_buttons'] . '</textarea>';
+							$htmlShareButtonsForm .= '</td>';
+						$htmlShareButtonsForm .= '</tr>';
+						$htmlShareButtonsForm .= '<tr valign="top">';
+							$htmlShareButtonsForm .= '<th scope="row" style="width: 120px !important;"></th>';
+							$htmlShareButtonsForm .= '<td>';
+								$htmlShareButtonsForm .= '<p class="description">Copy and paste the list of social sites below separated by commas, then edit to your liking</br><strong>facebook,pinterest,twitter,google,linkedin,reddit,diggit,stumbleupon,email</strong><br/>Update your WordPress version to 3.5&#43; to use the drag and drop facility.</p>';
+								$htmlShareButtonsForm .= '<p class="description"><strong>Entering anything incorrectly in this input will cause temporary problems with your website, if you are unsure, please visit the <a href="http://www.simplesharebuttons.com/forums/forum/wordpress-forum/" target="blank">support forums</a>.</strong></p>';
+							$htmlShareButtonsForm .= '</td>';
+						$htmlShareButtonsForm .= '</tr>';
+					$htmlShareButtonsForm .= '</table>';
+				}
+				
+				
+			// close basic tab div
 			$htmlShareButtonsForm .= '</div>';
-			$htmlShareButtonsForm .= '<input type="hidden" name="ssba_selected_buttons" id="ssba_selected_buttons" />';
+			
 			
 		//------ STYLING TAB ------//
 		
 		//----- STYLING SETTINGS DIV ------//
 		$htmlShareButtonsForm .= '<div id="ssba_settings_styling" style="display: none;">';
 			$htmlShareButtonsForm .= '<h2>Style Settings</h2>';
-		
-			// toggle setting options
 			$htmlShareButtonsForm .= '<div id="ssba_toggle_styling" style="margin: 10px 0 20px;">';
-			$htmlShareButtonsForm .= 'Toggle between <a href="javascript:;" id="ssba_button_normal_settings">assisted styling</a> and <a href="javascript:;" id="ssba_button_custom_styles">custom CSS</a>.';
+			
+			// if using 3.5+
+			if ($strWordPressVersion >= 3.5) {
+			
+				// toggle setting options
+				$htmlShareButtonsForm .= 'Toggle between <a href="javascript:;" id="ssba_button_normal_settings">assisted styling</a> and <a href="javascript:;" id="ssba_button_custom_styles">custom CSS</a>.';
+			}
+			
+			// using 3.5+
+			else {
+			
+				// upgrade notice
+				$htmlShareButtonsForm .= 'Custom CSS is only available for WordPress versions 3.5&#43;';
+			}
+			
+			// close toggle styling div
 			$htmlShareButtonsForm .= '</div>';
 		
 			// normal settings options
