@@ -2,7 +2,7 @@
 Contributors: DavidoffNeal
 Donate link: http://www.davidsneal.co.uk/contributions
 Tags: share buttons, facebook, twitter, google+, share, share links, stumble upon, linkedin, pinterest
-Requires at least: 3.0.1
+Requires at least: 3.5.1
 Tested up to: 3.5.1
 Stable tag: 2.1
 License: GPLv2
