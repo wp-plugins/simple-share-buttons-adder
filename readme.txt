@@ -4,7 +4,7 @@ Donate link: http://www.davidsneal.co.uk/contributions
 Tags: share buttons, facebook, twitter, google+, share, share links, stumble upon, linkedin, pinterest
 Requires at least: 3.0.1
 Tested up to: 3.5.1
-Stable tag: 2.2
+Stable tag: 2.3
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -49,6 +49,11 @@ A step by step guide on how to configure this plugin can be found <a href="http:
 9. This is an example of a set of Share Buttons you can add using Simple Share Buttons Adder.
 
 == Changelog ==
+
+= 2.3 =
+* Add a background colour and border to your share buttons container!
+* Fixes a bug that inserted an empty line at the top of pages/posts
+* Apologies for so many updates!
 
 = 2.2 =
 * Standby for Share Counters, currently under development!
