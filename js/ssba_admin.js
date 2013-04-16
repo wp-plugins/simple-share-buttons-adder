@@ -85,6 +85,8 @@
 	
 	// color picker
 	jQuery('#ssba_font_color').wpColorPicker();
+	jQuery('#ssba_div_border').wpColorPicker();
+	jQuery('#ssba_div_background').wpColorPicker();
 	
 	// when custom style button is clicked
 	jQuery('#ssba_button_custom_styles').click(function(){

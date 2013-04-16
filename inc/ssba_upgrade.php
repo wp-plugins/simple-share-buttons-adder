@@ -58,6 +58,13 @@ function upgrade_ssba($arrSettings) {
 	add_option('ssba_font_color',			'');	
 	add_option('ssba_font_size',			'');
 	add_option('ssba_font_weight',			'');
+	
+	// share container new in 2.3
+	add_option('ssba_div_padding', 			'');
+	add_option('ssba_div_rounded_corners', 	'');
+	add_option('ssba_border_width', 		'');
+	add_option('ssba_div_border', 			'#59625c');
+	add_option('ssba_div_background', 		'');
 
 	// add new placement options
 	add_option('ssba_cats_archs',			'');
@@ -108,7 +115,7 @@ function upgrade_ssba($arrSettings) {
 	add_option('ssba_text_placement', 	'left');
 
 	// update version number
-	update_option('ssba_version', '2.1');
+	update_option('ssba_version', '2.3');
 }
 	
 ?>
