@@ -92,13 +92,6 @@ function upgrade_ssba($arrSettings) {
 	// new options
 	add_option('ssba_share_new_window', 	'Y');
 	add_option('ssba_link_to_ssb', 			'Y');
-	
-	// share container new in 2.3
-	add_option('ssba_div_padding', 			'');
-	add_option('ssba_div_rounded_corners', 	'');
-	add_option('ssba_border_width', 		'');
-	add_option('ssba_div_border', 			'#59625c');
-	add_option('ssba_div_background', 		'');
 
 	// check if using 1.0
 	if ($arrSettings['ssba_version'] == '1.0') {
@@ -115,7 +108,7 @@ function upgrade_ssba($arrSettings) {
 	add_option('ssba_text_placement', 	'left');
 
 	// update version number
-	update_option('ssba_version', '2.3');
+	update_option('ssba_version', '2.1');
 }
 	
 ?>
