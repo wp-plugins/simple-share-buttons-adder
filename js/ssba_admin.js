@@ -35,10 +35,12 @@
 		// hide other tabs in case needed
 		jQuery("#ssba_settings_styling").hide();
 		jQuery("#ssba_settings_advanced").hide();
+		jQuery("#ssba_settings_counters").hide();
 		
 		// remove selected classes if needed
 		jQuery('#ssba_tab_styling').removeClass('ssba-selected-tab');
 		jQuery('#ssba_tab_advanced').removeClass('ssba-selected-tab');
+		jQuery('#ssba_tab_counters').removeClass('ssba-selected-tab');
 		
 		// show chosen tab
 		jQuery("#ssba_settings_basic").show();
@@ -53,10 +55,12 @@
 		// hide other tabs
 		jQuery("#ssba_settings_basic").hide();
 		jQuery("#ssba_settings_advanced").hide();
+		jQuery("#ssba_settings_counters").hide();
 		
 		// remove selected classes if needed
 		jQuery('#ssba_tab_basic').removeClass('ssba-selected-tab');
 		jQuery('#ssba_tab_advanced').removeClass('ssba-selected-tab');
+		jQuery('#ssba_tab_counters').removeClass('ssba-selected-tab');
 		
 		// show chosen tab
 		jQuery("#ssba_settings_styling").show();
@@ -65,16 +69,38 @@
 		jQuery('#ssba_tab_styling').addClass('ssba-selected-tab');
 	}); 
 	
+	// counters tab
+	jQuery('#ssba_tab_counters').click(function(){
+	
+		// hide other tabs
+		jQuery("#ssba_settings_basic").hide();
+		jQuery("#ssba_settings_advanced").hide();
+		jQuery("#ssba_settings_styling").hide();
+		
+		// remove selected classes if needed
+		jQuery('#ssba_tab_basic').removeClass('ssba-selected-tab');
+		jQuery('#ssba_tab_advanced').removeClass('ssba-selected-tab');
+		jQuery('#ssba_tab_styling').removeClass('ssba-selected-tab');
+		
+		// show chosen tab
+		jQuery("#ssba_settings_counters").show();
+		
+		// add selected tab class
+		jQuery('#ssba_tab_counters').addClass('ssba-selected-tab');
+	}); 
+	
 	// advanced tab
 	jQuery('#ssba_tab_advanced').click(function(){
 	
 		// hide other tabs
 		jQuery("#ssba_settings_basic").hide();
 		jQuery("#ssba_settings_styling").hide();
+		jQuery("#ssba_settings_counters").hide();
 		
 		// remove selected classes if needed
 		jQuery('#ssba_tab_basic').removeClass('ssba-selected-tab');
 		jQuery('#ssba_tab_styling').removeClass('ssba-selected-tab');
+		jQuery('#ssba_tab_counters').removeClass('ssba-selected-tab');
 		
 		// show chosen tab
 		jQuery("#ssba_settings_advanced").show();
@@ -109,6 +135,26 @@
 		jQuery('#ssba_custom_styles').val('');
 	}); 
 	
+	// when counter CSS is clicked
+	jQuery('#ssba_counter_normal_settings').click(function(){
+	
+		// hide show custom css and hide normal settings
+		jQuery("#ssba_counter_settings").show(600);
+		jQuery("#ssba_counter_custom_css").hide(600);
+		
+		// clear the contents of the custom css field
+		// this must be done so that the custom styles don't
+		// continue to overwrite other styles
+		jQuery('#ssba_share_count_css').val('');
+	}); 
+	
+	// when when counter CSS is clicked
+	jQuery('#ssba_counter_custom_styles').click(function(){
+	
+		// hide show custom css and hide normal settings
+		jQuery("#ssba_counter_custom_css").show(600);
+		jQuery("#ssba_counter_settings").hide(600);
+	}); 
 	
 	// when changing image sets
 	jQuery('#ssba_image_set').change(function(){

@@ -4,7 +4,7 @@ Donate link: http://www.davidsneal.co.uk/contributions
 Tags: share buttons, facebook, twitter, google+, share, share links, stumble upon, linkedin, pinterest
 Requires at least: 3.0.1
 Tested up to: 3.5.1
-Stable tag: 2.3
+Stable tag: 2.4
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -14,8 +14,6 @@ A simple plugin that enables you to add share buttons to all of your posts and/o
 
 The Simple Share Buttons Adder does exactly what it says on the tin – adds share buttons to all of your posts and pages, simply.
 
-Want to find out more? Visit <a href="http://www.simplesharebuttons.com">www.simplesharebuttons.com</a>
-
 No hotlinking to another website to slow downloading or for tracking use, it's simple, as promised.
 
 You can even upload and use your own custom images if you wish!
@@ -23,8 +21,6 @@ You can even upload and use your own custom images if you wish!
 The Simple Share Buttons Adder utilises features that, as a WordPress user, you will be familiar with. A self-explanatory administration screen will have you showing your Share Buttons on your posts and pages in no time!
 
 == Installation ==
-
-A full list of instructions to configure your Share Buttons can be found on the Simple Share Buttons website - <a href="http://www.simplesharebuttons.com/wordpress/wordpress-configuration/">www.simplesharebuttons.com</a>
 
 1. Upload the 'simple-share-buttons-adder' folder to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
@@ -53,6 +49,11 @@ A step by step guide on how to configure this plugin can be found <a href="http:
 9. This is an example of a set of Share Buttons you can add using Simple Share Buttons Adder.
 
 == Changelog ==
+
+= 2.4 =
+* The one people have been waiting for!
+* Choose to display a share count with the buttons! (all except Digg sorry!)
+* Checkout the new 'Counters' tab in the admin panel for setup!
 
 = 2.3 =
 * Add a background colour and border to your share buttons container!

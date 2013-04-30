@@ -16,6 +16,7 @@ function ssba_admin_panel($arrSettings, $htmlSettingsSaved) {
 		// top nav
 		$htmlShareButtonsForm .= '<div id="ssba-top-nav">';
 			$htmlShareButtonsForm .= '<a href="http://www.simplesharebuttons.com/forums/forum/wordpress-forum/" target="_blank">Support</a>';
+			$htmlShareButtonsForm .= '<a href="http://www.simplesharebuttons.com/wordpress-faq/" target="_blank">FAQ</a>';
 			$htmlShareButtonsForm .= '<a href="http://www.simplesharebuttons.com/showcase/" target="_blank">Showcase</a>';
 			$htmlShareButtonsForm .= '<a href="http://www.simplesharebuttons.com/donate/" target="_blank">Donate</a>';
 		$htmlShareButtonsForm .= '</div>';
@@ -27,6 +28,7 @@ function ssba_admin_panel($arrSettings, $htmlSettingsSaved) {
 	$htmlShareButtonsForm .= '<div id="ssba-tabs">';
 	$htmlShareButtonsForm .= '<a id="ssba_tab_basic" class="ssba-selected-tab" href="javascript:;">Basic</a>';
 	$htmlShareButtonsForm .= '<a id="ssba_tab_styling" href="javascript:;">Styling</a>';
+	$htmlShareButtonsForm .= '<a id="ssba_tab_counters" href="javascript:;">Counters</a>';
 	$htmlShareButtonsForm .= '<a id="ssba_tab_advanced" href="javascript:;">Advanced</a>';
 	$htmlShareButtonsForm .= '</div>';
 	
@@ -340,6 +342,110 @@ CODE;
 		// close styling tab
 		$htmlShareButtonsForm .= '</div>';
 		
+		//------ COUNTERS TAB ------//
+		
+		//----- COUNTERS SETTINGS DIV ------//
+		$htmlShareButtonsForm .= '<div id="ssba_settings_counters" style="display: none;">';
+			$htmlShareButtonsForm .= '<h2>Counter Settings</h2>';
+		
+			// toggle setting options
+			$htmlShareButtonsForm .= '<div id="ssba_toggle_styling" style="margin: 10px 0 20px;">';
+			$htmlShareButtonsForm .= '<p>Toggle between <a href="javascript:;" id="ssba_counter_normal_settings">assisted styling</a> and <a href="javascript:;" id="ssba_counter_custom_styles">custom CSS</a>.</p>';
+			$htmlShareButtonsForm .= '<p><strong>The share counters option is brand new for version 2.4. It is possible that there may be a couple of teething problems during its rollout, please raise any issues by adding a ticket in the <a href="http://www.simplesharebuttons.com/forums/forum/wordpress-forum/" target="_blank">Support Forum</a>.</strong></p>';
+			$htmlShareButtonsForm .= '</div>';
+			
+			// activate option
+			$htmlShareButtonsForm .= '<table class="form-table">';
+				$htmlShareButtonsForm .= '<tr valign="top">';
+					$htmlShareButtonsForm .= '<th scope="row" style="width: 120px;"><label>Share Count:</label></th>';
+					$htmlShareButtonsForm .= '<td>';
+					$htmlShareButtonsForm .= 'Show&nbsp;<input type="checkbox" name="ssba_show_share_count" id="ssba_show_share_count" ' . ($arrSettings['ssba_show_share_count'] == 'Y'  ? 'checked' : NULL) . ' value="Y" style="margin-right: 10px;" />';
+					$htmlShareButtonsForm .= '<p class="description">Check the box if you wish to display a share count for those sites that it is available.</br>Note that enabling this option will slow down the loading of any pages that use share buttons.</p></td>';
+				$htmlShareButtonsForm .= '</tr>';
+				$htmlShareButtonsForm .= '<tr valign="top">';
+					$htmlShareButtonsForm .= '<th scope="row" style="width: 120px;"><label>Show Once:</label></th>';
+					$htmlShareButtonsForm .= '<td>';
+					$htmlShareButtonsForm .= 'Show only on posts and pages&nbsp;<input type="checkbox" name="ssba_share_count_once" id="ssba_share_count_once" ' . ($arrSettings['ssba_share_count_once'] == 'Y'  ? 'checked' : NULL) . ' value="Y" style="margin-right: 10px;" />';
+					$htmlShareButtonsForm .= '<p class="description">This option is recommended, it deactivates share counts for categories and archives allowing them to load more quickly</p></td>';
+				$htmlShareButtonsForm .= '</tr>';
+			$htmlShareButtonsForm .= '</table>';
+		
+			// normal counter settings options
+			$htmlShareButtonsForm .= '<div id="ssba_counter_settings" ' . ($arrSettings['ssba_share_count_css'] != '' ? 'style="display: none;"' : NULL) . '>';
+				$htmlShareButtonsForm .= '<table class="form-table">';
+					$htmlShareButtonsForm .= '<tr valign="top">';
+						$htmlShareButtonsForm .= '<th scope="row" style="width: 120px;"><label for="ssba_share_count_style">Counters Style:&nbsp;</label></th>';
+						$htmlShareButtonsForm .= '<td><select name="ssba_share_count_style" id="ssba_share_count_style">';
+						$htmlShareButtonsForm .= '<option ' . ($arrSettings['ssba_share_count_style'] == 'default'  ? 'selected="selected"' : NULL) . ' value="default">Default</option>';
+						$htmlShareButtonsForm .= '<option ' . ($arrSettings['ssba_share_count_style'] == 'white' 	? 'selected="selected"' : NULL) . ' value="white">White</option>';
+						$htmlShareButtonsForm .= '<option ' . ($arrSettings['ssba_share_count_style'] == 'blue' 	? 'selected="selected"' : NULL) . ' value="blue">Blue</option>';
+						$htmlShareButtonsForm .= '</select>';
+						$htmlShareButtonsForm .= '<p class="description">Pick a setting to style the share counters</p></td>';
+					$htmlShareButtonsForm .= '</tr>';
+				$htmlShareButtonsForm .= '</table>';
+			$htmlShareButtonsForm .= '</div>';
+				
+			// custom counter style field
+			$htmlShareButtonsForm .= '<div id="ssba_counter_custom_css" ' . ($arrSettings['ssba_share_count_css'] == '' ? 'style="display: none;"' : NULL) . '>';
+				$htmlShareButtonsForm .= '<table>';
+					$htmlShareButtonsForm .= '<tr valign="top">';
+						$htmlShareButtonsForm .= '<th scope="row" style="width: 120px;"><label for="ssba_share_count_css">Custom CSS:&nbsp;</label></th>';
+						$htmlShareButtonsForm .= '<td>';
+						$htmlShareButtonsForm .= '<textarea name="ssba_share_count_css" id="ssba_share_count_css" rows="20" cols="50">' . $arrSettings['ssba_share_count_css'] . '</textarea>';
+						$htmlShareButtonsForm .= '<td>';
+							$htmlShareButtonsForm .= <<<CODE
+													<h3>Default CSS</h3>
+													.ssba_sharecount:after, .ssba_sharecount:before {</br>
+														right: 100%;</br>
+														border: solid transparent;</br>
+														content: " ";</br>
+														height: 0;</br>
+														width: 0;</br>
+														position: absolute;</br>
+														pointer-events: none;</br>
+													}</br>
+													.ssba_sharecount:after {</br>
+														border-color: rgba(224, 221, 221, 0);</br>
+														border-right-color: #f5f5f5;</br>
+														border-width: 5px;</br>
+														top: 50%;</br>
+														margin-top: -5px;</br>
+													}
+													.ssba_sharecount:before {</br>
+														border-color: rgba(85, 94, 88, 0);</br>
+														border-right-color: #e0dddd;</br>
+														border-width: 6px;</br>
+														top: 50%;</br>
+														margin-top: -6px;</br>
+													}</br>
+													.ssba_sharecount {</br>
+														font: 11px Arial, Helvetica, sans-serif;</br>
+														color: #555e58;</br>
+														padding: 5px;</br>
+														-khtml-border-radius: 6px;</br>
+														-o-border-radius: 6px;</br>
+														-webkit-border-radius: 6px;</br>
+														-moz-border-radius: 6px;</br>
+														border-radius: 6px;</br>
+														position: relative;</br>
+														background: #f5f5f5;</br>
+														border: 1px solid #e0dddd;</br>
+													}
+CODE;
+						$htmlShareButtonsForm .= '</td>';
+					$htmlShareButtonsForm .= '<tr>';
+						$htmlShareButtonsForm .= '<td>';
+						$htmlShareButtonsForm .= '</td>';
+						$htmlShareButtonsForm .= '<td colspan=2>';
+							$htmlShareButtonsForm .= '<p class="description">Note that entering any text into the &#39;Custom styles&#39; box will automatically override any other style settings on this page.<br/>The share count class is ssba_sharecount.</p>';
+						$htmlShareButtonsForm .= '</td>';
+					$htmlShareButtonsForm .= '</tr>';
+				$htmlShareButtonsForm .= '</table>';
+			$htmlShareButtonsForm .= '</div>';
+			
+		// close counters tab
+		$htmlShareButtonsForm .= '</div>';
+		
 		//------ ADVANCED TAB ------//
 		
 		$htmlShareButtonsForm .= '<div id="ssba_settings_advanced" style="display: none;">';
@@ -380,7 +486,7 @@ CODE;
 					</p><div class="author-shortcodes">
 						<div class="author-inner">
 							<div class="author-image">
-						<img src="http://www.simplesharebuttons.com/wp-content/uploads/et_temp/david-44682_60x60.jpg" alt="">
+						<img src="http://www.simplesharebuttons.com/wp-content/uploads/et_temp/david-44682_60x60.jpg" style="float: left; margin-right: 10px;" alt="">
 						<div class="author-overlay"></div>
 					</div> <!-- .author-image --> 
 					<div class="author-info">

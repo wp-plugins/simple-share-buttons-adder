@@ -99,6 +99,12 @@ function upgrade_ssba($arrSettings) {
 	// new options
 	add_option('ssba_share_new_window', 	'Y');
 	add_option('ssba_link_to_ssb', 			'Y');
+	
+	// new for 2.4
+	add_option('ssba_show_share_count',		'');
+	add_option('ssba_share_count_style',	'default');
+	add_option('ssba_share_count_css',		'');
+	add_option('ssba_share_count_once',		'Y');
 
 	// check if using 1.0
 	if ($arrSettings['ssba_version'] == '1.0') {
@@ -115,7 +121,7 @@ function upgrade_ssba($arrSettings) {
 	add_option('ssba_text_placement', 	'left');
 
 	// update version number
-	update_option('ssba_version', '2.3');
+	update_option('ssba_version', '2.4');
 }
 	
 ?>
