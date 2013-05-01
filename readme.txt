@@ -16,6 +16,8 @@ The Simple Share Buttons Adder does exactly what it says on the tin – adds sha
 
 No hotlinking to another website to slow downloading or for tracking use, it's simple, as promised.
 
+Find out more at <a href="http://www.simplesharebuttons.com" target="_blank">SimpleShareButtons.com</a>
+
 You can even upload and use your own custom images if you wish!
 
 The Simple Share Buttons Adder utilises features that, as a WordPress user, you will be familiar with. A self-explanatory administration screen will have you showing your Share Buttons on your posts and pages in no time!
@@ -31,6 +33,8 @@ The Simple Share Buttons Adder utilises features that, as a WordPress user, you 
 
 
 == Frequently Asked Questions ==
+
+A few FAQs can be found <a href="http://www.simplesharebuttons.com/wordpress-faq/" target="_blank">on this page</a>.
 
 Please visit the <a href="http://www.simplesharebuttons.com/forums/forum/wordpress-forum/">WordPress Support Forum</a> for any assistance you may need.
 
