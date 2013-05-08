@@ -6,9 +6,10 @@ a.ssba_tooptip span {
     margin-top:-30px; margin-left:28px; line-height:16px;
 }
 a.ssba_tooptip:hover span{
-	font-size: 14px;
-    display:inline; position:absolute; color:#fff;
-    border:1px solid #515953; background:#42a7e2;}
+	font-family: arial;
+	font-size: 12px;
+    display:inline; position:absolute; color:#555e58;
+    border:1px solid #e0dddd; background:#f5f5f5;}
 .callout {z-index:20;position:absolute;top:30px;border:0;left:-12px;}
     
 /*CSS3 extras*/
@@ -17,8 +18,6 @@ a.ssba_tooptip span
     border-radius:4px;
     -moz-border-radius: 4px;
     -webkit-border-radius: 4px;
-        
-    -moz-box-shadow: 5px 5px 8px #CCC;
-    -webkit-box-shadow: 5px 5px 8px #CCC;
-    box-shadow: 5px 5px 8px #CCC;
+    -khtml-border-radius: 4px;
+    -o-border-radius: 4px;
 }

@@ -3,7 +3,7 @@
 Plugin Name: Simple Share Buttons Adder
 Plugin URI: http://www.simplesharebuttons.com
 Description: A simple plugin that enables you to add share buttons to all of your posts and/or pages.
-Version: 2.4
+Version: 2.5
 Author: David S. Neal
 Author URI: http://www.davidsneal.co.uk/
 License: GPLv2
@@ -35,7 +35,7 @@ GNU General Public License for more details.
 	function ssba_activate() {
 	
 		// insert default options for ssba
-		add_option('ssba_version', 				'2.4');
+		add_option('ssba_version', 				'2.5');
 		add_option('ssba_image_set', 			'somacro');
 		add_option('ssba_size', 				'35');
 		add_option('ssba_pages',				'');
@@ -47,6 +47,10 @@ GNU General Public License for more details.
 		add_option('ssba_before_or_after', 		'after');
 		add_option('ssba_custom_styles', 		'');
 		add_option('ssba_email_message', 		'');
+		add_option('ssba_twitter_text', 		'');
+		add_option('ssba_buffer_text', 			'');
+		add_option('ssba_flattr_user_id', 		'');
+		add_option('ssba_flattr_url', 			'');
 		add_option('ssba_share_new_window', 	'Y');
 		add_option('ssba_link_to_ssb', 			'Y');
 		add_option('ssba_show_share_count',		'');
@@ -82,6 +86,8 @@ GNU General Public License for more details.
 		add_option('ssba_custom_reddit', 	  	'');
 		add_option('ssba_custom_stumbleupon', 	'');
 		add_option('ssba_custom_pinterest', 	'');
+		add_option('ssba_custom_buffer', 		'');
+		add_option('ssba_custom_flattr', 		'');
 	}
 	
 	// uninstall ssba
@@ -105,6 +111,10 @@ GNU General Public License for more details.
 		delete_option('ssba_before_or_after');
 		delete_option('ssba_custom_styles');
 		delete_option('ssba_email_message');
+		delete_option('ssba_buffer_text');
+		delete_option('ssba_twitter_text');
+		delete_option('ssba_flattr_user_id');
+		delete_option('ssba_flattr_url');
 		delete_option('ssba_share_new_window');
 		delete_option('ssba_link_to_ssb');
 		delete_option('ssba_show_share_count');
@@ -140,6 +150,8 @@ GNU General Public License for more details.
 		delete_option('ssba_custom_reddit');
 		delete_option('ssba_custom_stumbleupon');
 		delete_option('ssba_custom_pinterest');
+		delete_option('ssba_custom_buffer');
+		delete_option('ssba_custom_flattr');
 	}
 
 	// --------- ADMIN BITS ------------ //
@@ -194,9 +206,22 @@ GNU General Public License for more details.
 	// add css scripts for page/post use
 	function ssba_page_scripts() {
 	
-		// js scripts 
-		wp_register_style('ssbaFonts', 'http://fonts.googleapis.com/css?family=Reenie+Beanie|Indie+Flower');
-        wp_enqueue_style( 'ssbaFonts');
+		// get settings
+		$arrSettings = get_ssba_settings();
+		
+		// if reenie beenie font is selected
+		if ($arrSettings['ssba_font_family'] == 'Indie Flower') {
+	
+			// font scripts 
+			wp_register_style('ssbaFont', 'http://fonts.googleapis.com/css?family=Indie+Flower');
+			wp_enqueue_style( 'ssbaFont');
+		} else if ($arrSettings['ssba_font_family'] == 'Reenie Beanie') {
+			
+			// font scripts 
+			wp_register_style('ssbaFont', 'http://fonts.googleapis.com/css?family=Reenie+Beanie');
+			wp_enqueue_style( 'ssbaFont');
+		
+		}
 	
 		// register and enqueue css styles
 		wp_register_style('ssba-page-styles', plugins_url('/css/page-style.css', __FILE__ ));
@@ -215,8 +240,8 @@ GNU General Public License for more details.
 		// query the db for current ssba settings
 		$arrSettings = get_ssba_settings();
 
-		// check if not yet updated to 2.4
-		if ($arrSettings['ssba_version'] != '2.4') {
+		// check if not yet updated to 2.5
+		if ($arrSettings['ssba_version'] != '2.5') {
 		
 			// include then run the upgrade script
 			include_once (plugin_dir_path(__FILE__) . '/inc/ssba_upgrade.php');
@@ -261,6 +286,10 @@ GNU General Public License for more details.
 			update_option('ssba_before_or_after', 		$_POST['ssba_before_or_after']);
 			update_option('ssba_custom_styles', 		$_POST['ssba_custom_styles']);
 			update_option('ssba_email_message', 		stripslashes_deep($_POST['ssba_email_message']));
+			update_option('ssba_twitter_text', 			stripslashes_deep($_POST['ssba_twitter_text']));
+			update_option('ssba_buffer_text', 			stripslashes_deep($_POST['ssba_buffer_text']));
+			update_option('ssba_flattr_user_id', 		stripslashes_deep($_POST['ssba_flattr_user_id']));
+			update_option('ssba_flattr_url', 			stripslashes_deep($_POST['ssba_flattr_url']));
 			update_option('ssba_share_new_window', 		$_POST['ssba_share_new_window']);
 			update_option('ssba_link_to_ssb', 			$_POST['ssba_link_to_ssb']);
 			update_option('ssba_show_share_count', 		$_POST['ssba_show_share_count']);
@@ -296,6 +325,8 @@ GNU General Public License for more details.
 			update_option('ssba_custom_reddit', 		$_POST['ssba_custom_reddit']);
 			update_option('ssba_custom_stumbleupon', 	$_POST['ssba_custom_stumbleupon']);
 			update_option('ssba_custom_pinterest', 		$_POST['ssba_custom_pinterest']);
+			update_option('ssba_custom_buffer', 		$_POST['ssba_custom_buffer']);
+			update_option('ssba_custom_flattr', 		$_POST['ssba_custom_flattr']);
 
 			// show settings saved message
 			$htmlSettingsSaved = '<div id="setting-error-settings_updated" class="updated settings-error"><p><strong>Your settings have been saved. <a href="' . site_url() . '">Visit your site</a> to see how your buttons look!</strong></p></div>';
@@ -336,7 +367,7 @@ GNU General Public License for more details.
 	}
 	
 	// get and show share buttons
-	function show_share_buttons($content, $booShortCode = FALSE) {
+	function show_share_buttons($content, $booShortCode = FALSE, $atts = '') {
 	
 		// globals
 		global $post;
@@ -475,7 +506,7 @@ GNU General Public License for more details.
 			$htmlShareButtons .= '</style>';
 			
 			// ssba div
-			$htmlShareButtons.= '<div id="ssba"><!-- I got these buttons from simplesharebuttons.com!! -->';
+			$htmlShareButtons.= '<div id="ssba"><!-- I got these buttons from simplesharebuttons.com -->';
 			
 			// center if set so
 			$htmlShareButtons.= ($arrSettings['ssba_align'] == 'center' ? '<center>' : NULL);
@@ -506,14 +537,21 @@ GNU General Public License for more details.
 				// use wordpress functions for page/post details
 				$urlCurrentPage = get_permalink($post->ID);	
 				$strPageTitle = get_the_title($post->ID);
-			}
+			}	else if ($booShortCode == TRUE) { // if using shortcode
 			
-			// if using shortcode
-			else if ($booShortCode == TRUE) {
-			
-				// get page name and url from functions
-				$urlCurrentPage = get_current_url();
-				$strPageTitle = $_SERVER["SERVER_NAME"];
+				// if custom attributes have been set
+				if ($atts['url'] != '' && $atts['title'] != '') {
+					
+					// set page URL and title as set by user
+					$urlCurrentPage = (isset($atts['url']) ? $atts['url'] : NULL);
+					$strPageTitle = (isset($atts['title']) ? $atts['title'] : NULL);
+				} else {
+					// get page name and url from functions
+					$urlCurrentPage = get_current_url();
+					$strPageTitle = $_SERVER["SERVER_NAME"];
+				}
+				
+				
 			}		
 			
 			// the buttons!
@@ -581,10 +619,10 @@ GNU General Public License for more details.
 	add_filter( 'the_excerpt', 'show_share_buttons');
 
 	// shortcode for adding buttons
-	function ssba_buttons() {
+	function ssba_buttons($atts) {
 	
 		// get buttons - NULL for $content, TRUE for shortcode flag
-		$htmlShareButtons = show_share_buttons(NULL, TRUE);
+		$htmlShareButtons = show_share_buttons(NULL, TRUE, $atts);
 		
 		//return buttons
 		return $htmlShareButtons;
@@ -729,7 +767,7 @@ function ssba_twitter($arrSettings, $urlCurrentPage, $strPageTitle, $booShowShar
 	$strPageTitle = str_replace('|', '', $strPageTitle);
 
 	// twitter share link
-	$htmlShareButtons .= '<a id="ssba_twitter_share" href="http://twitter.com/share?url=' . $urlCurrentPage  . '&text=' . $strPageTitle . '" ' . ($arrSettings['ssba_share_new_window'] == 'Y' ? 'target="_blank"' : NULL) . '>';
+	$htmlShareButtons .= '<a id="ssba_twitter_share" href="http://twitter.com/share?url=' . $urlCurrentPage  . '&text=' . ($arrSettings['ssba_twitter_text'] != '' ? ' ' . $arrSettings['ssba_twitter_text'] : NULL) . ' ' . $strPageTitle . '" ' . ($arrSettings['ssba_share_new_window'] == 'Y' ? 'target="_blank"' : NULL) . '>';
 	
 	// if image set is not custom
 	if ($arrSettings['ssba_image_set'] != 'custom') {
@@ -910,7 +948,7 @@ function getRedditShareCount($urlCurrentPage) {
 	// get results from reddit and return the number of shares
     $htmlRedditShareDetails = file_get_contents('http://www.reddit.com/api/info.json?url=' . $urlCurrentPage);
 	$arrRedditResult = json_decode($htmlRedditShareDetails, true);
-    $intRedditShareCount = $arrRedditResult['data']['children']['0']['data']['ups'];
+    $intRedditShareCount = $arrRedditResult['data']['children']['0']['data']['score'];
     return ($intRedditShareCount ) ? $intRedditShareCount : '0';
 }
 
@@ -1074,9 +1112,70 @@ function ssba_email($arrSettings, $urlCurrentPage, $strPageTitle, $booShowShareC
 	// return share buttons
 	return $htmlShareButtons;
 }
+
+// get flattr button
+function ssba_flattr($arrSettings, $urlCurrentPage, $strPageTitle, $booShowShareCount) {
+
+	// check for dedicated flattr URL
+	if ($arrSettings['ssba_flattr_url'] != '') {
+	
+		// updatae url that will be set to specified URL
+		$urlCurrentPage = $arrSettings['ssba_flattr_url'];
+	}
+
+	// flattr share link
+	$htmlShareButtons .= '<a id="ssba_flattr_share" href="https://flattr.com/submit/auto?\user_id=' . $arrSettings['ssba_flattr_user_id'] . '&url=' . $urlCurrentPage . '" ' . ($arrSettings['ssba_share_new_window'] == 'Y' ? 'target="_blank"' : NULL) . '>';
+	
+	// if image set is not custom
+	if ($arrSettings['ssba_image_set'] != 'custom') {
+	
+		// show ssba image
+		$htmlShareButtons .= '<img title="Flattr" class="ssba" alt="flattr" src="' . WP_PLUGIN_URL . '/simple-share-buttons-adder/buttons/' . $arrSettings['ssba_image_set'] . '/flattr.png" />';
+	}
+	
+	// if using custom images
+	else {
+	
+		// show custom image
+		$htmlShareButtons .= '<img title="Flattr" class="ssba" src="' . $arrSettings['ssba_custom_flattr'] . '" alt="flattr" />';
+	}
+	
+	// close href
+	$htmlShareButtons .= '</a>';
+	
+	// return share buttons
+	return $htmlShareButtons;
+}
+
+// get buffer button
+function ssba_buffer($arrSettings, $urlCurrentPage, $strPageTitle, $booShowShareCount) {
+
+	// buffer share link
+	$htmlShareButtons .= '<a id="ssba_buffer_share" href="https://bufferapp.com/add?url=' . $urlCurrentPage . '&text=' . ($arrSettings['ssba_buffer_text'] != '' ? $arrSettings['ssba_buffer_text'] : NULL) . ' ' . $strPageTitle . '" ' . ($arrSettings['ssba_share_new_window'] == 'Y' ? 'target="_blank"' : NULL) . '>';
+	
+	// if image set is not custom
+	if ($arrSettings['ssba_image_set'] != 'custom') {
+	
+		// show ssba image
+		$htmlShareButtons .= '<img title="Buffer" class="ssba" alt="buffer" src="' . WP_PLUGIN_URL . '/simple-share-buttons-adder/buttons/' . $arrSettings['ssba_image_set'] . '/buffer.png" />';
+	}
+	
+	// if using custom images
+	else {
+	
+		// show custom image
+		$htmlShareButtons .= '<img title="Buffer" class="ssba" src="' . $arrSettings['ssba_custom_buffer'] . '" alt="buffer" />';
+	}
+	
+	// close href
+	$htmlShareButtons .= '</a>';
+	
+	// return share buttons
+	return $htmlShareButtons;
+}
 	
 	// register shortcode [ssba] to show [ssba_hide]
-	add_shortcode( 'ssba', 		'ssba_buttons' );	
+	add_shortcode( 'ssba', 'ssba_buttons' );	
 	add_shortcode( 'ssba_hide', 'ssba_hide' );	
 	
 ?>

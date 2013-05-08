@@ -79,7 +79,6 @@ function ssba_admin_panel($arrSettings, $htmlSettingsSaved) {
 						$htmlShareButtonsForm .= '<td><select name="ssba_image_set" id="ssba_image_set">';
 						$htmlShareButtonsForm .= '<option ' . ($arrSettings['ssba_image_set'] == 'arbenta' 		? 'selected="selected"' : NULL) . ' value="arbenta">Arbenta</option>';
 						$htmlShareButtonsForm .= '<option ' . ($arrSettings['ssba_image_set'] == 'custom' 		? 'selected="selected"' : NULL) . ' value="custom">Custom</option>';
-						$htmlShareButtonsForm .= '<option ' . ($arrSettings['ssba_image_set'] == 'default' 		? 'selected="selected"' : NULL) . ' value="default">Default</option>';
 						$htmlShareButtonsForm .= '<option ' . ($arrSettings['ssba_image_set'] == 'metal' 		? 'selected="selected"' : NULL) . ' value="metal">Metal</option>';
 						$htmlShareButtonsForm .= '<option ' . ($arrSettings['ssba_image_set'] == 'pagepeel' 	? 'selected="selected"' : NULL) . ' value="pagepeel">Page Peel</option>';
 						$htmlShareButtonsForm .= '<option ' . ($arrSettings['ssba_image_set'] == 'plain' 		? 'selected="selected"' : NULL) . ' value="plain">Plain</option>';
@@ -97,6 +96,13 @@ function ssba_admin_panel($arrSettings, $htmlSettingsSaved) {
 				$htmlShareButtonsForm .= '<div id="ssba-custom-images"' . ($arrSettings['ssba_image_set'] != 'custom' ? 'style="display: none;"' : NULL) . '>';
 				$htmlShareButtonsForm .= '<h4>Custom Images</h4>';
 				$htmlShareButtonsForm .= '<table class="form-table">';
+					$htmlShareButtonsForm .= '<tr valign="top">';
+						$htmlShareButtonsForm .= '<th scope="row" style="width: 120px;"><label>Buffer:</label></th>';
+						$htmlShareButtonsForm .= '<td>';
+						$htmlShareButtonsForm .= '<input id="ssba_custom_buffer" type="text" size="50" name="ssba_custom_buffer" value="' . (isset($arrSettings['ssba_custom_buffer']) ? $arrSettings['ssba_custom_buffer'] : NULL)  . '" />';
+						$htmlShareButtonsForm .= '<input id="upload_buffer_button" data-ssba-input="ssba_custom_buffer" class="button customUpload" type="button" value="Upload Image" />';
+						$htmlShareButtonsForm .= '</td>';
+					$htmlShareButtonsForm .= '</tr>';
 					$htmlShareButtonsForm .= '<tr valign="top">';
 						$htmlShareButtonsForm .= '<th scope="row" style="width: 120px;"><label>Diggit:</label></th>';
 						$htmlShareButtonsForm .= '<td>';
@@ -116,6 +122,13 @@ function ssba_admin_panel($arrSettings, $htmlSettingsSaved) {
 						$htmlShareButtonsForm .= '<td>';
 						$htmlShareButtonsForm .= '<input id="ssba_custom_facebook" type="text" size="50" name="ssba_custom_facebook" value="' . (isset($arrSettings['ssba_custom_facebook']) ? $arrSettings['ssba_custom_facebook'] : NULL)  . '" />';
 						$htmlShareButtonsForm .= '<input id="upload_facebook_button" data-ssba-input="ssba_custom_facebook" class="button customUpload" type="button" value="Upload Image" />';
+						$htmlShareButtonsForm .= '</td>';
+					$htmlShareButtonsForm .= '</tr>';
+					$htmlShareButtonsForm .= '<tr valign="top">';
+						$htmlShareButtonsForm .= '<th scope="row" style="width: 120px;"><label>Flattr:</label></th>';
+						$htmlShareButtonsForm .= '<td>';
+						$htmlShareButtonsForm .= '<input id="ssba_custom_flattr" type="text" size="50" name="ssba_custom_flattr" value="' . (isset($arrSettings['ssba_custom_flattr']) ? $arrSettings['ssba_custom_flattr'] : NULL)  . '" />';
+						$htmlShareButtonsForm .= '<input id="upload_flattr_button" data-ssba-input="ssba_custom_flattr" class="button customUpload" type="button" value="Upload Image" />';
 						$htmlShareButtonsForm .= '</td>';
 					$htmlShareButtonsForm .= '</tr>';
 					$htmlShareButtonsForm .= '<tr valign="top">';
@@ -451,6 +464,7 @@ CODE;
 		$htmlShareButtonsForm .= '<div id="ssba_settings_advanced" style="display: none;">';
 			$htmlShareButtonsForm .= '<h2>Advanced Settings</h2>';
 			$htmlShareButtonsForm .= '<table class="form-table">';
+				$htmlShareButtonsForm .= '<tr><td><h3>General</h3></td></tr>';
 				$htmlShareButtonsForm .= '<tr valign="top">';
 					$htmlShareButtonsForm .= '<th scope="row" style="width: 120px;"><label>Links:</label></th>';
 					$htmlShareButtonsForm .= '<td>';
@@ -458,15 +472,39 @@ CODE;
 					$htmlShareButtonsForm .= '<p class="description">Unchecking this box will make links open in the same window</p></td>';
 				$htmlShareButtonsForm .= '</tr>';
 				$htmlShareButtonsForm .= '<tr valign="top">';
-					$htmlShareButtonsForm .= '<th scope="row" style="width: 120px;"><label for="ssba_email_message">Email Text:&nbsp;</label></th>';
-					$htmlShareButtonsForm .= '<td><input type="text" name="ssba_email_message" id="ssba_email_message" value="' . $arrSettings['ssba_email_message'] . '" />';
-					$htmlShareButtonsForm .= '<p class="description">Add some text included in the email when people share that way</p></td>';
-				$htmlShareButtonsForm .= '</tr>';
-				$htmlShareButtonsForm .= '<tr valign="top">';
 					$htmlShareButtonsForm .= '<th scope="row" style="width: 120px;"><label>Share Text Link:</label></th>';
 					$htmlShareButtonsForm .= '<td>';
 					$htmlShareButtonsForm .= 'Share text links to simplesharebuttons.com&nbsp;<input type="checkbox" name="ssba_link_to_ssb" id="ssba_link_to_ssb" ' . ($arrSettings['ssba_link_to_ssb'] == 'Y'   ? 'checked' : NULL) . ' value="Y" />';
 					$htmlShareButtonsForm .= '<p class="description">Leave this checked if you are feeling kind &#58;&#41;</p></td>';
+				$htmlShareButtonsForm .= '</tr>';
+				$htmlShareButtonsForm .= '<tr><td><h3>Email</h3></td></tr>';
+				$htmlShareButtonsForm .= '<tr valign="top">';
+					$htmlShareButtonsForm .= '<th scope="row" style="width: 120px;"><label for="ssba_email_message">Email Text:&nbsp;</label></th>';
+					$htmlShareButtonsForm .= '<td><input type="text" name="ssba_email_message" id="ssba_email_message" value="' . $arrSettings['ssba_email_message'] . '" />';
+					$htmlShareButtonsForm .= '<p class="description">Add some text included in the email when people share that way</p></td>';
+				$htmlShareButtonsForm .= '</tr>';
+				$htmlShareButtonsForm .= '<tr><td><h3>Twitter</h3></td></tr>';
+				$htmlShareButtonsForm .= '<tr valign="top">';
+					$htmlShareButtonsForm .= '<th scope="row" style="width: 120px;"><label for="ssba_twitter_text">Twitter Text:&nbsp;</label></th>';
+					$htmlShareButtonsForm .= '<td><input type="text" name="ssba_twitter_text" id="ssba_twitter_text" value="' . $arrSettings['ssba_twitter_text'] . '" />';
+					$htmlShareButtonsForm .= '<p class="description">Add some custom text for when people share via Twitter</p></td>';
+				$htmlShareButtonsForm .= '</tr>';
+				$htmlShareButtonsForm .= '<tr><td><h3>Flattr</h3></td></tr>';
+				$htmlShareButtonsForm .= '<tr valign="top">';
+					$htmlShareButtonsForm .= '<th scope="row" style="width: 120px;"><label for="ssba_flattr_user_id">Flattr User ID:&nbsp;</label></th>';
+					$htmlShareButtonsForm .= '<td><input type="text" name="ssba_flattr_user_id" id="ssba_flattr_user_id" value="' . $arrSettings['ssba_flattr_user_id'] . '" />';
+					$htmlShareButtonsForm .= '<p class="description">Enter your Flattr ID, e.g. davidsneal</p></td>';
+				$htmlShareButtonsForm .= '</tr>';
+				$htmlShareButtonsForm .= '<tr valign="top">';
+					$htmlShareButtonsForm .= '<th scope="row" style="width: 120px;"><label for="ssba_flattr_url">Flattr URL:&nbsp;</label></th>';
+					$htmlShareButtonsForm .= '<td><input type="text" name="ssba_flattr_url" id="ssba_flattr_url" value="' . $arrSettings['ssba_flattr_url'] . '" />';
+					$htmlShareButtonsForm .= '<p class="description">This option is perfect for dedicated sites, e.g. http://www.simplesharebuttons.com</p></td>';
+				$htmlShareButtonsForm .= '</tr>';
+				$htmlShareButtonsForm .= '<tr><td><h3>Buffer</h3></td></tr>';
+				$htmlShareButtonsForm .= '<tr valign="top">';
+					$htmlShareButtonsForm .= '<th scope="row" style="width: 120px;"><label for="ssba_buffer_text">Custom Buffer Text:&nbsp;</label></th>';
+					$htmlShareButtonsForm .= '<td><input type="text" name="ssba_buffer_text" id="ssba_buffer_text" value="' . $arrSettings['ssba_buffer_text'] . '" />';
+					$htmlShareButtonsForm .= '<p class="description">Add some custom text for when people share via Buffer</p></td>';
 				$htmlShareButtonsForm .= '</tr>';
 			$htmlShareButtonsForm .= '</table>';
 		$htmlShareButtonsForm .= '</div>';
@@ -480,21 +518,27 @@ CODE;
 		$htmlShareButtonsForm .= '</form>';
 		
 	//
-	$htmlShareButtonsForm .= '<div class="ssba-box ssba-shadow">
-								<div class="ssba-box-content">Quite a fair amount of time and effort has gone into Simple Share Buttons, any donations would be greatly appreciated, it will help me continue to be able to offer this for free!<p></p>
-			<p>
-					</p><div class="author-shortcodes">
-						<div class="author-inner">
-							<div class="author-image">
-						<img src="http://www.simplesharebuttons.com/wp-content/uploads/et_temp/david-44682_60x60.jpg" style="float: left; margin-right: 10px;" alt="">
-						<div class="author-overlay"></div>
-					</div> <!-- .author-image --> 
-					<div class="author-info">
-						<a href="http://www.davidsneal.co.uk" target="_blank">David Neal</a> – Married, father of one, with an (sometimes unhealthy) obsession with websites, coding and gaming. This plugin and its website has been funded by myself.
-					</div> <!-- .author-info -->
-						</div> <!-- .author-inner -->
-					</div> <!-- .author-shortcodes -->
-			<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top"><input type="image" alt="PayPal – The safer, easier way to pay online." name="submit" src="https://www.paypalobjects.com/en_GB/i/btn/btn_donate_LG.gif"> <img alt="" src="https://www.paypalobjects.com/en_GB/i/scr/pixel.gif" width="1" height="1" border="0"> </form></div></div>';
+	$htmlShareButtonsForm .= '	<div class="ssba-box ssba-shadow">
+									<div class="ssba-box-content">Quite a fair amount of time and effort has gone into Simple Share Buttons, any donations would be greatly appreciated, it will help me continue to be able to offer this for free!<p></p>
+										<div class="author-shortcodes">
+											<div class="author-inner">
+												<div class="author-image">
+													<img src="http://www.simplesharebuttons.com/wp-content/uploads/et_temp/david-44682_60x60.jpg" style="float: left; margin-right: 10px;" alt="">
+													<div class="author-overlay"></div>
+												</div> <!-- .author-image --> 
+												<div class="author-info">
+													<a href="http://www.davidsneal.co.uk" target="_blank">David Neal</a> – Married, father of one, with an (sometimes unhealthy) obsession with websites, coding and gaming. This plugin and its website has been funded by myself.
+												</div> <!-- .author-info -->
+											</div> <!-- .author-inner -->
+										</div> <!-- .author-shortcodes -->
+										<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top"><input type="image" alt="PayPal – The safer, easier way to pay online." name="submit" src="https://www.paypalobjects.com/en_GB/i/btn/btn_donate_LG.gif"> <img alt="" src="https://www.paypalobjects.com/en_GB/i/scr/pixel.gif" width="1" height="1" border="0"> </form>
+										<a href="http://flattr.com/thing/1328301/Simple-Share-Buttons" target="_blank"><img class="ssba-flattr-this" src="http://api.flattr.com/button/flattr-badge-large.png" alt="Flattr this" title="Flattr this" border="0" /></a>
+									</div>
+									<p>You can show your support for <strong>free</strong> too&#33;</p>
+									<p><a href="http://wordpress.org/support/view/plugin-reviews/simple-share-buttons-adder" target="_blank" title="Rate 5 Star">Rate the plugin</a></br>
+									<a href="http://twitter.com/share?url=http://www.simplesharebuttons.com&text=Simple Share Buttons" target="_blank" title="Tweet">Tweet about Simple Share Buttons</a></br>
+									<a href="http://www.facebook.com/sharer.php?u=http://www.simplesharebuttons.com" target="_blank" title="Share on Facebook">Share on Facebook</a></p>
+								</div>';
 
 	// close #wrap	
 	$htmlShareButtonsForm .= '</div>';
@@ -542,7 +586,7 @@ function getAvailableSSBA($strSelectedSSBA) {
 	$arrSelectedSSBA = explode(',', $strSelectedSSBA);
 	
 	// create array of all available buttons
-	$arrAllAvailableSSBA = array('diggit', 'email', 'facebook', 'google', 'linkedin', 'pinterest', 'reddit', 'stumbleupon', 'twitter');
+	$arrAllAvailableSSBA = array('buffer', 'diggit', 'email', 'facebook', 'flattr', 'google', 'linkedin', 'pinterest', 'reddit', 'stumbleupon', 'twitter');
 	
 	// explode saved include list and add to a new array
 	$arrAvailableSSBA = array_diff($arrAllAvailableSSBA, $arrSelectedSSBA);

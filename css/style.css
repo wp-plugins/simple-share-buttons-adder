@@ -58,7 +58,7 @@ font-size: 15px !important;
 .connectedSortable { 
 background-color: #ffffff;
 border: 1px solid #dfdfdf;
-min-height: 340px;
+min-height: 412px;
 min-width: 150px;
 font-size: 12px;
 font-weight: light;
@@ -96,4 +96,10 @@ border: 1px solid #dfdfdf;
 .ssba-shadow .ssba-box-content {
 color: #737373;
 background: #f1f1f1;
+}
+
+.ssba-flattr-this {
+float: right;
+margin-top: -30px;
+margin-right: 225px;
 }

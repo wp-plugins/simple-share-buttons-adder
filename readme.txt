@@ -1,10 +1,10 @@
 ﻿=== Simple Share Buttons Adder ===
 Contributors: DavidoffNeal
-Donate link: http://www.simplesharebuttons.com/donate/
+Donate link: http://www.davidsneal.co.uk/contributions
 Tags: share buttons, facebook, twitter, google+, share, share links, stumble upon, linkedin, pinterest
 Requires at least: 3.0.1
 Tested up to: 3.5.1
-Stable tag: 2.4
+Stable tag: 2.5
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -15,8 +15,6 @@ A simple plugin that enables you to add share buttons to all of your posts and/o
 The Simple Share Buttons Adder does exactly what it says on the tin – adds share buttons to all of your posts and pages, simply.
 
 No hotlinking to another website to slow downloading or for tracking use, it's simple, as promised.
-
-Find out more at <a href="http://www.simplesharebuttons.com" target="_blank">SimpleShareButtons.com</a>
 
 You can even upload and use your own custom images if you wish!
 
@@ -33,8 +31,6 @@ The Simple Share Buttons Adder utilises features that, as a WordPress user, you 
 
 
 == Frequently Asked Questions ==
-
-A few FAQs can be found <a href="http://www.simplesharebuttons.com/wordpress-faq/" target="_blank">on this page</a>.
 
 Please visit the <a href="http://www.simplesharebuttons.com/forums/forum/wordpress-forum/">WordPress Support Forum</a> for any assistance you may need.
 
@@ -53,6 +49,15 @@ A step by step guide on how to configure this plugin can be found <a href="http:
 9. This is an example of a set of Share Buttons you can add using Simple Share Buttons Adder.
 
 == Changelog ==
+
+= 2.5 =
+* Further Twitter customisation for Twitter under 'Advanced' options!
+* Buffer and Flattr buttons added! (share counts still to come!) 
+* Flattr requires you to enter your user ID under the advanced tab, you must also submit pages/posts here http://flattr.com/submit
+* You can now set a specified URL and Title when using shortcode - [ssba url="http://www.simplesharebuttons.com" title="Simple Share Buttons"]! 
+* When doing the above, both a title and url must be specified.
+* 'Default' image set has been removed! If you are currently using this image set, it will be replaced with 'Somacro'!
+* Only relevant fonts are loaded if specified.
 
 = 2.4 =
 * The one people have been waiting for!

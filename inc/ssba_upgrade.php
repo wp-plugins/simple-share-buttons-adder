@@ -84,6 +84,8 @@ function upgrade_ssba($arrSettings) {
 	add_option('ssba_custom_reddit', 		'');
 	add_option('ssba_custom_stumbleupon', 	'');
 	add_option('ssba_custom_pinterest', 	'');
+	add_option('ssba_custom_buffer', 		'');
+	add_option('ssba_custom_flattr', 		'');
 	
 	// include
 	delete_option('ssba_email', 			'');
@@ -105,6 +107,19 @@ function upgrade_ssba($arrSettings) {
 	add_option('ssba_share_count_style',	'default');
 	add_option('ssba_share_count_css',		'');
 	add_option('ssba_share_count_once',		'Y');
+	
+	// new for 2.5
+	add_option('ssba_twitter_text',			'');
+	add_option('ssba_buffer_text',			'');
+	add_option('ssba_flattr_user_id',		'');
+	add_option('ssba_flattr_url',			'');
+	
+	// default image set removed for 2.5
+	if ($arrSettings['ssba_image_set'] == 'default') {
+
+		// update image set to somacro
+		update_option('ssba_image_set', 'somacro');
+	}
 
 	// check if using 1.0
 	if ($arrSettings['ssba_version'] == '1.0') {
@@ -121,7 +136,7 @@ function upgrade_ssba($arrSettings) {
 	add_option('ssba_text_placement', 	'left');
 
 	// update version number
-	update_option('ssba_version', '2.4');
+	update_option('ssba_version', '2.5');
 }
 	
 ?>
