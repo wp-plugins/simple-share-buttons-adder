@@ -329,7 +329,7 @@ GNU General Public License for more details.
 			update_option('ssba_custom_pinterest', 		$_POST['ssba_custom_pinterest']);
 			update_option('ssba_custom_buffer', 		$_POST['ssba_custom_buffer']);
 			update_option('ssba_custom_flattr', 		$_POST['ssba_custom_flattr']);
-			update_option('ssba_custom_flattr', 		$_POST['ssba_custom_tumblr']);
+			update_option('ssba_custom_tumblr', 		$_POST['ssba_custom_tumblr']);
 
 			// show settings saved message
 			$htmlSettingsSaved = '<div id="setting-error-settings_updated" class="updated settings-error"><p><strong>Your settings have been saved. <a href="' . site_url() . '">Visit your site</a> to see how your buttons look!</strong></p></div>';
