@@ -88,6 +88,7 @@ GNU General Public License for more details.
 		add_option('ssba_custom_pinterest', 	'');
 		add_option('ssba_custom_buffer', 		'');
 		add_option('ssba_custom_flattr', 		'');
+		add_option('ssba_custom_tumblr', 		'');
 	}
 	
 	// uninstall ssba
@@ -152,6 +153,7 @@ GNU General Public License for more details.
 		delete_option('ssba_custom_pinterest');
 		delete_option('ssba_custom_buffer');
 		delete_option('ssba_custom_flattr');
+		delete_option('ssba_custom_tumblr');
 	}
 
 	// --------- ADMIN BITS ------------ //
@@ -327,6 +329,7 @@ GNU General Public License for more details.
 			update_option('ssba_custom_pinterest', 		$_POST['ssba_custom_pinterest']);
 			update_option('ssba_custom_buffer', 		$_POST['ssba_custom_buffer']);
 			update_option('ssba_custom_flattr', 		$_POST['ssba_custom_flattr']);
+			update_option('ssba_custom_flattr', 		$_POST['ssba_custom_tumblr']);
 
 			// show settings saved message
 			$htmlSettingsSaved = '<div id="setting-error-settings_updated" class="updated settings-error"><p><strong>Your settings have been saved. <a href="' . site_url() . '">Visit your site</a> to see how your buttons look!</strong></p></div>';

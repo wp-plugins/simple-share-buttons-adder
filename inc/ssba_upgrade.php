@@ -121,16 +121,8 @@ function upgrade_ssba($arrSettings) {
 		update_option('ssba_image_set', 'somacro');
 	}
 
-	// check if using 1.0
-	if ($arrSettings['ssba_version'] == '1.0') {
-
-		// add options that were new for 1.1
-		// NOTE: 1.1 and above will have these already
-		add_option('ssba_size', 		'35');
-		add_option('ssba_linkedin', 	'');
-		add_option('ssba_stumbleupon', 	'');
-		add_option('ssba_pinterest', 	'');
-	}
+	// new for 2.6
+	add_option('ssba_custom_tumblr', 	'');
 
 	// add text placement option, default to left
 	add_option('ssba_text_placement', 	'left');
