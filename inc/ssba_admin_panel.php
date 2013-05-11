@@ -167,6 +167,13 @@ function ssba_admin_panel($arrSettings, $htmlSettingsSaved) {
 						$htmlShareButtonsForm .= '</td>';
 					$htmlShareButtonsForm .= '</tr>';
 					$htmlShareButtonsForm .= '<tr valign="top">';
+						$htmlShareButtonsForm .= '<th scope="row" style="width: 120px;"><label>Tumblr:</label></th>';
+						$htmlShareButtonsForm .= '<td>';
+						$htmlShareButtonsForm .= '<input id="ssba_custom_tumblr" type="text" size="50" name="ssba_custom_tumblr" value="' . (isset($arrSettings['ssba_custom_tumblr']) ? $arrSettings['ssba_custom_tumblr'] : NULL)  . '" />';
+						$htmlShareButtonsForm .= '<input id="upload_tumblr_button" data-ssba-input="ssba_custom_tumblr" class="button customUpload" type="button" value="Upload Image" />';
+						$htmlShareButtonsForm .= '</td>';
+					$htmlShareButtonsForm .= '</tr>';
+					$htmlShareButtonsForm .= '<tr valign="top">';
 						$htmlShareButtonsForm .= '<th scope="row" style="width: 120px;"><label>Twitter:</label></th>';
 						$htmlShareButtonsForm .= '<td>';
 						$htmlShareButtonsForm .= '<input id="ssba_custom_twitter" type="text" size="50" name="ssba_custom_twitter" value="' . (isset($arrSettings['ssba_custom_twitter']) ? $arrSettings['ssba_custom_twitter'] : NULL)  . '" />';
