@@ -88,7 +88,7 @@ function ssba_admin_panel($arrSettings, $htmlSettingsSaved) {
 						$htmlShareButtonsForm .= '<option ' . ($arrSettings['ssba_image_set'] == 'somacro' 		? 'selected="selected"' : NULL) . ' value="somacro">Somacro</option>';
 						$htmlShareButtonsForm .= '</select>';
 						$htmlShareButtonsForm .= '<p class="description"><a href="http://www.simplesharebuttons.com/button-sets/" target="_blank">Click here</a> to preview the button sets</br>';
-						$htmlShareButtonsForm .= "Choose your favourite set of buttons, or set to 'Custom' to choose your own.</p></td>";
+						$htmlShareButtonsForm .= "Choose your favourite set of buttons, or set to 'Custom' to choose your own.</br>You can order your own <a href='http://www.simplesharebuttons.com/custom-share-buttons/' target='blank'><strong>custom-coloured share buttons from here</strong></a>!</p></td>";
 					$htmlShareButtonsForm .= '</tr>';
 				$htmlShareButtonsForm .= '</table>';
 				
@@ -586,7 +586,7 @@ function getAvailableSSBA($strSelectedSSBA) {
 	$arrSelectedSSBA = explode(',', $strSelectedSSBA);
 	
 	// create array of all available buttons
-	$arrAllAvailableSSBA = array('buffer', 'diggit', 'email', 'facebook', 'flattr', 'google', 'linkedin', 'pinterest', 'reddit', 'stumbleupon', 'twitter');
+	$arrAllAvailableSSBA = array('buffer', 'diggit', 'email', 'facebook', 'flattr', 'google', 'linkedin', 'pinterest', 'reddit', 'stumbleupon', 'tumblr', 'twitter');
 	
 	// explode saved include list and add to a new array
 	$arrAvailableSSBA = array_diff($arrAllAvailableSSBA, $arrSelectedSSBA);

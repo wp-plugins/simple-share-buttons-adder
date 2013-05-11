@@ -58,7 +58,7 @@ font-size: 15px !important;
 .connectedSortable { 
 background-color: #ffffff;
 border: 1px solid #dfdfdf;
-min-height: 412px;
+min-height: 396px;
 min-width: 150px;
 font-size: 12px;
 font-weight: light;
@@ -78,7 +78,7 @@ background-image: -webkit-gradient(linear,left bottom,left top,from(#ececec),to(
 background-image: -webkit-linear-gradient(bottom,#ececec,#f9f9f9);
 background-image: -moz-linear-gradient(bottom,#ececec,#f9f9f9);
 background-image: -o-linear-gradient(bottom,#ececec,#f9f9f9);
-background-image: linear-gradient(to top,#ececec,#f9f9f9);border: 1px solid #c0bebe; margin: 5px 5px 5px; padding: 5px; font-size: 1.2em; width: 120px; }
+background-image: linear-gradient(to top,#ececec,#f9f9f9);border: 1px solid #c0bebe; margin: 0px 0px 5px; padding: 3px; font-size: 1.2em; width: 120px; }
 
 .available { border-left: 1px solid #dfdfdf; border-top: 1px solid #dfdfdf; border-bottom: 1px solid #dfdfdf; }
 .chosen { padding: 10px 20px 10px 10px; border-right: 1px solid #dfdfdf; border-top: 1px solid #dfdfdf; border-bottom: 1px solid #dfdfdf; }

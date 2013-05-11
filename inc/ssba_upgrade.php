@@ -136,7 +136,7 @@ function upgrade_ssba($arrSettings) {
 	add_option('ssba_text_placement', 	'left');
 
 	// update version number
-	update_option('ssba_version', '2.5');
+	update_option('ssba_version', '2.6');
 }
 	
 ?>

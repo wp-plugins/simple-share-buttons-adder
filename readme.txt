@@ -4,7 +4,7 @@ Donate link: http://www.davidsneal.co.uk/contributions
 Tags: share buttons, facebook, twitter, google+, share, share links, stumble upon, linkedin, pinterest
 Requires at least: 3.0.1
 Tested up to: 3.5.1
-Stable tag: 2.5
+Stable tag: 2.6
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -49,6 +49,10 @@ A step by step guide on how to configure this plugin can be found <a href="http:
 9. This is an example of a set of Share Buttons you can add using Simple Share Buttons Adder.
 
 == Changelog ==
+
+= 2.6 =
+* Tumblr button added!
+* You can now order your own custom-colour share buttons!! http://www.simplesharebuttons.com/custom-share-buttons/
 
 = 2.5 =
 * Further Twitter customisation for Twitter under 'Advanced' options!

@@ -3,7 +3,7 @@
 Plugin Name: Simple Share Buttons Adder
 Plugin URI: http://www.simplesharebuttons.com
 Description: A simple plugin that enables you to add share buttons to all of your posts and/or pages.
-Version: 2.5
+Version: 2.6
 Author: David S. Neal
 Author URI: http://www.davidsneal.co.uk/
 License: GPLv2
@@ -35,7 +35,7 @@ GNU General Public License for more details.
 	function ssba_activate() {
 	
 		// insert default options for ssba
-		add_option('ssba_version', 				'2.5');
+		add_option('ssba_version', 				'2.6');
 		add_option('ssba_image_set', 			'somacro');
 		add_option('ssba_size', 				'35');
 		add_option('ssba_pages',				'');
@@ -240,8 +240,8 @@ GNU General Public License for more details.
 		// query the db for current ssba settings
 		$arrSettings = get_ssba_settings();
 
-		// check if not yet updated to 2.5
-		if ($arrSettings['ssba_version'] != '2.5') {
+		// check if not yet updated to 2.6
+		if ($arrSettings['ssba_version'] != '2.6') {
 		
 			// include then run the upgrade script
 			include_once (plugin_dir_path(__FILE__) . '/inc/ssba_upgrade.php');
@@ -1165,6 +1165,47 @@ function ssba_buffer($arrSettings, $urlCurrentPage, $strPageTitle, $booShowShare
 	
 		// show custom image
 		$htmlShareButtons .= '<img title="Buffer" class="ssba" src="' . $arrSettings['ssba_custom_buffer'] . '" alt="buffer" />';
+	}
+	
+	// close href
+	$htmlShareButtons .= '</a>';
+	
+	// return share buttons
+	return $htmlShareButtons;
+}
+
+// get tumblr button
+function ssba_tumblr($arrSettings, $urlCurrentPage, $strPageTitle, $booShowShareCount) {
+
+	// check if http:// is included
+	if (preg_match('[http://]', $urlCurrentPage)) {
+	
+		// remove http:// from URL
+		$urlCurrentPage = str_replace('http://', '', $urlCurrentPage);			
+	} else if (preg_match('[https://]', $urlCurrentPage)) { // check if https:// is included
+	
+		// remove http:// from URL
+		$urlCurrentPage = str_replace('https://', '', $urlCurrentPage);			
+	}
+
+	// strip http:// or https:// from URL (tumblr doesn't work with this set)
+	$urlCurrentPage =  str_replace("http://", '', $urlCurrentPage);  
+
+	// tumblr share link
+	$htmlShareButtons .= '<a id="ssba_tumblr_share" href="http://www.tumblr.com/share/link?url=' . $urlCurrentPage . '&name=' . $strPageTitle . '" ' . ($arrSettings['ssba_share_new_window'] == 'Y' ? 'target="_blank"' : NULL) . '>';
+	
+	// if image set is not custom
+	if ($arrSettings['ssba_image_set'] != 'custom') {
+	
+		// show ssba image
+		$htmlShareButtons .= '<img title="tumblr" class="ssba" alt="tumblr" src="' . WP_PLUGIN_URL . '/simple-share-buttons-adder/buttons/' . $arrSettings['ssba_image_set'] . '/tumblr.png" />';
+	}
+	
+	// if using custom images
+	else {
+	
+		// show custom image
+		$htmlShareButtons .= '<img title="tumblr" class="ssba" src="' . $arrSettings['ssba_custom_tumblr'] . '" alt="tumblr" />';
 	}
 	
 	// close href
