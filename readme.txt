@@ -14,6 +14,8 @@ A simple plugin that enables you to add share buttons to all of your posts and/o
 
 The Simple Share Buttons Adder does exactly what it says on the tin – adds share buttons to all of your posts and pages, simply.
 
+This plugin has a dedicated website! Check out <a href="http://www.simplesharebuttons.com" target="_blank">www.simplesharebuttons.com</a>
+
 No hotlinking to another website to slow downloading or for tracking use, it's simple, as promised.
 
 You can even upload and use your own custom images if you wish!
@@ -31,6 +33,8 @@ The Simple Share Buttons Adder utilises features that, as a WordPress user, you 
 
 
 == Frequently Asked Questions ==
+
+There is a dedicated page for FAQs on the <a href="http://www.simplesharebuttons.com/wordpress-faq/" target="_blank">Simple Share Buttons website</a>.
 
 Please visit the <a href="http://www.simplesharebuttons.com/forums/forum/wordpress-forum/">WordPress Support Forum</a> for any assistance you may need.
 
