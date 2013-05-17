@@ -555,13 +555,19 @@ CODE;
 											<td><a href="http://flattr.com/thing/1328301/Simple-Share-Buttons" target="_blank"><img class="ssba-flattr-this" src="' . plugins_url() . '/simple-share-buttons-adder/images/flattr.png" alt="Flattr this" title="Flattr this" border="0" /></a>
 											<td><a href="https://www.freelancer.co.uk/u/davidsneal.html" target="_blank"><img src="' . plugins_url() . '/simple-share-buttons-adder/images/freelancer.png" title="Hire me on Freelancer!" /></a>
 										</tr>
-									</table></center>
+									</table>
 									<p>You can show your support for <strong>free</strong> too&#33;</p>
-									<p><a href="http://wordpress.org/support/view/plugin-reviews/simple-share-buttons-adder" target="_blank" title="Rate 5 Star">Rate the plugin</a></br>
-									<a href="http://twitter.com/share?url=http://www.simplesharebuttons.com&text=Simple Share Buttons" target="_blank" title="Tweet">Tweet about Simple Share Buttons</a></br>
-									<a href="http://www.facebook.com/sharer.php?u=http://www.simplesharebuttons.com" target="_blank" title="Share on Facebook">Share on Facebook</a></p>
+									<table class="centerme">
+										<tr>
+											<td><a href="http://wordpress.org/support/view/plugin-reviews/simple-share-buttons-adder" target="_blank" title="Rate 5 Star">Rate the plugin<br/><img src="' . plugins_url() . '/simple-share-buttons-adder/images/stars.png"></a></br></td>
+										<tr>
+											<td><a href="http://twitter.com/share?url=http://www.simplesharebuttons.com&text=Simple Share Buttons" target="_blank" title="Tweet">Tweet about Simple Share Buttons<br/><img src="' . plugins_url() . '/simple-share-buttons-adder/images/tweet.png"></a></td>
+										<tr>
+											<td><a href="http://www.facebook.com/sharer.php?u=http://www.simplesharebuttons.com" target="_blank" title="Share on Facebook">Share on Facebook<br/><img src="' . plugins_url() . '/simple-share-buttons-adder/images/share.png"></a></td>
+										</tr>
+									</table>
 									<div class="et-box et-bio">
-										<div class="et-box-content"><center>
+										<div class="et-box-content">
 										<h2>Order your custom buttons now for just £2!<p></p>
 										<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
 										<input type="hidden" name="cmd" value="_s-xclick">
@@ -570,7 +576,8 @@ CODE;
 										<img alt="" border="0" src="https://www.paypalobjects.com/en_GB/i/scr/pixel.gif" width="1" height="1">
 										</form>
 										<p class="description"><a href="http://www.simplesharebuttons.com/custom-share-buttons/" target="blank">Find out more here</a>!</p>
-										</h2></center></div></div>
+										</h2>
+									</center></div></div>
 								</div>';
 
 	// close author cell and close table

@@ -97,3 +97,9 @@ border: 1px solid #dfdfdf;
 color: #737373;
 background: #f1f1f1;
 }
+
+.centerme {
+text-align: center;
+}
+
+.centerme a { text-decoration: none; font-weight: bold; }
