@@ -34,6 +34,9 @@ function ssba_admin_panel($arrSettings, $htmlSettingsSaved) {
 	
 	// html form
 	$htmlShareButtonsForm .= '<div class="wrap">';
+		
+		// create a table and cell to contain all minus the author cell
+		$htmlShareButtonsForm .= '<table><tr><td style="width: 610px; vertical-align: top;">';
 	
 		// show settings saved message if set
 		(isset($htmlSettingsSaved) ? $htmlShareButtonsForm .= $htmlSettingsSaved : NULL);
@@ -371,7 +374,6 @@ CODE;
 			// toggle setting options
 			$htmlShareButtonsForm .= '<div id="ssba_toggle_styling" style="margin: 10px 0 20px;">';
 			$htmlShareButtonsForm .= '<p>Toggle between <a href="javascript:;" id="ssba_counter_normal_settings">assisted styling</a> and <a href="javascript:;" id="ssba_counter_custom_styles">custom CSS</a>.</p>';
-			$htmlShareButtonsForm .= '<p><strong>The share counters option is brand new for version 2.4. It is possible that there may be a couple of teething problems during its rollout, please raise any issues by adding a ticket in the <a href="http://www.simplesharebuttons.com/forums/forum/wordpress-forum/" target="_blank">Support Forum</a>.</strong></p>';
 			$htmlShareButtonsForm .= '</div>';
 			
 			// activate option
@@ -487,13 +489,13 @@ CODE;
 				$htmlShareButtonsForm .= '<tr><td><h3>Email</h3></td></tr>';
 				$htmlShareButtonsForm .= '<tr valign="top">';
 					$htmlShareButtonsForm .= '<th scope="row" style="width: 120px;"><label for="ssba_email_message">Email Text:&nbsp;</label></th>';
-					$htmlShareButtonsForm .= '<td><input type="text" name="ssba_email_message" id="ssba_email_message" value="' . $arrSettings['ssba_email_message'] . '" />';
+					$htmlShareButtonsForm .= '<td><input type="text" name="ssba_email_message" style="width: 250px;" id="ssba_email_message" value="' . $arrSettings['ssba_email_message'] . '" />';
 					$htmlShareButtonsForm .= '<p class="description">Add some text included in the email when people share that way</p></td>';
 				$htmlShareButtonsForm .= '</tr>';
 				$htmlShareButtonsForm .= '<tr><td><h3>Twitter</h3></td></tr>';
 				$htmlShareButtonsForm .= '<tr valign="top">';
 					$htmlShareButtonsForm .= '<th scope="row" style="width: 120px;"><label for="ssba_twitter_text">Twitter Text:&nbsp;</label></th>';
-					$htmlShareButtonsForm .= '<td><input type="text" name="ssba_twitter_text" id="ssba_twitter_text" value="' . $arrSettings['ssba_twitter_text'] . '" />';
+					$htmlShareButtonsForm .= '<td><input type="text" name="ssba_twitter_text" style="width: 250px;" id="ssba_twitter_text" value="' . $arrSettings['ssba_twitter_text'] . '" />';
 					$htmlShareButtonsForm .= '<p class="description">Add some custom text for when people share via Twitter</p></td>';
 				$htmlShareButtonsForm .= '</tr>';
 				$htmlShareButtonsForm .= '<tr><td><h3>Flattr</h3></td></tr>';
@@ -504,13 +506,13 @@ CODE;
 				$htmlShareButtonsForm .= '</tr>';
 				$htmlShareButtonsForm .= '<tr valign="top">';
 					$htmlShareButtonsForm .= '<th scope="row" style="width: 120px;"><label for="ssba_flattr_url">Flattr URL:&nbsp;</label></th>';
-					$htmlShareButtonsForm .= '<td><input type="text" name="ssba_flattr_url" id="ssba_flattr_url" value="' . $arrSettings['ssba_flattr_url'] . '" />';
+					$htmlShareButtonsForm .= '<td><input type="text" name="ssba_flattr_url" style="width: 250px;" id="ssba_flattr_url" value="' . $arrSettings['ssba_flattr_url'] . '" />';
 					$htmlShareButtonsForm .= '<p class="description">This option is perfect for dedicated sites, e.g. http://www.simplesharebuttons.com</p></td>';
 				$htmlShareButtonsForm .= '</tr>';
 				$htmlShareButtonsForm .= '<tr><td><h3>Buffer</h3></td></tr>';
 				$htmlShareButtonsForm .= '<tr valign="top">';
 					$htmlShareButtonsForm .= '<th scope="row" style="width: 120px;"><label for="ssba_buffer_text">Custom Buffer Text:&nbsp;</label></th>';
-					$htmlShareButtonsForm .= '<td><input type="text" name="ssba_buffer_text" id="ssba_buffer_text" value="' . $arrSettings['ssba_buffer_text'] . '" />';
+					$htmlShareButtonsForm .= '<td><input type="text" name="ssba_buffer_text" style="width: 250px;" id="ssba_buffer_text" value="' . $arrSettings['ssba_buffer_text'] . '" />';
 					$htmlShareButtonsForm .= '<p class="description">Add some custom text for when people share via Buffer</p></td>';
 				$htmlShareButtonsForm .= '</tr>';
 			$htmlShareButtonsForm .= '</table>';
@@ -524,7 +526,10 @@ CODE;
 			$htmlShareButtonsForm .= '</table>';
 		$htmlShareButtonsForm .= '</form>';
 		
-	//
+	// close form cell and open author one
+	$htmlShareButtonsForm .= '</td><td style="vertical-align: top;">';	
+	
+	// author div
 	$htmlShareButtonsForm .= '	<div class="ssba-box ssba-shadow">
 									<div class="ssba-box-content">Quite a fair amount of time and effort has gone into Simple Share Buttons, any donations would be greatly appreciated, it will help me continue to be able to offer this for free!<p></p>
 										<div class="author-shortcodes">
@@ -538,15 +543,39 @@ CODE;
 												</div> <!-- .author-info -->
 											</div> <!-- .author-inner -->
 										</div> <!-- .author-shortcodes -->
-										<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top"><input type="image" alt="PayPal – The safer, easier way to pay online." name="submit" src="https://www.paypalobjects.com/en_GB/i/btn/btn_donate_LG.gif"> <img alt="" src="https://www.paypalobjects.com/en_GB/i/scr/pixel.gif" width="1" height="1" border="0"> </form>
-										<a href="http://flattr.com/thing/1328301/Simple-Share-Buttons" target="_blank"><img class="ssba-flattr-this" src="http://api.flattr.com/button/flattr-badge-large.png" alt="Flattr this" title="Flattr this" border="0" /></a>
-									</div>
+									</div></br>
+									<center><table>
+										<tr>
+											<td><form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+													<input type="hidden" name="cmd" value="_s-xclick">
+													<input type="hidden" name="hosted_button_id" value="4TLXT69XCP3B8">
+													<input type="image" src="' . plugins_url() . '/simple-share-buttons-adder/images/paypal.png" border="0" name="submit" alt="PayPal – The safer, easier way to pay online.">
+													<img alt="" border="0" src="' . plugins_url() . '/simple-share-buttons-adder/images/paypal.png" width="1" height="1">
+												</form>
+											<td><a href="http://flattr.com/thing/1328301/Simple-Share-Buttons" target="_blank"><img class="ssba-flattr-this" src="' . plugins_url() . '/simple-share-buttons-adder/images/flattr.png" alt="Flattr this" title="Flattr this" border="0" /></a>
+											<td><a href="https://www.freelancer.co.uk/u/davidsneal.html" target="_blank"><img src="' . plugins_url() . '/simple-share-buttons-adder/images/freelancer.png" title="Hire me on Freelancer!" /></a>
+										</tr>
+									</table></center>
 									<p>You can show your support for <strong>free</strong> too&#33;</p>
 									<p><a href="http://wordpress.org/support/view/plugin-reviews/simple-share-buttons-adder" target="_blank" title="Rate 5 Star">Rate the plugin</a></br>
 									<a href="http://twitter.com/share?url=http://www.simplesharebuttons.com&text=Simple Share Buttons" target="_blank" title="Tweet">Tweet about Simple Share Buttons</a></br>
 									<a href="http://www.facebook.com/sharer.php?u=http://www.simplesharebuttons.com" target="_blank" title="Share on Facebook">Share on Facebook</a></p>
+									<div class="et-box et-bio">
+										<div class="et-box-content"><center>
+										<h2>Order your custom buttons now for just £2!<p></p>
+										<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+										<input type="hidden" name="cmd" value="_s-xclick">
+										<input type="hidden" name="hosted_button_id" value="T3LP29GX5CGZW">
+										<input type="image" src="https://www.paypalobjects.com/en_US/GB/i/btn/btn_buynowCC_LG.gif" border="0" name="submit" alt="PayPal – The safer, easier way to pay online.">
+										<img alt="" border="0" src="https://www.paypalobjects.com/en_GB/i/scr/pixel.gif" width="1" height="1">
+										</form>
+										<p class="description"><a href="http://www.simplesharebuttons.com/custom-share-buttons/" target="blank">Find out more here</a>!</p>
+										</h2></center></div></div>
 								</div>';
 
+	// close author cell and close table
+	$htmlShareButtonsForm .= '</td></tr></table>';							
+								
 	// close #wrap	
 	$htmlShareButtonsForm .= '</div>';
 	
