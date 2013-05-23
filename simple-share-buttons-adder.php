@@ -3,7 +3,7 @@
 Plugin Name: Simple Share Buttons Adder
 Plugin URI: http://www.simplesharebuttons.com
 Description: A simple plugin that enables you to add share buttons to all of your posts and/or pages.
-Version: 2.8
+Version: 2.9
 Author: David S. Neal
 Author URI: http://www.davidsneal.co.uk/
 License: GPLv2
@@ -35,7 +35,7 @@ GNU General Public License for more details.
 	function ssba_activate() {
 	
 		// insert default options for ssba
-		add_option('ssba_version', 				'2.8');
+		add_option('ssba_version', 				'2.9');
 		add_option('ssba_image_set', 			'somacro');
 		add_option('ssba_size', 				'35');
 		add_option('ssba_pages',				'');
@@ -317,8 +317,8 @@ GNU General Public License for more details.
 		// query the db for current ssba settings
 		$arrSettings = get_ssba_settings();
 
-		// check if not yet updated to 2.8
-		if ($arrSettings['ssba_version'] != '2.8') {
+		// check if not yet updated to 2.9
+		if ($arrSettings['ssba_version'] != '2.9') {
 		
 			// include then run the upgrade script
 			include_once (plugin_dir_path(__FILE__) . '/inc/ssba_upgrade.php');
@@ -754,7 +754,7 @@ GNU General Public License for more details.
 	}
 	
 	// shorten URL with bit.ly
-	function ssba_shorten_url($urlLong) {
+	function shorten_url($urlLong) {
 	
 		// get results from bitly and return short url
 		$hmtlBitly = file_get_contents('http://api.bit.ly/v3/shorten?login=simplesharebuttons&apiKey=R_555eddf50da1370b8ab75670a3de2fe6&longUrl=' . $urlLong);
@@ -762,7 +762,14 @@ GNU General Public License for more details.
 		$urlShort =  $arrBitly['data'];
 		$urlShort =  $urlShort['url'];
 		$hmtlBitly = str_replace('[\]', '', $hmtlBitly);
-		return $urlShort;
+		
+		if ($urlShort != '') {
+		
+			return $urlShort;
+		} else {
+		
+			return $urlLong;
+		}; 
 	}
 	
 	// get set share buttons
@@ -860,7 +867,7 @@ function ssba_twitter($arrSettings, $urlCurrentPage, $strPageTitle, $booShowShar
 	$strPageTitle = str_replace('%', ' percent', $strPageTitle);
 
 	// twitter share link
-	$htmlShareButtons .= '<a id="ssba_twitter_share" href="http://twitter.com/share?url=' . ssba_shorten_url($urlCurrentPage) . '&text=' . ($arrSettings['ssba_twitter_text'] != '' ? $arrSettings['ssba_twitter_text'] : NULL) . ' ' . $strPageTitle . '" ' . ($arrSettings['ssba_share_new_window'] == 'Y' ? 'target="_blank"' : NULL) . '>';
+	$htmlShareButtons .= '<a id="ssba_twitter_share" href="http://twitter.com/share?url=' . shorten_url($urlCurrentPage) . '&text=' . ($arrSettings['ssba_twitter_text'] != '' ? $arrSettings['ssba_twitter_text'] : NULL) . ' ' . $strPageTitle . '" ' . ($arrSettings['ssba_share_new_window'] == 'Y' ? 'target="_blank"' : NULL) . '>';
 	
 	// if image set is not custom
 	if ($arrSettings['ssba_image_set'] != 'custom') {

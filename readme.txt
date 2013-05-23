@@ -4,7 +4,7 @@ Donate link: http://www.davidsneal.co.uk/contributions
 Tags: share buttons, facebook, twitter, google+, share, share links, stumble upon, linkedin, pinterest
 Requires at least: 3.0.1
 Tested up to: 3.5.1
-Stable tag: 2.7
+Stable tag: 2.9
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -55,6 +55,10 @@ A step by step guide on how to configure this plugin can be found <a href="http:
 9. Use the widget option to add share buttons!
 
 == Changelog ==
+
+= 2.9 =
+* Fizes a clash of a function name with other plugins.
+* Fixes blank URL for Twitter when Bit.ly limit is exceeded.
 
 = 2.8 =
 * Now you can use the widget option to add your share buttons!
