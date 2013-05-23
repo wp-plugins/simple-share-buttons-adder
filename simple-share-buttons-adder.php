@@ -754,7 +754,7 @@ GNU General Public License for more details.
 	}
 	
 	// shorten URL with bit.ly
-	function shorten_url($urlLong) {
+	function ssba_shorten($urlLong) {
 	
 		// get results from bitly and return short url
 		$hmtlBitly = file_get_contents('http://api.bit.ly/v3/shorten?login=simplesharebuttons&apiKey=R_555eddf50da1370b8ab75670a3de2fe6&longUrl=' . $urlLong);
@@ -867,7 +867,7 @@ function ssba_twitter($arrSettings, $urlCurrentPage, $strPageTitle, $booShowShar
 	$strPageTitle = str_replace('%', ' percent', $strPageTitle);
 
 	// twitter share link
-	$htmlShareButtons .= '<a id="ssba_twitter_share" href="http://twitter.com/share?url=' . shorten_url($urlCurrentPage) . '&text=' . ($arrSettings['ssba_twitter_text'] != '' ? $arrSettings['ssba_twitter_text'] : NULL) . ' ' . $strPageTitle . '" ' . ($arrSettings['ssba_share_new_window'] == 'Y' ? 'target="_blank"' : NULL) . '>';
+	$htmlShareButtons .= '<a id="ssba_twitter_share" href="http://twitter.com/share?url=' . ssba_shorten($urlCurrentPage) . '&text=' . ($arrSettings['ssba_twitter_text'] != '' ? $arrSettings['ssba_twitter_text'] : NULL) . ' ' . $strPageTitle . '" ' . ($arrSettings['ssba_share_new_window'] == 'Y' ? 'target="_blank"' : NULL) . '>';
 	
 	// if image set is not custom
 	if ($arrSettings['ssba_image_set'] != 'custom') {
