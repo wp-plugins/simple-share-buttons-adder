@@ -3,7 +3,7 @@
 Plugin Name: Simple Share Buttons Adder
 Plugin URI: http://www.simplesharebuttons.com
 Description: A simple plugin that enables you to add share buttons to all of your posts and/or pages.
-Version: 2.7
+Version: 2.8
 Author: David S. Neal
 Author URI: http://www.davidsneal.co.uk/
 License: GPLv2
@@ -35,7 +35,7 @@ GNU General Public License for more details.
 	function ssba_activate() {
 	
 		// insert default options for ssba
-		add_option('ssba_version', 				'2.7');
+		add_option('ssba_version', 				'2.8');
 		add_option('ssba_image_set', 			'somacro');
 		add_option('ssba_size', 				'35');
 		add_option('ssba_pages',				'');
@@ -174,6 +174,81 @@ GNU General Public License for more details.
 	// add menu to dashboard
 	add_action( 'admin_menu', 'ssba_menu' );
 	
+	// widget class
+	class ssba_widget extends WP_Widget {
+
+		// construct the widget
+		public function __construct() {
+			parent::__construct(
+	 		'ssba_widget', // Base ID
+			'Share Buttons', // Name
+			array( 'description' => __( 'Simple Share Buttons Adder', 'text_domain' ), ) // Args
+		);
+		}
+
+		// extract required arguments and run the shortcode
+		public function widget( $args, $instance ) {
+			extract( $args );
+			$title = apply_filters( 'widget_title', $instance['title'] );
+			$url = $instance['url'];
+			$pagetitle = $instance['pagetitle'];
+
+			echo $before_widget;
+			if (!empty($title))
+			echo $before_title . $title . $after_title;
+			
+			$shortcode = '[ssba';
+			($url != '' ? $shortcode .= ' url="' . $url . '"' : NULL);
+			($pagetitle != '' ? $shortcode .= ' title="' . $pagetitle . '"' : NULL);
+			$shortcode .= ']';
+			echo do_shortcode($shortcode, 'text_domain' );
+			echo $after_widget;
+		}
+
+		public function form( $instance ) {
+			
+			if ( isset( $instance[ 'title' ] ) ) {
+			
+				$title = $instance[ 'title' ];
+			} else {
+			
+			$title = __( 'Share Buttons', 'text_domain' );
+			}
+
+			$url = esc_url( $instance['url'] );
+			$pagetitle = esc_attr( $instance['pagetitle'] );
+		
+			# Title
+			echo '<p><label for="' . $this->get_field_id('title') . '">' . 'Title:' . '</label><input class="widefat" id="' . $this->get_field_id('title') . '" name="' . $this->get_field_name('title') . '" type="text" value="' . $title . '" /></p>';
+			# URL
+			echo '<p><label for="' . $this->get_field_id('url') . '">' . 'URL:' . '</label><input class="widefat" id="' . $this->get_field_id('url') . '" name="' . $this->get_field_name('url') . '" type="text" value="' . $url . '" /></p>';
+			echo '<p class="description">Leave this blank to share the current page, or enter a URL to force one URL for all pages.</p>';
+			# Page title
+			echo '<p><label for="' . $this->get_field_id('pagetitle') . '">' . 'Page title:' . '</label><input class="widefat" id="' . $this->get_field_id('pagetitle') . '" name="' . $this->get_field_name('pagetitle') . '" type="text" value="' . $pagetitle . '" /></p>';
+			echo '<p class="description">Set a page title for the page being shared, leave this blank if you have not set a URL.</p>';
+		}
+
+		public function update( $new_instance, $old_instance ) {
+			$instance = array();
+			$instance['title'] = strip_tags( $new_instance['title'] );
+			$instance['url'] = strip_tags( $new_instance['url'] );
+			$instance['pagetitle'] = strip_tags( $new_instance['pagetitle'] );
+
+			return $instance;
+		}
+
+	}
+	
+	// add ssba to available widgets
+	add_action( 'widgets_init', create_function( '', 'register_widget( "ssba_widget" );' ) );
+	
+	
+	function mywidget_init() {
+		
+		register_sidebar_widget('Share Buttons Widget', 'ssba_widget');
+		register_widget_control('Share Buttons Widget', 'ssba_widget_control');
+	}
+	
 	// include js files and upload script
 	function ssba_admin_scripts() {
 	
@@ -242,8 +317,8 @@ GNU General Public License for more details.
 		// query the db for current ssba settings
 		$arrSettings = get_ssba_settings();
 
-		// check if not yet updated to 2.7
-		if ($arrSettings['ssba_version'] != '2.7') {
+		// check if not yet updated to 2.8
+		if ($arrSettings['ssba_version'] != '2.8') {
 		
 			// include then run the upgrade script
 			include_once (plugin_dir_path(__FILE__) . '/inc/ssba_upgrade.php');
@@ -379,6 +454,17 @@ GNU General Public License for more details.
 		$htmlContent = $content;
 		$htmlShareButtons = '';
 		$strIsWhatFunction = '';
+		$pattern = get_shortcode_regex();
+
+		// ssba_hide shortcode is in the post content and instance is not called by shortcode ssba
+		if (preg_match_all( '/'. $pattern .'/s', $post->post_content, $matches )
+			&& array_key_exists( 2, $matches )
+			&& in_array('ssba_hide', $matches[2]) 
+			&& $booShortCode == FALSE) {
+			
+			// exit the function returning the content without the buttons
+			return $content;
+		}
 	
 		// get sbba settings
 		$arrSettings = get_ssba_settings();
@@ -401,7 +487,7 @@ GNU General Public License for more details.
 										}
 										#ssba img		
 										{ 	
-											width: ' . $arrSettings['ssba_size'] . 'px;
+											width: ' . $arrSettings['ssba_size'] . 'px !important;
 											padding: ' . $arrSettings['ssba_padding'] . 'px;
 											border:  0;
 											box-shadow: none !important;
@@ -410,6 +496,7 @@ GNU General Public License for more details.
 										}
 										#ssba, #ssba a		
 										{
+											' . ($arrSettings['ssba_div_background'] == ''	? 'background: none;' : NULL) . ';
 											' . ($arrSettings['ssba_font_family'] 	!= ''	? 'font-family: ' . $arrSettings['ssba_font_family'] . ';' : NULL) . '
 											' . ($arrSettings['ssba_font_size']		!= ''	? 'font-size: 	' . $arrSettings['ssba_font_size'] . 'px;' : NULL) . '
 											' . ($arrSettings['ssba_font_color'] 	!= ''	? 'color: 		' . $arrSettings['ssba_font_color'] . '!important;' : NULL) . '
@@ -509,7 +596,7 @@ GNU General Public License for more details.
 			$htmlShareButtons .= '</style>';
 			
 			// ssba div
-			$htmlShareButtons.= '<div id="ssba"><!-- I got these buttons from simplesharebuttons.com -->';
+			$htmlShareButtons.= '<!-- I got these buttons from simplesharebuttons.com --><div id="ssba">';
 			
 			// center if set so
 			$htmlShareButtons.= ($arrSettings['ssba_align'] == 'center' ? '<center>' : NULL);
@@ -543,10 +630,10 @@ GNU General Public License for more details.
 			}	else if ($booShortCode == TRUE) { // if using shortcode
 			
 				// if custom attributes have been set
-				if ($atts['url'] != '' && $atts['title'] != '') {
+				if ($atts['url'] != '') {
 					
 					// set page URL and title as set by user
-					$urlCurrentPage = (isset($atts['url']) ? $atts['url'] : NULL);
+					$urlCurrentPage = (isset($atts['url']) ? $atts['url'] : get_current_url());
 					$strPageTitle = (isset($atts['title']) ? $atts['title'] : NULL);
 				} else {
 					// get page name and url from functions
@@ -633,17 +720,7 @@ GNU General Public License for more details.
 	
 	// shortcode for hiding buttons
 	function ssba_hide($content) {
-	
-		// add display none to the ssba div
-		$htmlShareButtons .= 	'<style type="text/css">
-									#ssba		
-										{ 	
-											display: none !important;
-										}
-								</style>' . $content;
-	
-		//return buttons
-		return $htmlShareButtons;
+
 	}
 	
 	// get URL function
@@ -676,8 +753,20 @@ GNU General Public License for more details.
 		return $urlCurrentPage;
 	}
 	
+	// shorten URL with bit.ly
+	function shorten_url($urlLong) {
+	
+		// get results from bitly and return short url
+		$hmtlBitly = file_get_contents('http://api.bit.ly/v3/shorten?login=simplesharebuttons&apiKey=R_555eddf50da1370b8ab75670a3de2fe6&longUrl=' . $urlLong);
+		$arrBitly = json_decode($hmtlBitly, true);
+		$urlShort =  $arrBitly['data'];
+		$urlShort =  $urlShort['url'];
+		$hmtlBitly = str_replace('[\]', '', $hmtlBitly);
+		return $urlShort;
+	}
+	
 	// get set share buttons
-function get_share_buttons($arrSettings, $urlCurrentPage, $strPageTitle) {
+	function get_share_buttons($arrSettings, $urlCurrentPage, $strPageTitle) {
 
 	// variables
 	$htmlShareButtons = '';
@@ -768,9 +857,10 @@ function ssba_twitter($arrSettings, $urlCurrentPage, $strPageTitle, $booShowShar
 
 	// remove any | symbols from the page title to allow page to be shared successfully
 	$strPageTitle = str_replace('|', '', $strPageTitle);
+	$strPageTitle = str_replace('%', ' percent', $strPageTitle);
 
 	// twitter share link
-	$htmlShareButtons .= '<a id="ssba_twitter_share" href="http://twitter.com/share?url=' . $urlCurrentPage  . '&text=' . ($arrSettings['ssba_twitter_text'] != '' ? ' ' . $arrSettings['ssba_twitter_text'] : NULL) . ' ' . $strPageTitle . '" ' . ($arrSettings['ssba_share_new_window'] == 'Y' ? 'target="_blank"' : NULL) . '>';
+	$htmlShareButtons .= '<a id="ssba_twitter_share" href="http://twitter.com/share?url=' . shorten_url($urlCurrentPage) . '&text=' . ($arrSettings['ssba_twitter_text'] != '' ? $arrSettings['ssba_twitter_text'] : NULL) . ' ' . $strPageTitle . '" ' . ($arrSettings['ssba_share_new_window'] == 'Y' ? 'target="_blank"' : NULL) . '>';
 	
 	// if image set is not custom
 	if ($arrSettings['ssba_image_set'] != 'custom') {

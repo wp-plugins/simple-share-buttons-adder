@@ -527,7 +527,7 @@ CODE;
 		$htmlShareButtonsForm .= '</form>';
 		
 	// close form cell and open author one
-	$htmlShareButtonsForm .= '</td><td style="vertical-align: top;">';	
+	$htmlShareButtonsForm .= '</td><td style="vertical-align: top; position: fixed;">';	
 	
 	// author div
 	$htmlShareButtonsForm .= '	<div class="ssba-box ssba-shadow">
@@ -535,7 +535,7 @@ CODE;
 										<div class="author-shortcodes">
 											<div class="author-inner">
 												<div class="author-image">
-													<img src="http://www.simplesharebuttons.com/wp-content/uploads/et_temp/david-44682_60x60.jpg" style="float: left; margin-right: 10px;" alt="">
+													<img src="' . plugins_url() . '/simple-share-buttons-adder/images/david.jpg" style="float: left; margin-right: 10px;" alt="">
 													<div class="author-overlay"></div>
 												</div> <!-- .author-image --> 
 												<div class="author-info">
@@ -568,7 +568,7 @@ CODE;
 									</table>
 									<div class="et-box et-bio">
 										<div class="et-box-content">
-										<h2>Order your custom buttons now for just £2!<p></p>
+										<h2>Order your custom&#45;coloured buttons now for just £2!</h2>
 										<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
 										<input type="hidden" name="cmd" value="_s-xclick">
 										<input type="hidden" name="hosted_button_id" value="T3LP29GX5CGZW">
@@ -576,7 +576,6 @@ CODE;
 										<img alt="" border="0" src="https://www.paypalobjects.com/en_GB/i/scr/pixel.gif" width="1" height="1">
 										</form>
 										<p class="description"><a href="http://www.simplesharebuttons.com/custom-share-buttons/" target="blank">Find out more here</a>!</p>
-										</h2>
 									</center></div></div>
 								</div>';
 

@@ -50,11 +50,16 @@ A step by step guide on how to configure this plugin can be found <a href="http:
 4. Show your buttons using [ssba] or hide them entirely from a page using [ssba_hide].
 5. This is an example of a set of Share Buttons you can add using Simple Share Buttons Adder.
 6. This is an example of a set of Share Buttons you can add using Simple Share Buttons Adder.
-7. This is an example of a set of Share Buttons you can add using Simple Share Buttons Adder.
+7. You can add your share buttons anywhere using the widget option!
 8. This is an example of a set of Share Buttons you can add using Simple Share Buttons Adder.
-9. This is an example of a set of Share Buttons you can add using Simple Share Buttons Adder.
+9. Use the widget option to add share buttons!
 
 == Changelog ==
+
+= 2.8 =
+* Now you can use the widget option to add your share buttons!
+* Links shared by twitter are now shortened using bit.ly!
+* [ssba_hide] shortcode is greatly improved! The buttons used to just be hidden, now they aren't created at all!
 
 = 2.7 =
 * Author bio moved with new ways to show your support!
