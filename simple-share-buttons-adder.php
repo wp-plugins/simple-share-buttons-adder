@@ -3,7 +3,7 @@
 Plugin Name: Simple Share Buttons Adder
 Plugin URI: http://www.simplesharebuttons.com
 Description: A simple plugin that enables you to add share buttons to all of your posts and/or pages.
-Version: 3.0
+Version: 3.1
 Author: David S. Neal
 Author URI: http://www.davidsneal.co.uk/
 License: GPLv2
@@ -35,7 +35,7 @@ GNU General Public License for more details.
 	function ssba_activate() {
 	
 		// insert default options for ssba
-		add_option('ssba_version', 				'3.0');
+		add_option('ssba_version', 				'3.1');
 		add_option('ssba_image_set', 			'somacro');
 		add_option('ssba_size', 				'35');
 		add_option('ssba_pages',				'');
@@ -317,8 +317,8 @@ GNU General Public License for more details.
 		// query the db for current ssba settings
 		$arrSettings = get_ssba_settings();
 
-		// check if not yet updated to 3.0
-		if ($arrSettings['ssba_version'] != '3.0') {
+		// check if not yet updated to 3.1
+		if ($arrSettings['ssba_version'] != '3.1') {
 		
 			// include then run the upgrade script
 			include_once (plugin_dir_path(__FILE__) . '/inc/ssba_upgrade.php');
@@ -875,12 +875,12 @@ function getFacebookShareCount($urlCurrentPage) {
 // get twitter button
 function ssba_twitter($arrSettings, $urlCurrentPage, $strPageTitle, $booShowShareCount) {
 
-	// remove any | symbols from the page title to allow page to be shared successfully
-	$strPageTitle = str_replace('|', '', $strPageTitle);
-	$strPageTitle = str_replace('%', ' percent', $strPageTitle);
+	// format the URL into friendly code
+	$strPageTitle = urlencode($strPageTitle);
+	$strTwitterText = ($arrSettings['ssba_twitter_text'] != '' ? urlencode($arrSettings['ssba_twitter_text']) : NULL);
 
 	// twitter share link
-	$htmlShareButtons .= '<a id="ssba_twitter_share" href="http://twitter.com/share?url=' . $urlCurrentPage . '&text=' . ($arrSettings['ssba_twitter_text'] != '' ? $arrSettings['ssba_twitter_text'] : NULL) . ' ' . $strPageTitle . '" ' . ($arrSettings['ssba_share_new_window'] == 'Y' ? 'target="_blank"' : NULL) . '>';
+	$htmlShareButtons .= '<a id="ssba_twitter_share" href="http://twitter.com/share?url=' . $urlCurrentPage . '&text=' . $strTwitterText . ' ' . $strPageTitle . '" ' . ($arrSettings['ssba_share_new_window'] == 'Y' ? 'target="_blank"' : NULL) . '>';
 	
 	// if image set is not custom
 	if ($arrSettings['ssba_image_set'] != 'custom') {

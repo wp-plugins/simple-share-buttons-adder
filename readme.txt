@@ -2,9 +2,9 @@
 Contributors: DavidoffNeal
 Donate link: http://www.davidsneal.co.uk/contributions
 Tags: share buttons, facebook, twitter, google+, share, share links, stumble upon, linkedin, pinterest
-Requires at least: 3.0.1
-Tested up to: 3.5.1
-Stable tag: 3.0
+Requires at least: 3.5.1
+Tested up to: 3.5.2
+Stable tag: 3.1
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -55,6 +55,9 @@ A step by step guide on how to configure this plugin can be found <a href="http:
 9. Use the widget option to add share buttons!
 
 == Changelog ==
+
+= 3.1 =
+* Titles and twitter text issues resolved for those experiencing problems with certain characters
 
 = 3.0 =
 * CSS scripts now loaded within the HEAD tag!
