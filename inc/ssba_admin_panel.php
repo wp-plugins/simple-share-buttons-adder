@@ -492,7 +492,7 @@ CODE;
 					$htmlShareButtonsForm .= '<th scope="row" style="width: 120px;"><label>Share Text Link:</label></th>';
 					$htmlShareButtonsForm .= '<td>';
 					$htmlShareButtonsForm .= 'Share text links to simplesharebuttons.com&nbsp;<input type="checkbox" name="ssba_link_to_ssb" id="ssba_link_to_ssb" ' . ($arrSettings['ssba_link_to_ssb'] == 'Y'   ? 'checked' : NULL) . ' value="Y" />';
-					$htmlShareButtonsForm .= '<p class="description">Leave this checked if you are feeling kind &#58;&#41;</p></td>';
+					$htmlShareButtonsForm .= '<p class="description">Check this box if you are feeling kind &#58;&#41;</p></td>';
 				$htmlShareButtonsForm .= '</tr>';
 				$htmlShareButtonsForm .= '<tr><td><h3>Email</h3></td></tr>';
 				$htmlShareButtonsForm .= '<tr valign="top">';

@@ -3,7 +3,7 @@
 Plugin Name: Simple Share Buttons Adder
 Plugin URI: http://www.simplesharebuttons.com
 Description: A simple plugin that enables you to add share buttons to all of your posts and/or pages.
-Version: 3.6
+Version: 3.7
 Author: David S. Neal
 Author URI: http://www.davidsneal.co.uk/
 License: GPLv2
@@ -20,8 +20,10 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 */
-	// turn error reporting off
-	error_reporting(0);
+	if(!WP_DEBUG){
+		// turn error reporting off
+		error_reporting(0);
+	}
 
 	// --------- INSTALLATION ------------ //
 
@@ -35,7 +37,7 @@ GNU General Public License for more details.
 	function ssba_activate() {
 	
 		// insert default options for ssba
-		add_option('ssba_version', 				'3.6');
+		add_option('ssba_version', 				'3.7');
 		add_option('ssba_image_set', 			'somacro');
 		add_option('ssba_size', 				'35');
 		add_option('ssba_pages',				'');
@@ -52,7 +54,7 @@ GNU General Public License for more details.
 		add_option('ssba_flattr_user_id', 		'');
 		add_option('ssba_flattr_url', 			'');
 		add_option('ssba_share_new_window', 	'Y');
-		add_option('ssba_link_to_ssb', 			'Y');
+		add_option('ssba_link_to_ssb', 			'N');
 		add_option('ssba_show_share_count',		'');
 		add_option('ssba_share_count_style',	'default');
 		add_option('ssba_share_count_css',		'');
@@ -319,8 +321,8 @@ GNU General Public License for more details.
 		// query the db for current ssba settings
 		$arrSettings = get_ssba_settings();
 
-		// check if not yet updated to 3.6
-		if ($arrSettings['ssba_version'] != '3.6') {
+		// check if not yet updated to 3.7
+		if ($arrSettings['ssba_version'] != '3.7') {
 		
 			// include then run the upgrade script
 			include_once (plugin_dir_path(__FILE__) . '/inc/ssba_upgrade.php');
