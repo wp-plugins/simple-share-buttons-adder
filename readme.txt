@@ -4,7 +4,7 @@ Donate link: http://www.simplesharebuttons.com/donate/
 Tags: share buttons, facebook, twitter, google+, share, share links, stumble upon, linkedin, pinterest
 Requires at least: 3.5.1
 Tested up to: 3.9
-Stable tag: 3.7
+Stable tag: 3.8
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -22,7 +22,7 @@ You can even upload and use your own custom images if you wish!
 
 Visit <a href="http://make.simplesharebuttons.com" target="_blank">make.simplesharebuttons.com</a> to make your own custom-coloured share buttons!
 
-I have now uploaded the source to GitHub so please use this to suggest any fixes/improvements! <a href="https://github.com/davidsneal/simplesharebuttons" target="_blank">https://github.com/davidsneal/simplesharebuttons</a>
+I have now uploaded the source to GitHub so please use this to suggest any fixes/improvements! https://github.com/davidsneal/simplesharebuttons
 
 The Simple Share Buttons Adder utilises features that, as a WordPress user, you will be familiar with. A self-explanatory administration screen will have you showing your Share Buttons on your posts and pages in no time!
 
@@ -30,7 +30,7 @@ The Simple Share Buttons Adder utilises features that, as a WordPress user, you 
 
 For full configuration instructions<a href="http://www.simplesharebuttons.com/wordpress/wordpress-configuration/" target="_blank"> visit this page</a>
 
-Visit <a href="http://make.simplesharebuttons.com" target="_blank" rel="nofollow">make.simplesharebuttons.com</a> to make your own custom-coloured share buttons!
+Visit <a href="http://make.simplesharebuttons.com" target="_blank">make.simplesharebuttons.com</a> to make your own custom-coloured share buttons!
 
 1. Upload the 'simple-share-buttons-adder' folder to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
@@ -63,6 +63,16 @@ A step by step guide on how to configure this plugin can be found <a href="http:
 9. Use the widget option to add share buttons!
 
 == Changelog ==
+
+= 3.8 =
+* A serious cleanup of previous small wanrings/notices
+* CSS now only shows when it is required (thanks goes out to https://github.com/emilyljohnson)
+* Add rel="nofollow" option added
+* Add different text for the widget area if you wish
+* Flattr bug fix, and title added (thanks to https://github.com/Sena for that)
+* Remove 'tooltip' style hover to share text link
+* Fix more validation errors, please check any custom CSS you may have applied to links with IDs
+* WHAT'S NEXT?? Well providing all goes well with this release, it shall include responsive icon buttons!!
 
 = 3.7 =
 * Error reporting on if WP_DEBUG is set to true

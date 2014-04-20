@@ -3,7 +3,7 @@
 Plugin Name: Simple Share Buttons Adder
 Plugin URI: http://www.simplesharebuttons.com
 Description: A simple plugin that enables you to add share buttons to all of your posts and/or pages.
-Version: 3.7
+Version: 3.8
 Author: David S. Neal
 Author URI: http://www.davidsneal.co.uk/
 License: GPLv2
@@ -20,7 +20,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 */
-	if(!WP_DEBUG){
+	if(WP_DEBUG !== true){
 		// turn error reporting off
 		error_reporting(0);
 	}
@@ -37,7 +37,7 @@ GNU General Public License for more details.
 	function ssba_activate() {
 	
 		// insert default options for ssba
-		add_option('ssba_version', 				'3.7');
+		add_option('ssba_version', 				'3.8');
 		add_option('ssba_image_set', 			'somacro');
 		add_option('ssba_size', 				'35');
 		add_option('ssba_pages',				'');
@@ -54,11 +54,13 @@ GNU General Public License for more details.
 		add_option('ssba_flattr_user_id', 		'');
 		add_option('ssba_flattr_url', 			'');
 		add_option('ssba_share_new_window', 	'Y');
-		add_option('ssba_link_to_ssb', 			'N');
+		add_option('ssba_link_to_ssb', 			'Y');
 		add_option('ssba_show_share_count',		'');
 		add_option('ssba_share_count_style',	'default');
 		add_option('ssba_share_count_css',		'');
 		add_option('ssba_share_count_once',		'Y');
+		add_option('ssba_widget_text',			'Y');
+		add_option('ssba_rel_nofollow',			'');
 		
 		// share container
 		add_option('ssba_div_padding', 			'');
@@ -125,6 +127,8 @@ GNU General Public License for more details.
 		delete_option('ssba_share_count_style');
 		delete_option('ssba_share_count_css');
 		delete_option('ssba_share_count_once');
+		delete_option('ssba_widget_text');
+		delete_option('ssba_rel_nofollow');
 		
 		// share container
 		delete_option('ssba_div_padding');
@@ -202,9 +206,9 @@ GNU General Public License for more details.
 			echo $before_title . $title . $after_title;
 			
 			$shortcode = '[ssba';
-			($url != '' ? $shortcode .= ' url="' . $url . '"' : NULL);
-			($pagetitle != '' ? $shortcode .= ' title="' . $pagetitle . '"' : NULL);
-			$shortcode .= ']';
+				($url != '' ? $shortcode .= ' url="' . $url . '"' : NULL);
+				($pagetitle != '' ? $shortcode .= ' title="' . $pagetitle . '"' : NULL);
+			$shortcode .= ' widget="Y"]';
 			echo do_shortcode($shortcode, 'text_domain' );
 			echo $after_widget;
 		}
@@ -290,23 +294,23 @@ GNU General Public License for more details.
 		// get settings
 		$arrSettings = get_ssba_settings();
 		
-		// if reenie beenie font is selected
-		if ($arrSettings['ssba_font_family'] == 'Indie Flower') {
-	
-			// font scripts 
-			wp_register_style('ssbaFont', 'http://fonts.googleapis.com/css?family=Indie+Flower');
-			wp_enqueue_style( 'ssbaFont');
-		} else if ($arrSettings['ssba_font_family'] == 'Reenie Beanie') {
-			
-			// font scripts 
-			wp_register_style('ssbaFont', 'http://fonts.googleapis.com/css?family=Reenie+Beanie');
-			wp_enqueue_style( 'ssbaFont');
+		// only include CSS if needed
+		if (is_page() && $arrSettings['ssba_pages'] == 'Y' || is_single() && $arrSettings['ssba_posts'] == 'Y' || is_category() && $arrSettings['ssba_cats_archs'] == 'Y' || is_archive() && $arrSettings['ssba_cats_archs'] == 'Y' || is_home() && $arrSettings['ssba_homepage'] == 'Y' || $booShortCode == TRUE) { 
 		
+			// if reenie beenie font is selected
+			if ($arrSettings['ssba_font_family'] == 'Indie Flower') {
+		
+				// font scripts 
+				wp_register_style('ssbaFont', 'http://fonts.googleapis.com/css?family=Indie+Flower');
+				wp_enqueue_style( 'ssbaFont');
+			} else if ($arrSettings['ssba_font_family'] == 'Reenie Beanie') {
+				
+				// font scripts 
+				wp_register_style('ssbaFont', 'http://fonts.googleapis.com/css?family=Reenie+Beanie');
+				wp_enqueue_style( 'ssbaFont');
+			}		
 		}
-	
-		// register and enqueue css styles
-		wp_register_style('ssba-page-styles', plugins_url('/css/page-style.css', __FILE__ ));
-		wp_enqueue_style('ssba-page-styles');
+		
 	}
 	
 	// call scripts add function
@@ -321,8 +325,8 @@ GNU General Public License for more details.
 		// query the db for current ssba settings
 		$arrSettings = get_ssba_settings();
 
-		// check if not yet updated to 3.7
-		if ($arrSettings['ssba_version'] != '3.7') {
+		// check if not yet updated to 3.8
+		if ($arrSettings['ssba_version'] != '3.8') {
 		
 			// include then run the upgrade script
 			include_once (plugin_dir_path(__FILE__) . '/inc/ssba_upgrade.php');
@@ -358,11 +362,11 @@ GNU General Public License for more details.
 			// update existing ssba settings		
 			update_option('ssba_image_set', 			$_POST['ssba_image_set']);
 			update_option('ssba_size', 					$_POST['ssba_size']);
-			update_option('ssba_pages', 				$_POST['ssba_pages']);
-			update_option('ssba_posts', 				$_POST['ssba_posts']);
-			update_option('ssba_cats_archs', 			$_POST['ssba_cats_archs']);
-			update_option('ssba_homepage', 				$_POST['ssba_homepage']);
-			update_option('ssba_align', 				$_POST['ssba_align']);
+			update_option('ssba_pages', 				(isset($_POST['ssba_pages']) ? $_POST['ssba_pages'] : NULL));
+			update_option('ssba_posts', 				(isset($_POST['ssba_posts']) ? $_POST['ssba_posts'] : NULL));
+			update_option('ssba_cats_archs', 			(isset($_POST['ssba_cats_archs']) ? $_POST['ssba_cats_archs'] : NULL));
+			update_option('ssba_homepage', 				(isset($_POST['ssba_homepage']) ? $_POST['ssba_homepage'] : NULL));
+			update_option('ssba_align', 				(isset($_POST['ssba_homepage']) ? $_POST['ssba_homepage'] : NULL));
 			update_option('ssba_padding', 				$_POST['ssba_padding']);								
 			update_option('ssba_before_or_after', 		$_POST['ssba_before_or_after']);
 			update_option('ssba_custom_styles', 		$_POST['ssba_custom_styles']);
@@ -371,16 +375,18 @@ GNU General Public License for more details.
 			update_option('ssba_buffer_text', 			stripslashes_deep($_POST['ssba_buffer_text']));
 			update_option('ssba_flattr_user_id', 		stripslashes_deep($_POST['ssba_flattr_user_id']));
 			update_option('ssba_flattr_url', 			stripslashes_deep($_POST['ssba_flattr_url']));
-			update_option('ssba_share_new_window', 		$_POST['ssba_share_new_window']);
-			update_option('ssba_link_to_ssb', 			$_POST['ssba_link_to_ssb']);
-			update_option('ssba_show_share_count', 		$_POST['ssba_show_share_count']);
+			update_option('ssba_share_new_window', 		(isset($_POST['ssba_share_new_window']) ? $_POST['ssba_share_new_window'] : NULL));
+			update_option('ssba_link_to_ssb', 			(isset($_POST['ssba_link_to_ssb']) ? $_POST['ssba_link_to_ssb'] : NULL));
+			update_option('ssba_show_share_count', 		(isset($_POST['ssba_show_share_count']) ? $_POST['ssba_show_share_count'] : NULL));
 			update_option('ssba_share_count_style',		$_POST['ssba_share_count_style']);
 			update_option('ssba_share_count_css',		$_POST['ssba_share_count_css']);
-			update_option('ssba_share_count_once',		$_POST['ssba_share_count_once']);
+			update_option('ssba_share_count_once',		(isset($_POST['ssba_share_count_once']) ? $_POST['ssba_share_count_once'] : NULL));
+			update_option('ssba_widget_text',			$_POST['ssba_widget_text']);
+			update_option('ssba_rel_nofollow',			(isset($_POST['ssba_rel_nofollow']) ? $_POST['ssba_rel_nofollow'] : NULL));
 			
 			// share container
 			update_option('ssba_div_padding', 			$_POST['ssba_div_padding']);
-			update_option('ssba_div_rounded_corners', 	$_POST['ssba_div_rounded_corners']);
+			update_option('ssba_div_rounded_corners', 	(isset($_POST['ssba_div_rounded_corners']) ? $_POST['ssba_div_rounded_corners'] : NULL));
 			update_option('ssba_border_width', 			$_POST['ssba_border_width']);
 			update_option('ssba_div_border', 			$_POST['ssba_div_border']);
 			update_option('ssba_div_background', 		$_POST['ssba_div_background']);
@@ -434,131 +440,138 @@ GNU General Public License for more details.
 		// query the db for current ssba settings
 		$arrSettings = get_ssba_settings();
 	
-		// css style
-		$htmlSSBAStyle .= '<style type="text/css">';
-		
-		// check if custom styles haven't been set
-		if ($arrSettings['ssba_custom_styles'] == '') {
-		
-			// use set options
-			$htmlSSBAStyle .= '	.ssba {
-										' . ($arrSettings['ssba_div_padding'] 			!= ''	? 'padding: ' 	. $arrSettings['ssba_div_padding'] . 'px;' : NULL) . '
-										' . ($arrSettings['ssba_border_width'] 			!= ''	? 'border: ' . $arrSettings['ssba_border_width'] . 'px solid ' 	. $arrSettings['ssba_div_border'] . ';' : NULL) . '
-										' . ($arrSettings['ssba_div_background'] 		!= ''	? 'background-color: ' 	. $arrSettings['ssba_div_background'] . ';' : NULL) . '
-										' . ($arrSettings['ssba_div_rounded_corners'] 	== 'Y'	? '-moz-border-radius: 10px; -webkit-border-radius: 10px; -khtml-border-radius: 10px;  border-radius: 10px; -o-border-radius: 10px;' : NULL) . '
-									}
-									.ssba img		
-									{ 	
-										width: ' . $arrSettings['ssba_size'] . 'px !important;
-										padding: ' . $arrSettings['ssba_padding'] . 'px;
-										border:  0;
-										box-shadow: none !important;
-										display: inline;
-										vertical-align: middle;
-									}
-									.ssba, .ssba a		
-									{
-										' . ($arrSettings['ssba_div_background'] == ''	? 'background: none;' : NULL) . '
-										' . ($arrSettings['ssba_font_family'] 	!= ''	? 'font-family: ' . $arrSettings['ssba_font_family'] . ';' : NULL) . '
-										' . ($arrSettings['ssba_font_size']		!= ''	? 'font-size: 	' . $arrSettings['ssba_font_size'] . 'px;' : NULL) . '
-										' . ($arrSettings['ssba_font_color'] 	!= ''	? 'color: 		' . $arrSettings['ssba_font_color'] . '!important;' : NULL) . '
-										' . ($arrSettings['ssba_font_weight'] 	!= ''	? 'font-weight: ' . $arrSettings['ssba_font_weight'] . ';' : NULL) . '
-									}';
-		}
-		
-		// else use set options
-		else {
-
-			// use custom styles
-			$htmlSSBAStyle .= $arrSettings['ssba_custom_styles'];
+		// only include CSS if needed
+		if (is_page() && $arrSettings['ssba_pages'] == 'Y' || is_single() && $arrSettings['ssba_posts'] == 'Y' || is_category() && $arrSettings['ssba_cats_archs'] == 'Y' || is_archive() && $arrSettings['ssba_cats_archs'] == 'Y' || is_home() && $arrSettings['ssba_homepage'] == 'Y' || $booShortCode == TRUE) { 
+	
+			// css style
+			$htmlSSBAStyle = '<style type="text/css">';
 			
-		}
-		
-		// if counters option is set to Y
-		if ($arrSettings['ssba_show_share_count'] == 'Y') {
-		
-			// if no custom share count css is set
-			if ($arrSettings['ssba_share_count_css'] == '') {
+			// check if custom styles haven't been set
+			if ($arrSettings['ssba_custom_styles'] == '') {
 			
-				// styles that apply to all counter css sets
-				$htmlSSBAStyle .= '.ssba_sharecount:after, .ssba_sharecount:before {
-										right: 100%;
-										border: solid transparent;
-										content: " ";
-										height: 0;
-										width: 0;
-										position: absolute;
-										pointer-events: none;
-									}
-									.ssba_sharecount:after {
-										border-color: rgba(224, 221, 221, 0);
-										border-right-color: #f5f5f5;
-										border-width: 5px;
-										top: 50%;
-										margin-top: -5px;
-									}
-									.ssba_sharecount:before {
-										border-color: rgba(85, 94, 88, 0);
-										border-right-color: #e0dddd;
-										border-width: 6px;
-										top: 50%;
-										margin-top: -6px;
-									}
-									.ssba_sharecount {
-										font: 11px Arial, Helvetica, sans-serif;
-										
-										padding: 5px;
-										-khtml-border-radius: 6px;
-										-o-border-radius: 6px;
-										-webkit-border-radius: 6px;
-										-moz-border-radius: 6px;
-										border-radius: 6px;
-										position: relative;
-										border: 1px solid #e0dddd;';
-		
-				// if default counter style has been chosen
-				if ($arrSettings['ssba_share_count_style'] == 'default') {
-			
-					// style share count
-					$htmlSSBAStyle .= 	'color: #555e58;
-											background: #f5f5f5;
+				// use set options
+				$htmlSSBAStyle .= '	.ssba {
+											' . ($arrSettings['ssba_div_padding'] 			!= ''	? 'padding: ' 	. $arrSettings['ssba_div_padding'] . 'px;' : NULL) . '
+											' . ($arrSettings['ssba_border_width'] 			!= ''	? 'border: ' . $arrSettings['ssba_border_width'] . 'px solid ' 	. $arrSettings['ssba_div_border'] . ';' : NULL) . '
+											' . ($arrSettings['ssba_div_background'] 		!= ''	? 'background-color: ' 	. $arrSettings['ssba_div_background'] . ';' : NULL) . '
+											' . ($arrSettings['ssba_div_rounded_corners'] 	== 'Y'	? '-moz-border-radius: 10px; -webkit-border-radius: 10px; -khtml-border-radius: 10px;  border-radius: 10px; -o-border-radius: 10px;' : NULL) . '
 										}
-										.ssba_sharecount:after {
-											border-right-color: #f5f5f5;
-										}';
-											
-				} elseif ($arrSettings['ssba_share_count_style'] == 'white') {
-				
-					// show white style share counts
-					$htmlSSBAStyle .= 	'color: #555e58;
-											background: #ffffff;
+										.ssba img		
+										{ 	
+											width: ' . $arrSettings['ssba_size'] . 'px !important;
+											padding: ' . $arrSettings['ssba_padding'] . 'px;
+											border:  0;
+											box-shadow: none !important;
+											display: inline;
+											vertical-align: middle;
 										}
-										.ssba_sharecount:after {
-											border-right-color: #ffffff;
+										.ssba, .ssba a		
+										{
+											text-decoration:none;
+											' . ($arrSettings['ssba_div_background'] == ''	? 'background: none;' : NULL) . '
+											' . ($arrSettings['ssba_font_family'] 	!= ''	? 'font-family: ' . $arrSettings['ssba_font_family'] . ';' : NULL) . '
+											' . ($arrSettings['ssba_font_size']		!= ''	? 'font-size: 	' . $arrSettings['ssba_font_size'] . 'px;' : NULL) . '
+											' . ($arrSettings['ssba_font_color'] 	!= ''	? 'color: 		' . $arrSettings['ssba_font_color'] . '!important;' : NULL) . '
+											' . ($arrSettings['ssba_font_weight'] 	!= ''	? 'font-weight: ' . $arrSettings['ssba_font_weight'] . ';' : NULL) . '
 										}';
-					
-				} elseif ($arrSettings['ssba_share_count_style'] == 'blue') {
-				
-					// show blue style share counts
-					$htmlSSBAStyle .= 	'color: #ffffff;
-											background: #42a7e2;
-										}
-										.ssba_sharecount:after {
-											border-right-color: #42a7e2;
-										}';
-				}
-			} else {
-			
-				// custom style
-				$htmlSSBAStyle .= $arrSettings['ssba_share_count_css'];
 			}
-		}
+			
+			// else use set options
+			else {
+	
+				// use custom styles
+				$htmlSSBAStyle .= $arrSettings['ssba_custom_styles'];
+				
+			}
+			
+			// if counters option is set to Y
+			if ($arrSettings['ssba_show_share_count'] == 'Y') {
+			
+				// if no custom share count css is set
+				if ($arrSettings['ssba_share_count_css'] == '') {
+				
+					// styles that apply to all counter css sets
+					$htmlSSBAStyle .= '.ssba_sharecount:after, .ssba_sharecount:before {
+											right: 100%;
+											border: solid transparent;
+											content: " ";
+											height: 0;
+											width: 0;
+											position: absolute;
+											pointer-events: none;
+										}
+										.ssba_sharecount:after {
+											border-color: rgba(224, 221, 221, 0);
+											border-right-color: #f5f5f5;
+											border-width: 5px;
+											top: 50%;
+											margin-top: -5px;
+										}
+										.ssba_sharecount:before {
+											border-color: rgba(85, 94, 88, 0);
+											border-right-color: #e0dddd;
+											border-width: 6px;
+											top: 50%;
+											margin-top: -6px;
+										}
+										.ssba_sharecount {
+											font: 11px Arial, Helvetica, sans-serif;
+											
+											padding: 5px;
+											-khtml-border-radius: 6px;
+											-o-border-radius: 6px;
+											-webkit-border-radius: 6px;
+											-moz-border-radius: 6px;
+											border-radius: 6px;
+											position: relative;
+											border: 1px solid #e0dddd;';
+			
+					// if default counter style has been chosen
+					if ($arrSettings['ssba_share_count_style'] == 'default') {
+				
+						// style share count
+						$htmlSSBAStyle .= 	'color: #555e58;
+												background: #f5f5f5;
+											}
+											.ssba_sharecount:after {
+												border-right-color: #f5f5f5;
+											}';
+												
+					} elseif ($arrSettings['ssba_share_count_style'] == 'white') {
+					
+						// show white style share counts
+						$htmlSSBAStyle .= 	'color: #555e58;
+												background: #ffffff;
+											}
+											.ssba_sharecount:after {
+												border-right-color: #ffffff;
+											}';
+						
+					} elseif ($arrSettings['ssba_share_count_style'] == 'blue') {
+					
+						// show blue style share counts
+						$htmlSSBAStyle .= 	'color: #ffffff;
+												background: #42a7e2;
+											}
+											.ssba_sharecount:after {
+												border-right-color: #42a7e2;
+											}';
+					}
+				} else {
+				
+					// custom style
+					$htmlSSBAStyle .= $arrSettings['ssba_share_count_css'];
+				}
+			}
+			
+			// close style tag
+			$htmlSSBAStyle .= '</style>';
+			
+			// return
+			echo $htmlSSBAStyle;
 		
-		// close style tag
-		$htmlSSBAStyle .= '</style>';
+		} // end conditional CSS
 		
-		// return
-		echo $htmlSSBAStyle;
 	}
 	
 	// --------- SHARE BUTTONS ------------ //
@@ -612,28 +625,37 @@ GNU General Public License for more details.
 
 		// placement on pages/posts/categories/archives/homepage
 		if ( (is_page() && $arrSettings['ssba_pages'] == 'Y') || (is_single() && $arrSettings['ssba_posts'] == 'Y') || (is_category() && $arrSettings['ssba_cats_archs'] == 'Y') || (is_archive() && $arrSettings['ssba_cats_archs'] == 'Y') || (is_home() && $arrSettings['ssba_homepage'] == 'Y') || $booShortCode == TRUE) {
-			
+
+					
+			// if not shortcode
+			if (isset($atts['widget']) && $atts['widget'] == 'Y')
+				// use widget share text
+				$strShareText = $arrSettings['ssba_widget_text'];
+			else 								
+				// use normal share text
+				$strShareText = $arrSettings['ssba_share_text'];
+						
 			// ssba div
-			$htmlShareButtons.= '<!-- I got these buttons from simplesharebuttons.com --><div class="ssba">';
+			$htmlShareButtons = '<!-- I got these buttons from simplesharebuttons.com :) --><div class="ssba">';
 			
 			// center if set so
 			$htmlShareButtons.= ($arrSettings['ssba_align'] == 'center' ? '<div style="text-align:center">' : NULL);
 			
 			// add custom text if set and set to placement above or left
-			if (($arrSettings['ssba_share_text'] != '') && ($arrSettings['ssba_text_placement'] == 'above' || $arrSettings['ssba_text_placement'] == 'left')) {
+			if (($strShareText != '') && ($arrSettings['ssba_text_placement'] == 'above' || $arrSettings['ssba_text_placement'] == 'left')) {
 			
 				// check if user has left share link box checked
 				if ($arrSettings['ssba_link_to_ssb'] == 'Y') {
 				
 					// share text with link
-					$htmlShareButtons .= '<a href="http://www.simplesharebuttons.com" target="_blank" class="ssba_tooptip" id="ssba_tooptip"><span>www.simplesharebuttons.com</span>' . $arrSettings['ssba_share_text'];
+					$htmlShareButtons .= '<a href="http://www.simplesharebuttons.com" target="_blank">' . $strShareText . '</a>';
 				}
 				
 				// just display the share text
 				else { 
 					
 					// share text
-					$htmlShareButtons .= $arrSettings['ssba_share_text'];
+					$htmlShareButtons .= $strShareText;
 				}
 				// add a line break if set to above
 				($arrSettings['ssba_text_placement'] == 'above' ? $htmlShareButtons .= '<br/>' : NULL);
@@ -648,7 +670,7 @@ GNU General Public License for more details.
 			}	else if ($booShortCode == TRUE) { // if using shortcode
 			
 				// if custom attributes have been set
-				if ($atts['url'] != '') {
+				if (isset($atts['url']) && $atts['url'] != '') {
 					
 					// set page URL and title as set by user
 					$urlCurrentPage = (isset($atts['url']) ? $atts['url'] : ssba_current_url());
@@ -666,7 +688,7 @@ GNU General Public License for more details.
 			$htmlShareButtons.= get_share_buttons($arrSettings, $urlCurrentPage, $strPageTitle);
 			
 			// add custom text if set and set to placement right or below
-			if (($arrSettings['ssba_share_text'] != '') && ($arrSettings['ssba_text_placement'] == 'right' || $arrSettings['ssba_text_placement'] =='below')) {
+			if (($strShareText != '') && ($arrSettings['ssba_text_placement'] == 'right' || $arrSettings['ssba_text_placement'] =='below')) {
 			
 				// add a line break if set to above
 				($arrSettings['ssba_text_placement'] == 'below' ? $htmlShareButtons .= '<br/>' : NULL);
@@ -675,14 +697,14 @@ GNU General Public License for more details.
 				if ($arrSettings['ssba_link_to_ssb'] == 'Y') {
 				
 					// share text with link
-					$htmlShareButtons .= '<a href="http://www.simplesharebuttons.com" target="_blank" class="ssba_tooptip" id="ssba_tooptip"><span>www.simplesharebuttons.com</span>' . $arrSettings['ssba_share_text'];
+					$htmlShareButtons .= '<a href="http://www.simplesharebuttons.com" target="_blank">' . $strShareText . '</a>';
 				}
 				
 				// just display the share text
 				else { 
 					
 					// share text
-					$htmlShareButtons .= $arrSettings['ssba_share_text'];
+					$htmlShareButtons .= $strShareText;
 				}
 			}
 			
@@ -748,7 +770,7 @@ GNU General Public License for more details.
 		$urlCurrentPage = 'http';
 		
 		// add s to http if required
-		if ($_SERVER["HTTPS"] == "on") {$urlCurrentPage .= "s";}
+		if (isset($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] == "on") {$urlCurrentPage .= "s";}
 		
 		// add colon and forward slashes
 		$urlCurrentPage .= "://";
@@ -838,7 +860,7 @@ GNU General Public License for more details.
 function ssba_facebook($arrSettings, $urlCurrentPage, $strPageTitle, $booShowShareCount) {
 
 	// facebook share link
-	$htmlShareButtons .= '<a id="ssba_facebook_share" href="http://www.facebook.com/sharer.php?u=' . $urlCurrentPage  . '" ' . ($arrSettings['ssba_share_new_window'] == 'Y' ? 'target="_blank"' : NULL) . '>';
+	$htmlShareButtons = '<a class="ssba_facebook_share" href="http://www.facebook.com/sharer.php?u=' . $urlCurrentPage  . '" ' . ($arrSettings['ssba_share_new_window'] == 'Y' ? 'target="_blank"' : NULL) . ($arrSettings['ssba_rel_nofollow'] == 'Y' ? 'rel="nofollow"' : NULL) .'>';
 	
 	// if not using custom
 	if ($arrSettings['ssba_image_set'] != 'custom') {
@@ -873,7 +895,7 @@ function getFacebookShareCount($urlCurrentPage) {
 	// get results from facebook and return the number of shares
     $htmlFacebookShareDetails = file_get_contents('http://graph.facebook.com/' . $urlCurrentPage);
     $arrFacebookShareDetails = json_decode($htmlFacebookShareDetails, true);
-    $intFacebookShareCount =  $arrFacebookShareDetails['shares'];
+    $intFacebookShareCount =  (isset($arrFacebookShareDetails['shares']) ? $arrFacebookShareDetails['shares'] : 0);
     return ($intFacebookShareCount ) ? $intFacebookShareCount : '0';
 }
 
@@ -884,7 +906,7 @@ function ssba_twitter($arrSettings, $urlCurrentPage, $strPageTitle, $booShowShar
 	$twitterShareText = urlencode(html_entity_decode($strPageTitle . ' ' . $arrSettings['ssba_twitter_text'], ENT_COMPAT, 'UTF-8'));
 
 	// twitter share link
-	$htmlShareButtons .= '<a id="ssba_twitter_share" href="http://twitter.com/share?url=' . $urlCurrentPage . '&amp;text=' . $twitterShareText . '" ' . ($arrSettings['ssba_share_new_window'] == 'Y' ? 'target="_blank"' : NULL) . '>';
+	$htmlShareButtons = '<a class="ssba_twitter_share" href="http://twitter.com/share?url=' . $urlCurrentPage . '&amp;text=' . $twitterShareText . '" ' . ($arrSettings['ssba_share_new_window'] == 'Y' ? 'target="_blank"' : NULL) . ($arrSettings['ssba_rel_nofollow'] == 'Y' ? 'rel="nofollow"' : NULL) . '>';
 	
 	// if image set is not custom
 	if ($arrSettings['ssba_image_set'] != 'custom') {
@@ -927,7 +949,7 @@ function getTwitterShareCount($urlCurrentPage) {
 function ssba_google($arrSettings, $urlCurrentPage, $strPageTitle, $booShowShareCount) {
 
 	// google share link
-	$htmlShareButtons .= '<a id="ssba_google_share" href="https://plus.google.com/share?url=' . $urlCurrentPage  . '" ' . ($arrSettings['ssba_share_new_window'] == 'Y' ? 'target="_blank"' : NULL) . '>';
+	$htmlShareButtons = '<a class="ssba_google_share" href="https://plus.google.com/share?url=' . $urlCurrentPage  . '" ' . ($arrSettings['ssba_share_new_window'] == 'Y' ? 'target="_blank"' : NULL) . ($arrSettings['ssba_rel_nofollow'] == 'Y' ? 'rel="nofollow"' : NULL) . '>';
 	
 	// if image set is not custom
 	if ($arrSettings['ssba_image_set'] != 'custom') {
@@ -1002,7 +1024,7 @@ function getGoogleShareCount($urlCurrentPage) {
 function ssba_diggit($arrSettings, $urlCurrentPage, $strPageTitle, $booShowShareCount) {
 
 	// diggit share link
-	$htmlShareButtons .= '<a id="ssba_diggit_share" class="ssba_share_link" href="http://www.digg.com/submit?url=' . $urlCurrentPage  . '" ' . ($arrSettings['ssba_share_new_window'] == 'Y' ? 'target="_blank"' : NULL) . '>';
+	$htmlShareButtons = '<a class="ssba_diggit_share" class="ssba_share_link" href="http://www.digg.com/submit?url=' . $urlCurrentPage  . '" ' . ($arrSettings['ssba_share_new_window'] == 'Y' ? 'target="_blank"' : NULL) . ($arrSettings['ssba_rel_nofollow'] == 'Y' ? 'rel="nofollow"' : NULL) . '>';
 	
 	// if image set is not custom
 	if ($arrSettings['ssba_image_set'] != 'custom') {
@@ -1029,7 +1051,7 @@ function ssba_diggit($arrSettings, $urlCurrentPage, $strPageTitle, $booShowShare
 function ssba_reddit($arrSettings, $urlCurrentPage, $strPageTitle, $booShowShareCount) {
 
 	// reddit share link
-	$htmlShareButtons .= '<a id="ssba_reddit_share" href="http://reddit.com/submit?url=' . $urlCurrentPage  . '&amp;title=' . $strPageTitle . '" ' . ($arrSettings['ssba_share_new_window'] == 'Y' ? 'target="_blank"' : NULL) . '>';
+	$htmlShareButtons = '<a class="ssba_reddit_share" href="http://reddit.com/submit?url=' . $urlCurrentPage  . '&amp;title=' . $strPageTitle . '" ' . ($arrSettings['ssba_share_new_window'] == 'Y' ? 'target="_blank"' : NULL) . ($arrSettings['ssba_rel_nofollow'] == 'Y' ? 'rel="nofollow"' : NULL) . '>';
 	
 	// if image set is not custom
 	if ($arrSettings['ssba_image_set'] != 'custom') {
@@ -1065,7 +1087,7 @@ function getRedditShareCount($urlCurrentPage) {
 	// get results from reddit and return the number of shares
     $htmlRedditShareDetails = file_get_contents('http://www.reddit.com/api/info.json?url=' . $urlCurrentPage);
 	$arrRedditResult = json_decode($htmlRedditShareDetails, true);
-    $intRedditShareCount = $arrRedditResult['data']['children']['0']['data']['score'];
+    $intRedditShareCount = (isset($arrRedditResult['data']['children']['0']['data']['score']) ? $arrRedditResult['data']['children']['0']['data']['score'] : 0);
     return ($intRedditShareCount ) ? $intRedditShareCount : '0';
 }
 
@@ -1073,7 +1095,7 @@ function getRedditShareCount($urlCurrentPage) {
 function ssba_linkedin($arrSettings, $urlCurrentPage, $strPageTitle, $booShowShareCount) {
 
 	// linkedin share link
-	$htmlShareButtons .= '<a id="ssba_linkedin_share" class="ssba_share_link" href="http://www.linkedin.com/shareArticle?mini=true&amp;url=' . $urlCurrentPage  . '" ' . ($arrSettings['ssba_share_new_window'] == 'Y' ? 'target="_blank"' : NULL) . '>';
+	$htmlShareButtons = '<a class="ssba_linkedin_share" class="ssba_share_link" href="http://www.linkedin.com/shareArticle?mini=true&amp;url=' . $urlCurrentPage  . '" ' . ($arrSettings['ssba_share_new_window'] == 'Y' ? 'target="_blank"' : NULL) . ($arrSettings['ssba_rel_nofollow'] == 'Y' ? 'rel="nofollow"' : NULL) . '>';
 	
 	// if image set is not custom
 	if ($arrSettings['ssba_image_set'] != 'custom') {
@@ -1119,7 +1141,7 @@ function getLinkedinShareCount($urlCurrentPage) {
 function ssba_pinterest($arrSettings, $urlCurrentPage, $strPageTitle, $booShowShareCount) {
 
 	// pinterest share link
-	$htmlShareButtons .= "<a id='ssba_pinterest_share' href='javascript:void((function()%7Bvar%20e=document.createElement(&apos;script&apos;);e.setAttribute(&apos;type&apos;,&apos;text/javascript&apos;);e.setAttribute(&apos;charset&apos;,&apos;UTF-8&apos;);e.setAttribute(&apos;src&apos;,&apos;http://assets.pinterest.com/js/pinmarklet.js?r=&apos;+Math.random()*99999999);document.body.appendChild(e)%7D)());'>";
+	$htmlShareButtons = "<a class='ssba_pinterest_share' href='javascript:void((function()%7Bvar%20e=document.createElement(&apos;script&apos;);e.setAttribute(&apos;type&apos;,&apos;text/javascript&apos;);e.setAttribute(&apos;charset&apos;,&apos;UTF-8&apos;);e.setAttribute(&apos;src&apos;,&apos;http://assets.pinterest.com/js/pinmarklet.js?r=&apos;+Math.random()*99999999);document.body.appendChild(e)%7D)());'>";
 	
 	// if image set is not custom
 	if ($arrSettings['ssba_image_set'] != 'custom') {
@@ -1164,7 +1186,7 @@ function getPinterestShareCount($urlCurrentPage) {
 function ssba_stumbleupon($arrSettings, $urlCurrentPage, $strPageTitle, $booShowShareCount) {
 
 	// stumbleupon share link
-	$htmlShareButtons .= '<a id="ssba_stumbleupon_share" class="ssba_share_link" href="http://www.stumbleupon.com/submit?url=' . $urlCurrentPage  . '&amp;title=' . $strPageTitle . '" ' . ($arrSettings['ssba_share_new_window'] == 'Y' ? 'target="_blank"' : NULL) . '>';
+	$htmlShareButtons = '<a class="ssba_stumbleupon_share" class="ssba_share_link" href="http://www.stumbleupon.com/submit?url=' . $urlCurrentPage  . '&amp;title=' . $strPageTitle . '" ' . ($arrSettings['ssba_share_new_window'] == 'Y' ? 'target="_blank"' : NULL) . ($arrSettings['ssba_rel_nofollow'] == 'Y' ? 'rel="nofollow"' : NULL) . '>';
 	
 	// if image set is not custom
 	if ($arrSettings['ssba_image_set'] != 'custom') {
@@ -1199,7 +1221,7 @@ function getStumbleUponShareCount($urlCurrentPage) {
 	// get results from stumbleupon and return the number of shares
     $htmlStumbleUponShareDetails = file_get_contents('http://www.stumbleupon.com/services/1.01/badge.getinfo?url=' . $urlCurrentPage);
     $arrStumbleUponResult = json_decode($htmlStumbleUponShareDetails, true);
-    $intStumbleUponShareCount =  $arrStumbleUponResult['result']['views'];
+    $intStumbleUponShareCount =  (isset($arrStumbleUponResult['result']['views']) ? $arrStumbleUponResult['result']['views'] : 0);
     return ($intStumbleUponShareCount ) ? $intStumbleUponShareCount : '0';
 }
 
@@ -1207,7 +1229,7 @@ function getStumbleUponShareCount($urlCurrentPage) {
 function ssba_email($arrSettings, $urlCurrentPage, $strPageTitle, $booShowShareCount) {
 
 	// email share link
-	$htmlShareButtons .= '<a id="ssba_email_share" href="mailto:?Subject=' . $strPageTitle . '&amp;Body=' . $arrSettings['ssba_email_message'] . '%20' . $urlCurrentPage  . '">';
+	$htmlShareButtons = '<a class="ssba_email_share" href="mailto:?Subject=' . $strPageTitle . '&amp;Body=' . $arrSettings['ssba_email_message'] . '%20' . $urlCurrentPage  . '">';
 	
 	// if image set is not custom
 	if ($arrSettings['ssba_image_set'] != 'custom') {
@@ -1241,8 +1263,8 @@ function ssba_flattr($arrSettings, $urlCurrentPage, $strPageTitle, $booShowShare
 	}
 
 	// flattr share link
-	$htmlShareButtons .= '<a id="ssba_flattr_share" href="https://flattr.com/submit/auto?\user_id=' . $arrSettings['ssba_flattr_user_id'] . '&amp;url=' . $urlCurrentPage . '" ' . ($arrSettings['ssba_share_new_window'] == 'Y' ? 'target="_blank"' : NULL) . '>';
-	
+	$htmlShareButtons = '<a class="ssba_flattr_share" href="https://flattr.com/submit/auto?user_id=' . $arrSettings['ssba_flattr_user_id'] . '&amp;title=' . $strPageTitle . '&amp;url=' . $urlCurrentPage . '" ' . ($arrSettings['ssba_share_new_window'] == 'Y' ? 'target="_blank"' : NULL) . ($arrSettings['ssba_rel_nofollow'] == 'Y' ? 'rel="nofollow"' : NULL) . '>';
+
 	// if image set is not custom
 	if ($arrSettings['ssba_image_set'] != 'custom') {
 	
@@ -1268,7 +1290,7 @@ function ssba_flattr($arrSettings, $urlCurrentPage, $strPageTitle, $booShowShare
 function ssba_buffer($arrSettings, $urlCurrentPage, $strPageTitle, $booShowShareCount) {
 
 	// buffer share link
-	$htmlShareButtons .= '<a id="ssba_buffer_share" href="https://bufferapp.com/add?url=' . $urlCurrentPage . '&amp;text=' . ($arrSettings['ssba_buffer_text'] != '' ? $arrSettings['ssba_buffer_text'] : NULL) . ' ' . $strPageTitle . '" ' . ($arrSettings['ssba_share_new_window'] == 'Y' ? 'target="_blank"' : NULL) . '>';
+	$htmlShareButtons = '<a class="ssba_buffer_share" href="https://bufferapp.com/add?url=' . $urlCurrentPage . '&amp;text=' . ($arrSettings['ssba_buffer_text'] != '' ? $arrSettings['ssba_buffer_text'] : NULL) . ' ' . $strPageTitle . '" ' . ($arrSettings['ssba_share_new_window'] == 'Y' ? 'target="_blank"' : NULL) . ($arrSettings['ssba_rel_nofollow'] == 'Y' ? 'rel="nofollow"' : NULL) . '>';
 	
 	// if image set is not custom
 	if ($arrSettings['ssba_image_set'] != 'custom') {
@@ -1309,7 +1331,7 @@ function ssba_tumblr($arrSettings, $urlCurrentPage, $strPageTitle, $booShowShare
 	$urlCurrentPage =  str_replace("http://", '', $urlCurrentPage);  
 
 	// tumblr share link
-	$htmlShareButtons .= '<a id="ssba_tumblr_share" href="http://www.tumblr.com/share/link?url=' . $urlCurrentPage . '&amp;name=' . $strPageTitle . '" ' . ($arrSettings['ssba_share_new_window'] == 'Y' ? 'target="_blank"' : NULL) . '>';
+	$htmlShareButtons = '<a class="ssba_tumblr_share" href="http://www.tumblr.com/share/link?url=' . $urlCurrentPage . '&amp;name=' . $strPageTitle . '" ' . ($arrSettings['ssba_share_new_window'] == 'Y' ? 'target="_blank"' : NULL) . ($arrSettings['ssba_rel_nofollow'] == 'Y' ? 'rel="nofollow"' : NULL) . '>';
 	
 	// if image set is not custom
 	if ($arrSettings['ssba_image_set'] != 'custom') {
@@ -1336,7 +1358,7 @@ function ssba_tumblr($arrSettings, $urlCurrentPage, $strPageTitle, $booShowShare
 function ssba_print($arrSettings, $urlCurrentPage, $strPageTitle, $booShowShareCount) {
 
 	// linkedin share link
-	$htmlShareButtons .= '<a id="ssba_print" class="ssba_share_link" href="#" onclick="window.print()">';
+	$htmlShareButtons = '<a class="ssba_print" class="ssba_share_link" href="#" onclick="window.print()">';
 	
 	// if image set is not custom
 	if ($arrSettings['ssba_image_set'] != 'custom') {
