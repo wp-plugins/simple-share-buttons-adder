@@ -3,7 +3,7 @@ Contributors: DavidoffNeal
 Donate link: http://www.simplesharebuttons.com/donate/
 Tags: share buttons, facebook, twitter, google+, share, share links, stumble upon, linkedin, pinterest, yummly, vk
 Requires at least: 3.5.1
-Tested up to: 4.0.1
+Tested up to: 4.1
 Stable tag: 5.1
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
