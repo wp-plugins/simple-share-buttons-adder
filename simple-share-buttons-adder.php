@@ -26,7 +26,7 @@ GNU General Public License for more details.
 	}
 
 	// set version number constant
-	define('SSBA_VERSION', '5.0');
+	define('SSBA_VERSION', '5.1');
 	
 	// make sure we have settings ready
 	// this has been introduced to exclude from excerpts
@@ -337,7 +337,7 @@ GNU General Public License for more details.
 		// query the db for current ssba settings
 		$arrSettings = get_ssba_settings();
 
-		// check if not yet updated to 5.0
+		// check if not updated to current version
 		if ($arrSettings['ssba_version'] != SSBA_VERSION) {
 		
 			// run the upgrade function
@@ -695,7 +695,7 @@ GNU General Public License for more details.
 			}
 						
 			// ssba div
-			$htmlShareButtons = '<!-- Simple Share Buttons Adder (5.0) simplesharebuttons.com --><div class="ssba">';
+			$htmlShareButtons = '<!-- Simple Share Buttons Adder ('.SSBA_VERSION.') simplesharebuttons.com --><div class="ssba">';
 			
 			// center if set so
 			$htmlShareButtons.= '<div style="text-align:'.$arrSettings['ssba_align'].'">';
