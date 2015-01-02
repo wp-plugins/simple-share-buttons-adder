@@ -3,9 +3,9 @@
 Plugin Name: Simple Share Buttons Adder
 Plugin URI: https://simplesharebuttons.com
 Description: A simple plugin that enables you to add share buttons to all of your posts and/or pages.
-Version: 5.2
-Author: David S. Neal
-Author URI: http://www.davidsneal.co.uk/
+Version: 5.3
+Author: Simple Share Buttons
+Author URI: https://simplesharebuttons.com
 License: GPLv2
 
 Copyright 2014 Simple Share Buttons admin@simplesharebuttons.com
@@ -26,7 +26,7 @@ GNU General Public License for more details.
 	}
 
 	// set version number constant
-	define('SSBA_VERSION', '5.2');
+	define('SSBA_VERSION', '5.3');
 	
 	// make sure we have settings ready
 	// this has been introduced to exclude from excerpts
@@ -1182,7 +1182,7 @@ function ssba_pinterest($arrSettings, $urlCurrentPage, $strPageTitle, $booShowSh
 	if(has_post_thumbnail($arrSettings['post_id']))
 	{
 		// get the featured image
-		$urlPostThumb = wp_get_attachment_image_src(get_post_thumbnail_id($arrSettings['post_id']));
+		$urlPostThumb = wp_get_attachment_image_src(get_post_thumbnail_id($arrSettings['post_id'], 'full'));
 		$urlPostThumb = $urlPostThumb[0];
 	}
 	// no featured image set

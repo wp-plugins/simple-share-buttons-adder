@@ -4,7 +4,7 @@ Donate link: https://simplesharebuttons.com/donate/
 Tags: share buttons, facebook, twitter, google+, share, share links, stumble upon, linkedin, pinterest, yummly, vk
 Requires at least: 3.5.1
 Tested up to: 4.1
-Stable tag: 5.2
+Stable tag: 5.3
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -61,6 +61,9 @@ A step by step guide on how to configure this plugin can be found <a href="http:
 9. Use the widget option to add share buttons!
 
 == Changelog ==
+
+= 5.3 =
+* Tweak: Use full featured image instead of thumbnail
 
 = 5.2 =
 * Feature: Use a post's featured image when 'pinning'
