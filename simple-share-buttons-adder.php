@@ -379,6 +379,9 @@ GNU General Public License for more details.
 
 		// added in 5.2
 		add_option('ssba_default_pinterest', '');
+
+		// added in 5.5
+		add_option('ssba_pinterest_featured', '');
 	
 		// update version number
 		update_option('ssba_version', SSBA_VERSION);
