@@ -3,7 +3,7 @@
 Plugin Name: Simple Share Buttons Adder
 Plugin URI: https://simplesharebuttons.com
 Description: A simple plugin that enables you to add share buttons to all of your posts and/or pages.
-Version: 5.4
+Version: 5.5
 Author: Simple Share Buttons
 Author URI: https://simplesharebuttons.com
 License: GPLv2
@@ -26,7 +26,7 @@ GNU General Public License for more details.
 	}
 
 	// set version number constant
-	define('SSBA_VERSION', '5.4');
+	define('SSBA_VERSION', '5.5');
 	
 	// make sure we have settings ready
 	// this has been introduced to exclude from excerpts
@@ -44,7 +44,7 @@ GNU General Public License for more details.
 	function ssba_activate() {
 	
 		// insert default options for ssba
-		add_option('ssba_version', 				'background-size:450px 30px;');
+		add_option('ssba_version', 				SSBA_VERSION);
 		add_option('ssba_image_set', 			'somacro');
 		add_option('ssba_size', 				'35');
 		add_option('ssba_pages',				'');
@@ -70,6 +70,7 @@ GNU General Public License for more details.
 		add_option('ssba_widget_text',			'');
 		add_option('ssba_rel_nofollow',			'');
 		add_option('ssba_default_pinterest',	'');
+		add_option('ssba_pinterest_featured',	'');
 		
 		// share container
 		add_option('ssba_div_padding', 			'');
@@ -142,6 +143,7 @@ GNU General Public License for more details.
 		delete_option('ssba_widget_text');
 		delete_option('ssba_rel_nofollow');
 		delete_option('ssba_default_pinterest');
+		delete_option('ssba_pinterest_featured');
 		
 		// share container
 		delete_option('ssba_div_padding');
@@ -434,6 +436,7 @@ GNU General Public License for more details.
 				update_option('ssba_widget_text',			$_POST['ssba_widget_text']);
 				update_option('ssba_rel_nofollow',			(isset($_POST['ssba_rel_nofollow']) ? $_POST['ssba_rel_nofollow'] : NULL));
 				update_option('ssba_default_pinterest',		(isset($_POST['ssba_default_pinterest']) ? $_POST['ssba_default_pinterest'] : NULL));
+				update_option('ssba_pinterest_featured',	(isset($_POST['ssba_pinterest_featured']) ? $_POST['ssba_pinterest_featured'] : NULL));
 				
 				// share container
 				update_option('ssba_div_padding', 			$_POST['ssba_div_padding']);
@@ -1178,23 +1181,33 @@ function getLinkedinShareCount($urlCurrentPage) {
 // get pinterest button
 function ssba_pinterest($arrSettings, $urlCurrentPage, $strPageTitle, $booShowShareCount) {
 
-	// if this post has a featured image
-	if(has_post_thumbnail($arrSettings['post_id']))
+	// if using featured images for Pinteres
+	if($arrSettings['ssba_pinterest_featured'] == 'Y')
 	{
-		// get the featured image
-		$urlPostThumb = wp_get_attachment_image_src(get_post_thumbnail_id($arrSettings['post_id']), 'full');
-		$urlPostThumb = $urlPostThumb[0];
+		// if this post has a featured image
+		if(has_post_thumbnail($arrSettings['post_id']))
+		{
+			// get the featured image
+			$urlPostThumb = wp_get_attachment_image_src(get_post_thumbnail_id($arrSettings['post_id']), 'full');
+			$urlPostThumb = $urlPostThumb[0];
+		}
+		// no featured image set
+		else
+		{
+			// use the pinterest default
+			$urlPostThumb = $arrSettings['ssba_default_pinterest'];
+		}
+
+		// pinterest share link
+		$htmlShareButtons = '<a href="http://pinterest.com/pin/create/bookmarklet/?is_video=false&url='.$urlCurrentPage.'&media='.$urlPostThumb.'&description='.$strPageTitle.'" class="ssba_pinterest_share ssba_share_link" '.($arrSettings['ssba_share_new_window'] == 'Y' ? ' target="_blank" ' : NULL) . ($arrSettings['ssba_rel_nofollow'] == 'Y' ? ' rel="nofollow" ' : NULL).'>';
 	}
-	// no featured image set
+	// not using featured images for pinterest
 	else
 	{
-		// use the pinterest default
-		$urlPostThumb = $arrSettings['ssba_default_pinterest'];
+		// use the choice of pinnable images approach
+		$htmlShareButtons = "<a class='ssba_pinterest_share' href='javascript:void((function()%7Bvar%20e=document.createElement(&apos;script&apos;);e.setAttribute(&apos;type&apos;,&apos;text/javascript&apos;);e.setAttribute(&apos;charset&apos;,&apos;UTF-8&apos;);e.setAttribute(&apos;src&apos;,&apos;//assets.pinterest.com/js/pinmarklet.js?r=&apos;+Math.random()*99999999);document.body.appendChild(e)%7D)());'>";
 	}
-	 
-	// pinterest share link
-	$htmlShareButtons = '<a href="http://pinterest.com/pin/create/bookmarklet/?is_video=false&url='.$urlCurrentPage.'&media='.$urlPostThumb.'&description='.$strPageTitle.'" class="ssba_pinterest_share ssba_share_link" '.($arrSettings['ssba_share_new_window'] == 'Y' ? ' target="_blank" ' : NULL) . ($arrSettings['ssba_rel_nofollow'] == 'Y' ? ' rel="nofollow" ' : NULL).'>';
-	
+
 	// if image set is not custom
 	if ($arrSettings['ssba_image_set'] != 'custom') {
 	

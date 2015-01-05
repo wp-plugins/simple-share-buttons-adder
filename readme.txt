@@ -4,7 +4,7 @@ Donate link: https://simplesharebuttons.com/donate/
 Tags: share buttons, facebook, twitter, google+, share, share links, stumble upon, linkedin, pinterest, yummly, vk
 Requires at least: 3.5.1
 Tested up to: 4.1
-Stable tag: 5.4
+Stable tag: 5.5
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -61,6 +61,10 @@ A step by step guide on how to configure this plugin can be found <a href="http:
 9. Use the widget option to add share buttons!
 
 == Changelog ==
+
+= 5.5 =
+* Tweak: Revert to old Pinterest functionality by default
+* Update: Add option to use featured images when 'pinning' if desired
 
 = 5.4 =
 * Fix: Use full featured image for Pinterest
