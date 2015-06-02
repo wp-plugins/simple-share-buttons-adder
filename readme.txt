@@ -4,7 +4,7 @@ Donate link: https://simplesharebuttons.com/donate/
 Tags: share buttons, facebook, twitter, google+, share, share links, stumble upon, linkedin, pinterest, yummly, vk
 Requires at least: 3.9
 Tested up to: 4.2.2
-Stable tag: 6.0.0
+Stable tag: 6.0.1
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -60,6 +60,10 @@ A step by step guide on how to configure this plugin can be found <a href="http:
 8. This is an example of a set of Share Buttons you can add using Simple Share Buttons Adder
 
 == Changelog ==
+
+= 6.0.1 =
+* Tweak: Add more specific classes for better targeting
+* Fix: Improve XSS fix from 6.0.0
 
 = 6.0.0 =
 * Feature: New admin panel styling
