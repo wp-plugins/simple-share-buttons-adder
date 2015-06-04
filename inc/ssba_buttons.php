@@ -91,7 +91,7 @@ function show_share_buttons($content, $booShortCode = FALSE, $atts = '') {
         } else { // using shortcode
 
             // set page URL and title as set by user or get if needed
-            $urlCurrentPage = (isset($atts['url']) ? $atts['url'] : ssba_current_url());
+            $urlCurrentPage = (isset($atts['url']) ? $atts['url'] : ssba_current_url($atts));
             $strPageTitle = (isset($atts['title']) ? $atts['title'] : get_the_title());
         }
 
@@ -178,10 +178,27 @@ function ssba_hide($content) {
 }
 
 // get URL function
-function ssba_current_url() {
-    global $wp;
-    $url = add_query_arg($_SERVER['QUERY_STRING'], '', home_url($wp->request));
-    return esc_url($url);
+function ssba_current_url($atts) {
+	// if multisite has been set to true
+	if (isset($atts['multisite'])) {
+		global $wp;
+	    $url = add_query_arg($_SERVER['QUERY_STRING'], '', home_url($wp->request));
+	    return esc_url($url);
+	}
+
+	// add http
+	$urlCurrentPage = 'http';
+
+	// add s to http if required
+	if (isset($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] == "on") {
+		$urlCurrentPage .= "s";
+	}
+
+	// add colon and forward slashes
+	$urlCurrentPage .= "://".$_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
+
+	// return url
+	return esc_url($urlCurrentPage);
 }
 
 // get set share buttons
