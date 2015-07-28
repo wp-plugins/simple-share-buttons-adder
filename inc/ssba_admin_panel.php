@@ -120,6 +120,15 @@ function ssba_admin_panel($arrSettings) {
 	// get the font family needed
 	$htmlShareButtonsForm = '<style>'.ssba_get_font_family().'</style>';
 
+	// if left to right
+	if (is_rtl()) {
+    	// move save button
+    	$htmlShareButtonsForm .= '<style>.ssba-btn-save{left: 0!important;
+                                        right: auto !important;
+                                        border-radius: 0 5px 5px 0;}
+                                </style>';
+	}
+
 	// add header
 	$htmlShareButtonsForm .= ssba_admin_header();
 

@@ -44,17 +44,6 @@ function show_share_buttons($content, $booShortCode = FALSE, $atts = '') {
         // post id
         $intPostID = get_the_ID();
 
-        // if post type is download (EDD clashes)
-        if(get_post_type($intPostID) == "download") {
-
-            // check for and remove added text
-            preg_match_all("/>(.*?)>/", $strPageTitle, $matches);
-            $title =  $matches[0][0];
-            $title = ltrim($title, '>');
-            $title = rtrim($title, '</span>');
-            $strPageTitle = $title;
-        }
-
         // ssba div
         $htmlShareButtons = '<!-- Simple Share Buttons Adder ('.SSBA_VERSION.') simplesharebuttons.com --><div class="ssba ssba-wrap">';
 
@@ -95,6 +84,9 @@ function show_share_buttons($content, $booShortCode = FALSE, $atts = '') {
             $strPageTitle = (isset($atts['title']) ? $atts['title'] : get_the_title());
         }
 
+        // strip any unwanted tags from the page title
+        $strPageTitle = esc_attr(strip_tags($strPageTitle));
+
         // the buttons!
         $htmlShareButtons.= get_share_buttons($arrSettings, $urlCurrentPage, $strPageTitle, $intPostID);
 
@@ -104,7 +96,7 @@ function show_share_buttons($content, $booShortCode = FALSE, $atts = '') {
             // add a line break if set to above
             ($arrSettings['ssba_text_placement'] == 'below' ? $htmlShareButtons .= '<br/>' : NULL);
 
-            // check if user has left share link box checked
+            // check if user has checked share link option
             if ($arrSettings['ssba_link_to_ssb'] == 'Y') {
 
                 // share text with link
@@ -686,10 +678,10 @@ function getStumbleUponShareCount($urlCurrentPage) {
 function ssba_email($arrSettings, $urlCurrentPage, $strPageTitle, $booShowShareCount) {
 
     // replace ampersands as needed for email link
-    $strPageTitle = str_replace('&', '%26', $strPageTitle);
+    $emailTitle = str_replace('&', '%26', $strPageTitle);
 
     // email share link
-    $htmlShareButtons = '<a class="ssba_email_share" href="mailto:?subject=' . $strPageTitle . '&amp;body=' . $arrSettings['ssba_email_message'] . '%20' . $urlCurrentPage  . '">';
+    $htmlShareButtons = '<a class="ssba_email_share" href="mailto:?subject=' . $emailTitle . '&amp;body=' . $arrSettings['ssba_email_message'] . '%20' . $urlCurrentPage  . '">';
 
     // if image set is not custom
     if ($arrSettings['ssba_image_set'] != 'custom') {
