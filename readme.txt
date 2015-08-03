@@ -1,6 +1,5 @@
 === Simple Share Buttons Adder ===
 Contributors: DavidoffNeal
-Donate link: https://simplesharebuttons.com/donate/
 Tags: share buttons, facebook, twitter, google+, share, share links, stumble upon, linkedin, pinterest, yummly, vk
 Requires at least: 3.9
 Tested up to: 4.2.3
