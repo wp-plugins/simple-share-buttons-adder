@@ -3,7 +3,7 @@ Contributors: DavidoffNeal
 Tags: share buttons, facebook, twitter, google+, share, share links, stumble upon, linkedin, pinterest, yummly, vk
 Requires at least: 3.9
 Tested up to: 4.2.4
-Stable tag: 6.0.3
+Stable tag: 6.0.4
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -61,6 +61,12 @@ A step by step guide on how to configure this plugin can be found <a href="http:
 8. This is an example of a set of Share Buttons you can add using Simple Share Buttons Adder
 
 == Changelog ==
+
+= 6.0.4 =
+* Feature: Add popup-window feature when sharing
+* Feature: Add number formatting (e.g. 3,563 = 3.5k)
+* Tweak: Improve Facebook count reliability
+* Remove link border by default in CSS
 
 = 6.0.3 =
 * Tweak: Add RTL compatibility to the admin pages by moving the save button to the left
