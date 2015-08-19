@@ -2,7 +2,7 @@
 Contributors: DavidoffNeal
 Tags: share buttons, facebook, twitter, google+, share, share links, stumble upon, linkedin, pinterest, yummly, vk
 Requires at least: 3.9
-Tested up to: 4.2.4
+Tested up to: 4.3
 Stable tag: 6.0.4
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
