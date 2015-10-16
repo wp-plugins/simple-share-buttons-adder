@@ -2,8 +2,8 @@
 Contributors: DavidoffNeal
 Tags: share buttons, facebook, twitter, google+, share, share links, stumble upon, linkedin, pinterest, yummly, vk
 Requires at least: 3.9
-Tested up to: 4.3
-Stable tag: 6.0.5
+Tested up to: 4.3.1
+Stable tag: 6.1.0
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -61,6 +61,14 @@ A step by step guide on how to configure this plugin can be found <a href="http:
 8. This is an example of a set of Share Buttons you can add using Simple Share Buttons Adder
 
 == Changelog ==
+
+= 6.1.0 =
+* Feature: Add Yummly share counts
+* Feature: Add Tumblr share counts
+* Update: New Google+ branded buttons
+* Update: Use JSON array in a single database entry to store all core settings
+* Tweak: Add title attributes to the buttons on the network select option to assist recognition of each network
+* Tweak: Remove PHP notice
 
 = 6.0.5 =
 * Fix: Re-include http/https for URL being shared to Tumblr (404 error)

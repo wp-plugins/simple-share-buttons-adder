@@ -897,15 +897,13 @@ function ssba_admin_panel($arrSettings) {
 
 // get an html formatted of currently selected and ordered buttons
 function getSelectedSSBA($strSelectedSSBA) {
+    //variables
+    $htmlSelectedList = '';
 
-	// variables
-	$htmlSelectedList = '';
-	$arrSelectedSSBA = '';
+    // prepare array of buttons
+    $arrButtons = json_decode(get_option('ssba_buttons'), true);
 
-	// prepare array of buttons
-	$arrButtons = json_decode(get_option('ssba_buttons'), true);
-
-	// if there are some selected buttons
+    // if there are some selected buttons
 	if ($strSelectedSSBA != '') {
 
 		// explode saved include list and add to a new array
@@ -918,7 +916,7 @@ function getSelectedSSBA($strSelectedSSBA) {
 			foreach ($arrSelectedSSBA as $strSelected) {
 
 				// add a list item for each selected option
-				$htmlSelectedList .= '<li class="ssbp-option-item" id="'.$strSelected.'"><a href="javascript:;" class="ssbp-btn ssbp-'.$strSelected.'"></a></li>';
+				$htmlSelectedList .= '<li class="ssbp-option-item" id="'.$strSelected.'"><a title="'.$arrButtons[$strSelected]["full_name"].'" href="javascript:;" class="ssbp-btn ssbp-'.$strSelected.'"></a></li>';
 			}
 		}
 	}
@@ -931,7 +929,6 @@ function getAvailableSSBA($strSelectedSSBA)
 {
 	// variables
 	$htmlAvailableList = '';
-	$arrSelectedSSBA = '';
 
 	// prepare array of buttons
 	$arrButtons = json_decode(get_option('ssba_buttons'), true);
@@ -949,7 +946,7 @@ function getAvailableSSBA($strSelectedSSBA)
 		foreach($arrAvailableSSBA as $strAvailable)
 		{
 			// add a list item for each available option
-			$htmlAvailableList .= '<li class="ssbp-option-item" id="'.$strAvailable.'"><a href="javascript:;" class="ssbp-btn ssbp-'.$strAvailable.'"></a></li>';
+			$htmlAvailableList .= '<li class="ssbp-option-item" id="'.$strAvailable.'"><a title="'.$arrButtons[$strAvailable]["full_name"].'" href="javascript:;" class="ssbp-btn ssbp-'.$strAvailable.'"></a></li>';
 		}
 	}
 
