@@ -156,6 +156,15 @@ function ssba_settings() {
     		'ssba_selected_buttons' => $ssbaPost['ssba_selected_buttons'],
         );
 
+        // prepare array of buttons
+        $arrButtons = json_decode(get_option('ssba_buttons'), true);
+
+        // loop through each button
+        foreach ($arrButtons as $button => $arrButton) {
+            // add custom button to array of options
+            $arrOptions['ssba_custom_'.$button] = $ssbaPost['ssba_custom_'.$button];
+        }
+
 		 // save the settings
         ssba_update_options($arrOptions);
 
